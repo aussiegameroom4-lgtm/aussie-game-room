@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AUSSIE GAME ROOM | SCRAMBLE PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ffd700; --gold-glow:rgba(255,215,0,0.6); --glass:rgba(255,255,255,0.06);
+  --bg:#0d0f16; --accent:#b38728; --aqua:#00f2ea; --green:#00ff88; --red:#ff4444;
+}
+*{box-sizing:border-box;touch-action:manipulation;}
+body{margin:0;background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;font-family:'Inter',sans-serif;background-image:radial-gradient(circle at 50% 50%,#2a2d3d 0%,#0d0f16 100%);}
+body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0f16 100%);animation:redPulse 1s infinite alternate;}
+@keyframes redPulse{from{background-color:#0d0f16;}to{background-color:#301515;}}
+#landingBg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:url('landing-bg.jpg') center/cover no-repeat;pointer-events:none;}
+
+.landing-view,.hof-view,.coll-view{position:fixed;top:0;left:0;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;z-index:100;overflow-y:auto;}
+.hof-view,.coll-view{background:radial-gradient(circle at center,#282b38 0%,#0d0f16 100%);}
+.landing-view{background:linear-gradient(rgba(13,15,22,0.32),rgba(13,15,22,0.58));}
+.hero-title{font-family:'Orbitron';font-size:clamp(45px,10.8vw,99px);line-height:0.9;margin-bottom:20px;letter-spacing:-2px;}
+.gold-text{background:linear-gradient(to bottom,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px var(--gold-glow));}
+.hero-subtitle{font-family:'Orbitron';letter-spacing:6px;color:var(--accent);font-size:16px;margin-bottom:40px;}
+.landing-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;}
+.btn-primary{background:var(--gold);color:#000;padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:none;cursor:pointer;transition:.3s;box-shadow:0 0 20px var(--gold-glow);}
+.btn-primary:hover{transform:scale(1.06);}
+.btn-secondary{background:rgba(255,255,255,0.08);color:#fff;padding:15px 40px;border-radius:50px;font-family:'Orbitron';border:2px solid rgba(255,255,255,0.25);cursor:pointer;transition:.3s;}
+.btn-secondary:hover{background:rgba(255,255,255,0.16);border-color:#fff;}
+.btn-daily{background:rgba(0,242,234,0.12);color:var(--aqua);padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:2px solid var(--aqua);cursor:pointer;transition:.3s;}
+.btn-daily:hover{background:rgba(0,242,234,0.22);}
+.btn-daily:disabled{opacity:.4;cursor:not-allowed;border-color:rgba(255,255,255,0.2);color:#888;box-shadow:none;}
+.btn-daily:disabled:hover{background:rgba(0,242,234,0.12);}
+.btn-endless{background:rgba(0,255,136,0.12);color:var(--green);padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:2px solid var(--green);cursor:pointer;transition:.3s;}
+.btn-endless:hover{background:rgba(0,255,136,0.22);}
+@media(max-width:768px){.hero-title{font-size:50px;}}
+
+.back-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:10px 20px;border-radius:50px;cursor:pointer;font-family:'Orbitron';margin-bottom:20px;}
+.hof-title{font-family:'Orbitron';font-size:32px;margin:0 0 20px;}
+.hof-list{display:flex;flex-direction:column;gap:10px;width:100%;max-width:500px;}
+.hof-item{display:flex;align-items:center;padding:16px 24px;background:rgba(255,255,255,0.06);border-radius:15px;border:1px solid rgba(255,255,255,0.1);}
+.hof-item.rank-1{border-color:var(--gold);background:rgba(255,215,0,0.1);}
+.hof-item .rank{font-family:'Orbitron';font-size:20px;width:50px;color:var(--gold);}
+.hof-item .label{flex:1;text-align:left;font-size:15px;opacity:.85;}
+.hof-item .score{font-family:'Orbitron';color:var(--accent);}
+.empty-note{opacity:.6;margin-top:10px;}
+.hof-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;justify-content:center;}
+.hof-tab{font-family:'Orbitron';font-size:12px;letter-spacing:1px;color:#ccc;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);padding:10px 18px;border-radius:30px;cursor:pointer;transition:.2s;}
+.hof-tab:hover{background:rgba(255,255,255,0.12);}
+.hof-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.hof-item .you{color:var(--aqua);font-size:11px;letter-spacing:1px;margin-left:6px;}
+.hof-item.is-you{border-color:var(--aqua);background:rgba(0,242,234,0.08);}
+.go-leaderboard{margin:18px 0;padding:16px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.1);display:none;}
+.go-leaderboard.visible{display:block;}
+.go-leaderboard .lb-label{font-family:'Orbitron';font-size:12px;letter-spacing:2px;color:var(--accent);margin-bottom:10px;}
+.go-leaderboard .lb-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.go-leaderboard input{font-family:'Inter',sans-serif;font-size:14px;padding:10px 14px;border-radius:30px;border:1px solid rgba(255,255,255,0.25);background:rgba(0,0,0,0.3);color:#fff;width:160px;text-align:center;}
+.go-leaderboard input:focus{outline:none;border-color:var(--gold);}
+.go-leaderboard .lb-submit{font-family:'Orbitron';font-size:12px;letter-spacing:1px;color:#000;background:var(--gold);padding:10px 20px;border-radius:30px;border:none;cursor:pointer;}
+.go-leaderboard .lb-submit:disabled{opacity:.5;cursor:default;}
+.go-leaderboard .lb-status{margin-top:10px;font-size:13px;opacity:.85;min-height:18px;}
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(80px, 1fr));gap:10px;width:100%;max-width:600px;margin-top:20px;max-height:60vh;overflow-y:auto;padding:10px;}
+.coll-item{padding:10px;background:rgba(255,255,255,0.05);border-radius:5px;font-family:'Orbitron';font-size:12px;}
+
+.container{display:none;flex:1;padding:5vh 5%;flex-direction:column;justify-content:center;position:relative;z-index:1;background-size:cover;background-position:center;background-repeat:no-repeat;transition:background-image .25s ease;}
+.game-active .container{display:flex;}
+.game-active .landing-view,.game-active .hof-view,.game-active .coll-view{display:none;}
+
+.vip-card{padding:58px 20px 30px;text-align:center;position:relative;width:100%;max-width:700px;margin:0 auto;border-radius:20px;background:var(--glass);border:1px solid rgba(255,255,255,0.14);backdrop-filter:blur(10px);}
+.stop-badge{position:absolute;top:-44px;left:50%;width:96px;height:96px;margin-left:-48px;pointer-events:none;display:none;z-index:2;}
+.exit-btn{position:absolute;top:15px;left:15px;background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);color:#ff4444;padding:5px 15px;border-radius:5px;cursor:pointer;font-family:'Orbitron';font-size:11px;}
+.mute-btn{position:absolute;top:15px;right:15px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:14px;}
+.gold-label{color:var(--accent);font-family:'Orbitron';font-weight:900;letter-spacing:3px;font-size:13px;line-height:1.35;text-transform:uppercase;margin-bottom:10px;}
+#hintBox{font-family:'Orbitron';font-size:16px;color:var(--aqua);text-shadow:0 0 10px var(--aqua);min-height:24px;margin-bottom:15px;font-weight:bold;opacity:0;transition:opacity .5s;}
+#hintBox.visible{opacity:1;animation:pulse 1s infinite;}
+@keyframes pulse{0%{opacity:.8;}50%{opacity:1;}100%{opacity:.8;}}
+
+.stats-row{display:flex;justify-content:center;gap:30px;margin-bottom:20px;font-family:'Orbitron';}
+.stat{text-align:center;}
+.stat .num{font-size:28px;color:var(--gold);display:block;}
+.stat .lbl{font-size:10px;opacity:.7;letter-spacing:2px;}
+
+.answer-row{display:flex;justify-content:center;gap:clamp(4px,1.2vw,8px);margin-bottom:24px;flex-wrap:nowrap;min-height:56px;width:100%;max-width:100%;}
+.slot{flex:1 1 0;max-width:44px;height:clamp(42px,9vw,52px);border:2px solid rgba(255,255,255,0.22);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Audiowide';font-size:clamp(16px,4.5vw,24px);font-weight:400;background:rgba(255,255,255,0.06);min-width:0;}
+.slot.filled{border-color:var(--gold);color:var(--gold);cursor:pointer;background:rgba(255,215,0,0.12);}
+.answer-row.correct .slot{border-color:var(--green);color:var(--green);box-shadow:0 0 20px rgba(0,255,136,0.4);}
+.answer-row.wrong .slot{border-color:var(--red);color:var(--red);animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+.tile-row{display:flex;justify-content:center;gap:clamp(4px,1.5vw,10px);margin-bottom:24px;flex-wrap:nowrap;width:100%;max-width:100%;}
+.tile{flex:1 1 0;max-width:48px;height:clamp(44px,10vw,56px);border-radius:10px;background:linear-gradient(to bottom,#4a4a58,#2e2e3a);border:1px solid rgba(255,255,255,0.2);color:#fff;font-family:'Audiowide';font-size:clamp(15px,4.2vw,22px);font-weight:400;cursor:pointer;transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.15s;box-shadow:0 4px 0 rgba(0,0,0,0.4);padding:0;min-width:0;}
+.tile:hover{transform:translateY(-3px);border-color:var(--gold);}
+.tile:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,0.4);}
+.tile.used{visibility:hidden;}
+
+.control-row{display:flex;justify-content:center;gap:12px;margin-bottom:24px;}
+.ctrl-btn{background:rgba(255,255,255,0.08);border:1px solid #555;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Orbitron';font-size:12px;cursor:pointer;transition:.2s;}
+.ctrl-btn:hover{background:var(--accent);color:#000;}
+
+.timer-section{width:100%;max-width:500px;margin:0 auto;}
+.timer-bar{width:100%;height:10px;background:rgba(255,255,255,0.08);border-radius:50px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);}
+#progress{width:100%;height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width 1s linear;}
+.critical #progress{background:linear-gradient(90deg,#ff0050,#ff4444);}
+#timerLabel{font-family:'Orbitron';font-size:20px;color:#aaa;margin-bottom:6px;}
+
+.flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1000;display:none;align-items:center;justify-content:center;pointer-events:none;}
+.flash-overlay.solid{background:rgba(0,0,0,0.92);pointer-events:auto;}
+.error-recovery{position:fixed;bottom:0;left:0;width:100%;z-index:2000;display:none;justify-content:center;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,rgba(0,0,0,0.96),rgba(0,0,0,0.8));}
+.error-recovery.show{display:flex;}
+.error-recovery-card{max-width:400px;width:100%;background:rgba(255,68,68,0.1);border:1px solid var(--red);border-radius:16px;padding:16px 18px;text-align:center;}
+.error-recovery-card p{margin:0 0 12px;font-size:13px;opacity:.85;}
+.error-recovery-card button{font-family:'Orbitron';font-size:12px;font-weight:bold;letter-spacing:1px;color:#000;background:var(--gold);padding:12px 24px;border-radius:30px;border:none;cursor:pointer;}
+.flash-text{font-family:'Orbitron';font-size:clamp(32px,8vw,60px);font-weight:900;color:var(--red);text-shadow:0 0 30px rgba(255,68,68,0.8);animation:flashPop 1s ease-out;}
+@keyframes flashPop{0%{opacity:0;transform:scale(0.7);}20%{opacity:1;transform:scale(1.1);}80%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(1);}}
+.game-over-card{text-align:center;padding:20px;max-width:500px;}
+.go-title{font-family:'Orbitron';font-size:40px;margin-bottom:10px;}
+.go-word{opacity:.7;margin-bottom:30px;font-size:14px;}
+.go-word span{color:var(--gold);font-weight:bold;}
+.go-stats{display:flex;justify-content:center;gap:30px;margin-bottom:40px;font-family:'Orbitron';}
+.go-stats .num{font-size:32px;color:var(--gold);display:block;}
+.go-stats .lbl{font-size:10px;opacity:.6;letter-spacing:1px;}
+
+.help-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff;width:34px;height:34px;border-radius:50%;font-family:'Orbitron';font-weight:bold;cursor:pointer;font-size:15px;}
+.help-btn:hover{background:rgba(255,215,0,0.15);border-color:var(--gold);}
+.help-btn.floating{position:absolute;top:15px;right:65px;width:30px;height:30px;font-size:13px;}
+.help-card{text-align:left;max-width:460px;padding:30px 24px;}
+.help-title{font-family:'Orbitron';font-size:26px;margin:0 0 20px;text-align:center;}
+.help-list{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:14px;}
+.help-list li{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.4;opacity:.9;}
+.help-list .help-icon{font-size:18px;flex-shrink:0;width:24px;text-align:center;}
+.help-list b{color:var(--gold);}
+
+/* BOSS ROUND ANIMATIONS */
+@keyframes spinCw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes spinCcw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+.boss2-spin { animation: spinCw 2.5s linear infinite; }
+.boss9-cw { animation: spinCw 2.5s linear infinite; }
+.boss9-ccw { animation: spinCcw 2.5s linear infinite; }
+.boss3-mirror { transform: scale(-1, -1); }
+@keyframes driftFloat {
+  0%   { transform: translate(0,0); }
+  25%  { transform: translate(var(--dx,10px), calc(var(--dy,10px) * -1)); }
+  50%  { transform: translate(calc(var(--dx,10px) * -1), var(--dy,10px)); }
+  75%  { transform: translate(var(--dy,10px), calc(var(--dx,10px) * -1)); }
+  100% { transform: translate(0,0); }
+}
+.boss5-drift { animation: driftFloat var(--dur,3s) ease-in-out var(--delay,0s) infinite; }
+
+@keyframes glitch {
+  0% { transform: translate(0); text-shadow: 2px 0 var(--red), -2px 0 var(--aqua); }
+  20% { transform: translate(-2px, 1px); text-shadow: -2px 0 var(--red), 2px 0 var(--aqua); }
+  40% { transform: translate(2px, -1px); text-shadow: 2px 0 var(--red), -2px 0 var(--aqua); }
+  60% { transform: translate(-1px, 2px); text-shadow: -2px 0 var(--red), 2px 0 var(--aqua); }
+  80% { transform: translate(1px, -2px); text-shadow: 2px 0 var(--red), -2px 0 var(--aqua); }
+  100% { transform: translate(0); text-shadow: 2px 0 var(--red), -2px 0 var(--aqua); }
+}
+.boss6-glitch { animation: glitch 0.2s infinite; }
+
+@keyframes blackout {
+  0%, 80% { color: transparent; text-shadow: none; }
+  85%, 95% { color: #fff; text-shadow: 0 0 10px #fff; }
+  100% { color: transparent; text-shadow: none; }
+}
+.boss7-blackout { animation: blackout 2.5s infinite; }
+
+.boss-pulse { color: var(--red); animation: bossWarning 0.5s infinite alternate; font-size: clamp(40px,10vw,80px); text-align:center;}
+@keyframes bossWarning { from { transform: scale(1); text-shadow: 0 0 20px var(--red); } to { transform: scale(1.1); text-shadow: 0 0 40px var(--red); } }
+#bossOverlay .flash-text.boss-pulse{ animation: flashPop 0.6s ease-out, bossWarning 0.5s ease-in-out 0.6s infinite alternate; }
+
+/* ===== THE CLIMB (map) ===== */
+.climb-note{font-family:'Orbitron';font-size:12px;opacity:.65;margin:-30px 0 30px;}
+.hof-item .label small{display:block;font-size:11px;opacity:.6;margin-top:2px;}
+.streak-counter{font-family:'Orbitron';font-size:12px;color:var(--gold);margin-top:10px;text-align:center;}
+
+.map-view{position:fixed;inset:0;display:none;flex-direction:column;z-index:100;background:#05060c;}
+.game-active .map-view{display:none !important;}
+.map-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(13,15,22,.96);border-bottom:1px solid rgba(255,255,255,.1);z-index:3;}
+.map-header .back-btn{margin:0;padding:8px 14px;font-size:12px;}
+.map-title{font-family:'Orbitron';font-weight:900;font-size:16px;letter-spacing:3px;}
+.map-progress{font-family:'Orbitron';font-size:12px;color:var(--gold);min-width:64px;text-align:right;}
+.map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:190px;-webkit-overflow-scrolling:touch;}
+.map-stage{position:relative;width:min(100vw,520px);aspect-ratio:768/1376;margin:0 auto;}
+.map-stage img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;}
+.map-fog{position:absolute;left:0;right:0;top:0;height:0;pointer-events:none;z-index:1;background:linear-gradient(to bottom,rgba(5,7,16,.88) 0%,rgba(5,7,16,.74) 70%,rgba(5,7,16,0) 100%);transition:height 1.8s ease;}
+
+.map-node{position:absolute;width:7%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-weight:900;font-size:clamp(9px,2.7vw,15px);cursor:pointer;z-index:2;color:#3a2600;background:radial-gradient(circle at 35% 30%,#fff6b8,#ffd700 48%,#b38728 100%);border:2px solid #fff3a8;box-shadow:0 0 10px rgba(255,215,0,.75),inset 0 -3px 5px rgba(0,0,0,.25);transition:filter .4s, box-shadow .4s;}
+.map-node::before{content:'';position:absolute;inset:-45%;border-radius:50%;}
+.map-node.locked{filter:grayscale(1) brightness(.5);box-shadow:none;}
+.map-node.open::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);animation:nodePulse 1.4s ease-out infinite;}
+@keyframes nodePulse{from{transform:scale(.8);opacity:1;}to{transform:scale(1.6);opacity:0;}}
+.map-node.selected{box-shadow:0 0 0 3px #fff,0 0 18px rgba(255,215,0,.95);}
+
+.map-marker{position:absolute;width:8.4%;aspect-ratio:1/1;transform:translate(-50%,-88%);z-index:4;pointer-events:none;display:flex;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#c8f3ff 55%,#39c5ff 100%);border:2px solid #fff;box-shadow:0 0 14px rgba(0,242,234,.9),0 6px 10px rgba(0,0,0,.5);font-size:clamp(12px,3.8vw,21px);}
+.map-marker::after{content:'';position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #39c5ff;}
+
+.map-banner{position:absolute;left:0;right:0;top:36%;text-align:center;padding:0 12px;font-family:'Orbitron';font-weight:900;font-size:clamp(22px,6.5vw,42px);color:var(--gold);text-shadow:0 0 26px var(--gold-glow),0 2px 8px #000;pointer-events:none;opacity:0;z-index:6;}
+.map-banner.warn{color:#ff8a8a;text-shadow:0 0 22px rgba(255,68,68,.7),0 2px 8px #000;font-size:clamp(16px,4.6vw,26px);}
+.map-banner.show{animation-name:bannerPop;animation-timing-function:ease-out;animation-fill-mode:forwards;}
+@keyframes bannerPop{0%{opacity:0;transform:scale(.7);}16%{opacity:1;transform:scale(1.08);}80%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(1);}}
+
+.map-panel{position:absolute;left:0;right:0;bottom:0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(8,10,18,.98) 65%,rgba(8,10,18,.88));border-top:1px solid rgba(255,215,0,.35);text-align:center;z-index:5;}
+.mp-zone{font-family:'Orbitron';font-size:11px;letter-spacing:3px;color:var(--accent);}
+.mp-name{font-family:'Orbitron';font-weight:900;font-size:22px;margin:2px 0 4px;}
+.mp-meta{font-size:12px;opacity:.7;margin-bottom:10px;}
+.mp-start{padding:12px 46px;font-size:14px;}
+.mp-start:disabled{opacity:.45;cursor:default;box-shadow:none;transform:none;}
+
+.particle-burst{position:absolute;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:999;animation:burst 0.6s ease-out forwards;}
+@keyframes burst{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0;}}
+.combo-badge{position:absolute;top:20%;left:50%;transform:translateX(-50%);font-family:'Orbitron';font-size:30px;color:var(--green);pointer-events:none;z-index:999;animation:floatUp 1s ease-out forwards;}
+@keyframes floatUp{0%{opacity:1;transform:translate(-50%,0);}100%{opacity:0;transform:translate(-50%,-100px);}}
+</style>
+</head>
+<body>
+<div id="landingBg"></div>
+<div id="errorRecovery" class="error-recovery">
+  <div class="error-recovery-card">
+    <p>Something glitched. Your climb progress is saved — tap below to get back in.</p>
+    <button onpointerdown="engine.recoverFromError()">TAP TO CONTINUE</button>
+  </div>
+</div>
+
+<div id="landingView" class="landing-view">
+  <h1 class="hero-title">WORD<br><span class="gold-text">SCRAMBLE</span></h1>
+  <div class="landing-buttons">
+    <button onpointerdown="engine.beginGame('CLIMB')" class="btn-primary">THE CLIMB</button>
+    <button onpointerdown="engine.beginGame('BIGLAP')" class="btn-primary">THE BIG LAP</button>
+    <button onpointerdown="engine.beginGame('DAILY')" class="btn-daily" id="dailyBtn">DAILY CHALLENGE</button>
+    <button onpointerdown="engine.beginGame('ENDLESS')" class="btn-endless">ENDLESS MODE</button>
+    <button onpointerdown="engine.showView('HOF')" class="btn-secondary">HIGH SCORES</button>
+    <button onpointerdown="engine.showColl()" class="btn-secondary">COLLECTION</button>
+    <button onpointerdown="engine.showHelp()" class="help-btn" title="How to play">?</button>
+  </div>
+  <p class="climb-note" id="climbNote"></p>
+  <div id="streakDisplay" class="streak-counter"></div>
+</div>
+
+<div id="hofView" class="hof-view">
+  <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
+  <h1 class="hof-title">HIGH <span class="gold-text">SCORES</span></h1>
+  <div class="hof-tabs">
+    <button class="hof-tab active" id="hofTabMine" onpointerdown="engine.setHofTab('MINE')">MY BEST</button>
+    <button class="hof-tab" id="hofTabEndless" onpointerdown="engine.setHofTab('ENDLESS')">🌏 ENDLESS</button>
+    <button class="hof-tab" id="hofTabDaily" onpointerdown="engine.setHofTab('DAILY')">🌏 DAILY</button>
+  </div>
+  <div id="hofList" class="hof-list"></div>
+</div>
+
+<div id="collView" class="coll-view" style="display:none">
+  <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
+  <h1 class="hof-title">COLLECTION</h1>
+  <div id="collGrid" class="coll-grid"></div>
+</div>
+
+<div id="mapView" class="map-view">
+  <div class="map-header">
+    <button onpointerdown="engine.showView('LANDING')" class="back-btn">&larr; MENU</button>
+    <div class="map-title" id="mapTitle">THE <span class="gold-text">CLIMB</span></div>
+    <div class="map-progress" id="mapProgress">0/13</div>
+  </div>
+  <div class="map-scroll" id="mapScroll">
+    <div class="map-stage" id="mapStage">
+      <img id="mapImg" src="rags-to-riches-map.jpg" alt="Mission map" draggable="false">
+      <div class="map-fog" id="mapFog"></div>
+      <div id="mapNodes"></div>
+      <div class="map-marker" id="mapMarker">🎩</div>
+    </div>
+  </div>
+  <div class="map-banner" id="mapBanner"></div>
+  <div class="map-panel">
+    <div class="mp-zone" id="mpZone">ZONE 1 OF 13</div>
+    <div class="mp-name" id="mpName">The Street</div>
+    <div class="mp-meta" id="mpMeta"></div>
+    <button class="btn-primary mp-start" id="mpStart" onpointerdown="engine.startSelectedZone()">START</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="vip-card">
+    <img id="stopBadge" class="stop-badge" alt="">
+    <button onpointerdown="engine.exitGame()" class="exit-btn">EXIT</button>
+    <button onpointerdown="engine.toggleMute()" class="mute-btn" id="muteBtn">🔊</button>
+    <button onpointerdown="engine.showHelp()" class="help-btn floating" title="How to play">?</button>
+    <div class="gold-label" id="roundLabel">WORD SCRAMBLE</div>
+    <div id="hintBox">HINT: STARTS WITH "A"</div>
+    <div id="comboDisplay" style="position:absolute; top:10px; font-family:'Orbitron'; color:var(--green);"></div>
+
+    <div class="stats-row">
+      <div class="stat"><span class="num" id="scoreNum">0</span><span class="lbl">SCORE</span></div>
+      <div class="stat"><span class="num" id="streakNum">0</span><span class="lbl">STREAK</span></div>
+      <div class="stat" id="livesStat"><span class="num" id="livesNum">0</span><span class="lbl">LIVES</span></div>
+      <div class="stat"><span class="num" id="roundNum">1</span><span class="lbl">ROUND</span></div>
+    </div>
+
+    <div class="answer-row" id="answerRow"></div>
+    <div class="tile-row" id="tileRow"></div>
+
+    <div class="control-row">
+      <button class="ctrl-btn" onpointerdown="engine.clearAnswer()">CLEAR</button>
+      <button class="ctrl-btn" onpointerdown="engine.shuffleTiles()">SHUFFLE</button>
+    </div>
+
+    <div class="timer-section">
+      <div id="timerLabel">30s</div>
+      <div class="timer-bar"><div id="progress"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="bossOverlay" class="flash-overlay solid">
+  <div class="flash-text boss-pulse">BOSS ROUND</div>
+</div>
+
+<div id="lifeLostOverlay" class="flash-overlay">
+  <div class="flash-text life-lost-text">LIFE LOST</div>
+</div>
+
+<div id="helpOverlay" class="flash-overlay solid">
+  <div class="game-over-card help-card">
+    <h2 class="help-title">HOW TO <span class="gold-text">PLAY</span></h2>
+    <ul class="help-list">
+      <li><span class="help-icon">👆</span><span>Tap the scrambled letters in order to spell the word before the timer runs out. Tap a filled slot to undo it, or use <b>CLEAR</b> / <b>SHUFFLE</b> for help.</span></li>
+      <li><span class="help-icon">⚡</span><span>Solving fast scores more points. Chain correct answers for a growing <b>streak bonus</b>.</span></li>
+      <li><span class="help-icon">🏔️</span><span><b>The Climb</b> has 13 zones, from The Street up to Galaxy Tycoon. Each zone is 10 rounds. Beat its boss to climb to the next zone. Your progress is saved.</span></li>
+      <li><span class="help-icon">🚐</span><span><b>The Big Lap</b> is a 15-stop road trip around Australia's Big Things, from the Big Swoop in Canberra to the Big Tasmanian Devil. It works just like The Climb.</span></li>
+      <li><span class="help-icon">👹</span><span>Round 10 of every zone is a <b>BOSS ROUND</b>. The tiles get messed with (spinning, drifting, glitching and more). Run out of time and you retry the zone from its first round.</span></li>
+      <li><span class="help-icon">📅</span><span><b>Daily Challenge</b> gives everyone the same 15 words, once a day. You start with no lives and earn one at the boss round.</span></li>
+    </ul>
+    <div class="landing-buttons">
+      <button onpointerdown="engine.hideHelp()" class="btn-primary">GOT IT</button>
+    </div>
+  </div>
+</div>
+
+<div id="gameOverOverlay" class="flash-overlay solid">
+  <div class="game-over-card">
+    <h2 class="go-title" id="goTitle">GAME <span class="gold-text">OVER</span></h2>
+    <div class="go-word" id="goWordLine">The word was <span id="goWord"></span></div>
+    <div class="go-stats">
+      <div><span class="num" id="goScore">0</span><span class="lbl">FINAL SCORE</span></div>
+      <div><span class="num" id="goStreak">0</span><span class="lbl">BEST STREAK</span></div>
+      <div><span class="num" id="goRound">0</span><span class="lbl">ROUNDS SURVIVED</span></div>
+    </div>
+    <div class="go-leaderboard" id="goLeaderboard">
+      <div class="lb-label">SUBMIT TO THE GLOBAL LEADERBOARD</div>
+      <div class="lb-row">
+        <input type="text" id="lbNameInput" maxlength="14" placeholder="Your name">
+        <button class="lb-submit" id="lbSubmitBtn" onpointerdown="engine.submitLeaderboardScore()">SUBMIT</button>
+      </div>
+      <div class="lb-status" id="lbStatus"></div>
+    </div>
+    <div class="landing-buttons">
+      <button id="goPrimary" onpointerdown="engine.retryZone()" class="btn-primary">RETRY ZONE</button>
+      <button id="goSecondary" onpointerdown="engine.toMap()" class="btn-secondary">MAP</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ASSETS = { map: 'rags-to-riches-map.jpg', map2: 'big-lap-map.jpg', sounds: { correct: 'sounds/correct.mp3', wrong: 'sounds/wrong.mp3', tick: 'sounds/tick.mp3', lifeLost: 'sounds/life-lost.mp3', lifeGained: 'sounds/life-gained.mp3', gameOver: 'sounds/game-over.mp3', music: 'sounds/music-loop.mp3' } };
+(function preloadAssets() { const allUrls = [ASSETS.map, ASSETS.map2, ...Object.values(ASSETS.sounds)]; let loadedCount = 0; allUrls.forEach(url => { const isAudio = url.endsWith('.mp3'); const el = isAudio ? new Audio(url) : new Image(); el.onload = el.oncanplaythrough = () => { loadedCount++; if(loadedCount === allUrls.length) console.log("Assets loaded"); }; if(!isAudio) el.src = url; }); })();
+
+function triggerBurst(el) {
+  if (navigator.vibrate) navigator.vibrate(50);
+  const rect = el.getBoundingClientRect();
+  for(let i=0; i<8; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle-burst';
+    p.style.left = (rect.left + rect.width/2) + 'px';
+    p.style.top = (rect.top + rect.height/2) + 'px';
+    p.style.setProperty('--tx', (Math.random()-0.5)*100 + 'px');
+    p.style.setProperty('--ty', (Math.random()-0.5)*100 + 'px');
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 600);
+  }
+}
+
+function updateStreakDisplay() {
+  const lastDate = localStorage.getItem('scramble_streak_date');
+  const today = new Date().toDateString();
+  let streak = parseInt(localStorage.getItem('scramble_streak') || '0');
+  if(lastDate !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    if(lastDate !== yesterday.toDateString()) streak = 0;
+  }
+  document.getElementById('streakDisplay').innerText = streak > 0 ? `🔥 DAILY STREAK: ${streak} DAYS` : '';
+}
+
+function updateStreakDate() {
+  const today = new Date().toDateString();
+  const lastDate = localStorage.getItem('scramble_streak_date');
+  if(lastDate !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    let streak = (lastDate === yesterday.toDateString()) ? parseInt(localStorage.getItem('scramble_streak') || '0') + 1 : 1;
+    localStorage.setItem('scramble_streak', streak);
+    localStorage.setItem('scramble_streak_date', today);
+  }
+}
+
+function addToCollection(word) {
+  let coll = new Set(JSON.parse(localStorage.getItem('scramble_collection') || '[]'));
+  coll.add(word);
+  localStorage.setItem('scramble_collection', JSON.stringify([...coll]));
+}
+
+const WORDS=["ANT","ARM","BAG","BAT","BED","BEE","BIG","BOX","BUG","BUS","BUY","CAB","CAP","CAR","CAT","COW","CUP","CUT","DAY","DIG","DOG","DRY","EAR","EAT","EGG","EYE","FAN","FAR","FIG","FIT","FLY","FOG","FOX","FUN","GAP","GAS","GUM","GUN","GYM","HAT","HEN","HOT","ICE","INK","JAM","JAR","JAW","JET","JOB","JOY","KEY","KID","LAB","LAP","LAW","LEG","LID","LIP","LOG","MAP","MIX","MOP","MUD","NET","NUT","OAK","OIL","OWL","PAN","PEN","PET","PIE","PIG","PIN","PIT","POT","RAG","RAT","RIB","RIM","ROD","ROW","RUG","RUN","SAD","SAW","SEA","SET","SIT","SIX","SKI","SKY","SUN","TAG","TAP","TAX","TEA","TIE","TIN","TOE","TOP","TOY","TUB","VAN","VET","WAX","WEB","WET","WIN","ZIP","ZOO","ARMY","BANK","BIRD","BOAT","BOOK","CASH","CITY","CODE","COIN","DARK","DATA","DEEP","DOOR","EDGE","EXIT","FACE","FAST","FIRE","FISH","FLOW","FOOD","FREE","GAME","GATE","GIFT","GOLD","GOOD","HARD","HEAT","HIGH","HILL","HOME","HOPE","ICON","IDEA","IRON","ITEM","JUMP","KEEP","KING","LAND","LAST","LEAD","LIFE","LIFT","LIGHT","LINE","LINK","LIST","LIVE","LOCK","LONG","LOUD","LOVE","LUCK","MAIL","MAIN","MARK","MIND","MOON","MOVE","NAME","NEAR","NEXT","NIGHT","OPEN","PAGE","PARK","PART","PATH","PEAK","PLAN","PLAY","PORT","POST","PURE","RACE","RAIN","RANK","REAL","ROAD","ROCK","ROOF","SAFE","SALE","SAND","SAVE","SHIP","SHOP","SHOW","SIDE","SIGN","SIZE","SKIN","SNOW","SOFT","SONG","SORT","SOUL","STAR","STEP","STOP","TEAM","TECH","TEST","TEXT","TIME","TOOL","TRIP","TRUE","UNIT","USER","VIEW","VOTE","WALL","WAVE","WIND","WING","WIRE","WORD","WORK","YEAR","ZONE","AGENT","ALIVE","ALPHA","BEACH","BLOCK","BOOST","BRAVE","BREAD","BREAK","BRIGHT","BUILD","CHAIN","CHART","CHASE","CHECK","CHIEF","CHILD","CHILL","CLASS","CLEAR","CLICK","CLOSE","CLOUD","COAST","COLOR","COUNT","COVER","CRAFT","CRASH","CREAM","CROSS","CROWD","CROWN","CYCLE","DAILY","DANCE","DEPTH","DREAM","DRIVE","EARTH","EMPTY","ENTRY","EQUAL","ERROR","EVENT","EXTRA","FAITH","FIELD","FIGHT","FINAL","FIRST","FLAME","FLASH","FLOOR","FOCUS","FORCE","FRAME","FRESH","FRONT","FRUIT","GLASS","GLOBE","GLOW","GRADE","GRAPH","GREAT","GREEN","GROUP","GUARD","GUIDE","HABIT","HAPPY","HEART","HEAVY","IMAGE","INDEX","INPUT","JUICE","LEVEL","LIMIT","LOCAL","LOGIC","LUCKY","MAGIC","MAJOR","MATCH","METAL","MODEL","MONEY","MOTOR","MOUNT","MUSIC","NOBLE","OCEAN","ORDER","OUTER","PANEL","PARTY","PEACE","PHASE","PHONE","PHOTO","PILOT","PLANE","PLANT","POINT","POWER","PRESS","PRICE","PRIME","PRINT","PRIOR","PRIZE","PROOF","PROUD","QUICK","QUIET","QUOTE","RADIO","RANGE","RAPID","RATIO","REACH","READY","REPLY","RESET","RIGHT","RIVER","ROBOT","ROUTE","ROYAL","SCALE","SCENE","SCOPE","SCORE","SHARP","SHIFT","SHINE","SHIRT","SHOCK","SHORT","SIGHT","SKILL","SMART","SMOKE","SOLID","SOUND","SOUTH","SPACE","SPEED","SPEND","SPLIT","STAGE","STAND","START","STATE","STEAM","STEEL","STEER","STILL","STONE","STORE","STORM","STORY","STYLE","SUPER","SWEET","SWIFT","SWING","TABLE","TASTE","THEME","THICK","THING","THINK","THIRD","TIGHT","TOTAL","TOUCH","TOUGH","TRACK","TRADE","TRAIL","TRAIN","TREND","TRIAL","TRIBE","TRICK","TRUTH","TWIST","UNITE","UPPER","VALUE","VAPOR","VAULT","VIDEO","VOICE","WATCH","WATER","WORLD","YOUTH","ZEBRA","ACCEPT","ACCESS","ACTION","ACTIVE","ACTUAL","ADVICE","AFFORD","AGENCY","AGENDA","ALMOST","ALWAYS","AMOUNT","ANIMAL","ANNUAL","ANSWER","ANYONE","APPEAR","AROUND","ARRIVE","ARTIST","ASPECT","ASSESS","ASSIST","ASSUME","ATTACK","ATTEND","AUTHOR","AVENUE","BACKUP","BATTLE","BEAUTY","BECOME","BEFORE","BEHIND","BELIEF","BELONG","BETTER","BEYOND","BORDER","BOTTLE","BOTTOM","BRANCH","BREATH","BRIDGE","BURNER","BROKEN","BUDGET","BURDEN","BUTTON","CAMERA","ABILITY","ABSENCE","ACADEMY","ACCOUNT","ACHIEVE","ACQUIRE","ADDRESS","ADVANCE","ADVERSE","ADVISOR","AGAINST","AIRPORT","ALCOHOL","ALREADY","ANALYST","ANCIENT","ANOTHER","ANXIETY","ANYBODY","APOLOGY","APPAREL","APPLAUD","APPOINT","APPROVE","ARCHERY","ARTICLE","ARTISAN","ASSAULT","ATTEMPT","ATTRACT","AUCTION","AVERAGE","BACKING","BAGGAGE","BALANCE","BALLOON","BANDAGE","BANKING","BARGAIN","BARRIER","BATTERY","BEARING","BELIEVE","BENEATH","BENEFIT","BICYCLE","BILLION","BIOLOGY","BLANKET","BROTHER","ABSOLUTE","ABSTRACT","ACADEMIC","ACCIDENT","ACCURATE","ACTIVITY","ADDITION","ADEQUATE","ADJACENT","ADVANCED","ADVISORY","ADVOCATE","AIRCRAFT","ALLIANCE","ALPHABET","AMBITION","ANALYSIS","ANYTHING","ANYWHERE","APPARENT","APPROACH","APPROVAL","ARGUMENT","ARTISTIC","ASSEMBLY","ATHLETIC","ATTORNEY","AUDIENCE","AUTONOMY","BACHELOR","BACKBONE","BACKYARD","BACTERIA","BASEBALL","BASEMENT","BATHROOM","BOUNDARY","BRACELET","BREAKOUT","BROCHURE","BUILDING","BUSINESS","CALENDAR","CAMPAIGN","CAPACITY","CATEGORY","CATHOLIC","CHAMPION","CHEMICAL","CHILDREN","ABANDONED","ABUNDANCE","ACCESSORY","ACCIDENTS","ACCOMPANY","ACCORDING","ACHIEVING","ACOUSTICS","ADMISSION","ADVANTAGE","ADVENTURE","ADVERTISE","AESTHETIC","AFFECTION","AFTERNOON","AGREEMENT","ALBATROSS","ALIGNMENT","ALLOWANCE","ALTERNATE","AMBULANCE","AMENDMENT","AMPLIFIER","AMUSEMENT","ANCHORAGE","ANIMATION","ANNOUNCER","ANSWERING","ANTARCTIC","APARTMENT","APOLOGIZE","APPARATUS","APPEALING","APPLICANT","APPRAISAL","ARCHITECT","AWARENESS","BEAUTIFUL","BEGINNING","BEHAVIOUR","BREAKFAST","BRILLIANT","BROADCAST","BUTTERFLY","CALCULATE","CAMPAIGNS","CANDIDATE","CARPENTER","CELEBRATE","CHALLENGE"];
+
+const CONFIG={ baseRoundTime:30, minRoundTime:10, hintAt:10, roundsPerRamp:5, dailyRounds:15, zoneStartLives:0, zoneBonusLifeRound:0, climbKey:'scramble_climb_v1' };
+
+const DAILY_WORD_LENGTHS = [3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, 9];
+const MAP_W = 768, MAP_H = 1376;
+const CLIMB_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+function zoneRegularRounds(z){ return ZONE_REGULAR_ROUNDS[z-1] || 9; }
+function zoneTotalRounds(z){ return zoneRegularRounds(z) + 1; }
+function zoneBossRound(z){ return zoneFirstRound(z) + zoneRegularRounds(z); }
+const CLIMB_ZONES = [{n:1,  name:'The Street',     x:383.2, y:1277.5},{n:2,  name:'The Pawn Shop',  x:458.7, y:1176.3},{n:3,  name:'Downtown Grind', x:308.6, y:1084.8},{n:4,  name:'First Paycheck', x:458.3, y:993.4},{n:5,  name:'The Nightclub',  x:309.7, y:901.5},{n:6,  name:'The Boardroom',  x:458.3, y:810.2},{n:7,  name:'Uptown Loft',    x:309.5, y:718.5},{n:8,  name:'Rooftop Bar',    x:458.4, y:627.4},{n:9,  name:'The Mansion',    x:310.3, y:536.1},{n:10, name:'The Yacht',      x:457.7, y:444.6},{n:11, name:'Private Jet',    x:310.3, y:353.9},{n:12, name:'Private Island', x:457.1, y:262.3},{n:13, name:'Galaxy Tycoon',  x:383.4, y:139.0}];
+function zoneFirstRound(z){ let r = 1; for(let i = 1; i < z; i++) r += zoneTotalRounds(i); return r; }
+function zoneRoundTime(z){ return MISSION.roundTime(z); }
+const CLIMB_WORDS = { 1: { words: { 3:["MUD","RAT","BUM","LOW","WET"] }, boss: ["RUN","OUT","BAD"] }, 2: { words: { 3:["PAY","BUY","OWE"], 4:["LOAN","GOLD","CASH"] }, boss: ["DEAL","RING","GEMS"] }, 3: { words: { 4:["WORK","JOBS","BOSS","DESK","RUSH","GRIT","SHOP"] }, boss: ["WAGE","GAIN","OVER"] }, 4: { words: { 4:["RENT","HOME","KEYS","MOVE"], 5:["FIRST","PROUD","EXTRA","SAVED"] }, boss: ["CHECK","BONUS","DEBUT"] }, 5: { words: { 5:["DANCE","MUSIC","DRINK","LIGHT","PARTY","HOUSE","TABLE","SOUND","CROWD","NIGHT","STAGE","VIBES","LASER","BOOTH","DRESS"] }, boss: ["ELITE","ROYAL","GRAND"] }, 6: { words: { 5:["TRADE","SHARE","BONUS","CHART","BRAND","PITCH","VALUE","STOCK","AUDIT","CLERK","FUNDS","QUOTA","MERIT","GRANT","ASSET"], 6:["PROFIT","MARKET","BUDGET","INVEST","CLIENT","VENDOR","SALARY","MEMBER","BRANCH","DEMAND","SUPPLY","LEADER","TARGET","OFFICE","GROWTH"] }, boss: ["TYCOON","EMPIRE","LEGACY"] }, 7: { words: { 6:["WINDOW","MODERN","MARBLE","ACCENT","CORNER","DESIGN","CEMENT","CLOSET","GARAGE","STUDIO","TENANT","DUPLEX","SKYWAY","TOWERS","GLEAMS"] }, boss: ["LUXURY","ASCEND","UPWARD"] }, 8: { words: { 6:["VELVET","LOUNGE","SUNSET","WHISKY","BOTTLE","TICKET","CANDLE","GLITZY","GOLDEN","SILVER","ORCHID","TUXEDO","BEADED","SPARKS","GLOWED"], 7:["SPARKLE","TERRACE","PRIVATE","LEATHER","BALCONY","SKYLINE","GLAMOUR","VELVETY","DRESSED","CROWDED","NIGHTLY","UPSCALE","SUNBEDS","PILLOWS","CABANAS"] }, boss: ["OPULENT","GLAMOUR","PRIVATE"] }, 9: { words: { 7:["MANSION","GARDENS","GRANITE","MARBLED","CEILING","LIBRARY","GALLERY","COLUMNS","GARAGES","KITCHEN","BALCONY","JACUZZI","ORCHARD","HALLWAY","TERRACE"] }, boss: ["ESTATES","OPULENT","PRIVATE"] }, 10:{ words: { 7:["HARBOUR","VOYAGES","CAPTAIN","ANCHORS","SUNDECK","CRUISER","DOLPHIN","SEAGULL","HORIZON","PONTOON","STARLIT","COMPASS","BOATING","SAILING","MARINER"], 8:["PORTSIDE","SEAWATER","SUNBATHE","DECKHAND","LIFEBOAT","WATERWAY","SEASHELL","DOCKSIDE","SAILBOAT","SPLASHED","SPEEDING","YACHTING","BAREFOOT","OVERSEAS","FLOATING"] }, boss: ["FLAGSHIP","VOYAGERS","PLATINUM"] }, 11:{ words: { 8:["AIRCRAFT","BOARDING","TURBINES","COCKPITS","AIRLINES","PASSPORT","ALTITUDE","LANDINGS","HEADWIND","STEWARDS","SEATBELT","OVERHEAD","CATERING","CHECKING","BUSINESS"] }, boss: ["DIAMONDS","ELEVATED","PLATINUM"] }, 12:{ words: { 8:["PARADISE","SEASHORE","SANDBARS","COCONUTS","SNORKELS","HAMMOCKS","SUNRISES","SUNSHINE","CASTAWAY","SECLUDED","SEAFRONT","BUNGALOW","BAREFOOT","SEABIRDS","DRIFTING"], 9:["TURQUOISE","WATERFALL","HIDEAWAYS","SANCTUARY","EXCLUSIVE","SEASHELLS","COASTLINE","OVERWATER","SUNBATHED","LUXURIOUS","SEAWORTHY","PRIVATELY","CATAMARAN","ISOLATION","STARLIGHT"] }, boss: ["PENTHOUSE","OPULENTLY","GRANDIOSE"] }, 13:{ words: { 9:["ASTRONAUT","SPACESHIP","SATELLITE","UNIVERSAL","STARSHIPS","COSMONAUT","TELESCOPE","ASTEROIDS","SPACESUIT","MOONLIGHT","SPACEWALK","TRILLIONS","FORTUNATE","OVERLORDS","CONQUEROR"] }, boss: ["IMMORTALS","ETERNALLY","LEGENDARY"] } };
+
+// ===== THE BIG LAP: 15 Aussie Big Things, anticlockwise around the country =====
+const BIGLAP_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+const BIGLAP_ZONES = [
+  {n:1,  name:'Big Swoop',            place:'Canberra, ACT',            x:650, y:836},
+  {n:2,  name:'Big Golden Guitar',    place:'Tamworth, NSW',            x:683, y:737},
+  {n:3,  name:'Big Banana',           place:'Coffs Harbour, NSW',       x:722, y:738},
+  {n:4,  name:'Big Pineapple',        place:'Sunshine Coast, QLD',      x:726, y:670},
+  {n:5,  name:'Big Gumboot',          place:'Tully, QLD',               x:603, y:499},
+  {n:6,  name:'Big Boxing Crocodile', place:'Humpty Doo, NT',           x:330, y:362},
+  {n:7,  name:'Big Prawn',            place:'Exmouth, WA',              x:42,  y:567},
+  {n:8,  name:'Big Ram',              place:'Wagin, WA',                x:114, y:779},
+  {n:9,  name:'Big Kangaroo',         place:'Border Village, SA',       x:291, y:749},
+  {n:10, name:'Big Galah',            place:'Kimba, SA',                x:396, y:760},
+  {n:11, name:'Big Lobster',          place:'Kingston SE, SA',          x:472, y:827},
+  {n:12, name:'Big Koala',            place:'Dadswells Bridge, VIC',    x:510, y:891},
+  {n:13, name:'Giant Murray Cod',     place:'Swan Hill, VIC',           x:540, y:833},
+  {n:14, name:'Big Ned Kelly',        place:'Glenrowan, VIC',           x:580, y:885},
+  {n:15, name:'Big Tasmanian Devil',  place:'Mole Creek, TAS',          x:603, y:981}
+];
+const BIGLAP_WORDS = {
+  1:  { words: { 3:["CAW","FLY","EGG","SKY","FRY"] }, boss: ["PECK","DIVE","CHIP"] },
+  2:  { words: { 3:["HAT","HUM","JIG"], 4:["BAND","TUNE","BOOT","SONG"] }, boss: ["GOLD","STRUM","BANJO"] },
+  3:  { words: { 4:["PEEL","TREE","SURF","CAKE","MUSH","FARM","BEND","DOCK"] }, boss: ["BUNCH","SPLIT","JETTY"] },
+  4:  { words: { 4:["TART"], 5:["JUICY","SPIKY","FRUIT","CROWN","SUNNY","TANGY","SWEET","CHUNK"] }, boss: ["TROPIC","SPIKES","FRUITY"] },
+  5:  { words: { 5:["RAINY","SOGGY","MUDDY","STORM","CLOUD","FLOOD","DRIPS","WATER","SUGAR","MISTY"] }, boss: ["PUDDLE","SPLASH","RUBBER"] },
+  6:  { words: { 5:["SWAMP","TEETH","GLOVE","PUNCH","RIVER","BOXER","FIGHT","ROUND","CHOMP","TOUGH"] }, boss: ["SNAPPY","BOXING","HUNGRY"] },
+  7:  { words: { 5:["SHELL","WHALE","BEACH","SHARK","TRAWL","SALTY"], 6:["SHRIMP","DIVING","TURTLE"] }, boss: ["SEAFOOD","ANTENNA","SNORKEL"] },
+  8:  { words: { 6:["FLEECE","FLOCKS","WOOLLY","SHEARS","MEADOW","CATTLE","FENCES","GRAINS","MUTTON"] }, boss: ["SHEARER","PADDOCK","LAMBING"] },
+  9:  { words: { 6:["HOPPED","BORDER","CLIFFS","SUNSET","BOUNCE","TRAVEL","LIZARD","CAMELS","BUSHES"] }, boss: ["KANGAROO","OUTBACK","VEGEMITE"] },
+  10: { words: { 6:["SQUAWK","BIRDIE","FLIGHT","CHIRPY"], 7:["FEATHER","PLUMAGE","SCREECH","PERCHED","NESTING"] }, boss: ["COCKATOO","HALFWAY","SKYWARD"] },
+  11: { words: { 7:["PINCHER","CLAWING","HARBOUR","FISHING","SEASIDE","COASTAL","ANCHORS","BUTTERY","SEAWEED"] }, boss: ["CRAYFISH","FISHERMAN","SHELLFISH"] },
+  12: { words: { 7:["CUDDLES","NAPTIME","CLIMBER","SNOOZED","BRIDGES","SLEEPER","HUGGING","YAWNING","TREETOP"] }, boss: ["EUCALYPT","BRANCHES","SLEEPING"] },
+  13: { words: { 7:["ANGLERS","STEAMER","BOATING","CURRENT","FLOWING"], 8:["FISHHOOK","CATCHING","PADDLING","RIVERBED"] }, boss: ["BILLABONG","RIVERBANK","WATERWAYS"] },
+  14: { words: { 8:["ARMOURED","HORSEMAN","HIDEOUTS","STANDOFF","IRONCLAD","FUGITIVE","GALLOPED","SHOWDOWN","MOUNTAIN"] }, boss: ["LEGENDARY","NOTORIOUS","OUTLAWED"] },
+  15: { words: { 8:["DEVILISH","SNARLING","GROWLING"], 9:["NOCTURNAL","MARSUPIAL","CAVERNOUS","LIMESTONE","SCAVENGER","FEROCIOUS"] }, boss: ["TASMANIAN","WILDLIFE","NIGHTFALL"] }
+};
+
+const MISSIONS = {
+  CLIMB: {
+    id:'CLIMB', titleHtml:'THE <span class="gold-text">CLIMB</span>', shortName:'The Climb',
+    map:'rags-to-riches-map.jpg', storageKey:'scramble_climb_v1',
+    zones:CLIMB_ZONES, words:CLIMB_WORDS, regularRounds:CLIMB_REGULAR_ROUNDS,
+    bg:(z) => `bg/zone-bg-${z}.jpg`, fog:true, marker:'\u{1F3A9}', nodeSize:7, markerSize:8.4,
+    roundTime:(z) => Math.max(CONFIG.minRoundTime, CONFIG.baseRoundTime - 2 * (z - 1)),
+    finalBanner:'RAGS TO RICHES – COMPLETE!', doneNote:'Rags to riches complete!'
+  },
+  BIGLAP: {
+    id:'BIGLAP', titleHtml:'THE BIG <span class="gold-text">LAP</span>', shortName:'The Big Lap',
+    map:'big-lap-map.jpg', storageKey:'scramble_biglap_v1',
+    zones:BIGLAP_ZONES, words:BIGLAP_WORDS, regularRounds:BIGLAP_REGULAR_ROUNDS,
+    bg:(z) => `bg/big-lap-${z}.jpg`, badge:(z) => `bg/big-lap-badge-${z}.png`, fog:false, marker:'\u{1F690}', nodeSize:4.6, markerSize:6,
+    roundTime:(z) => Math.max(16, CONFIG.baseRoundTime - (z - 1)),
+    finalBanner:'BIG LAP – COMPLETE!', doneNote:'Big Lap complete!'
+  }
+};
+let MISSION = MISSIONS.CLIMB, ZONES = CLIMB_ZONES, ZONE_WORDS = CLIMB_WORDS, ZONE_REGULAR_ROUNDS = CLIMB_REGULAR_ROUNDS;
+function setMission(id){ MISSION = MISSIONS[id] || MISSIONS.CLIMB; ZONES = MISSION.zones; ZONE_WORDS = MISSION.words; ZONE_REGULAR_ROUNDS = MISSION.regularRounds; }
+
+function wordLengthsForRound(round, mode){ if(mode === 'DAILY'){ return [DAILY_WORD_LENGTHS[round - 1] || 6]; } const block = Math.floor((round - 1) / 10); const pairIndex = Math.floor(block / 2); const base = Math.min(3 + pairIndex, 9); if(block % 2 === 0) return [base]; return [...new Set([base, Math.min(base + 1, 9)])]; }
+function mulberry32(seed){ return function(){ seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function todayKey(){ const d = new Date(); return `${d.getUTCFullYear()}${String(d.getUTCMonth()+1).padStart(2,'0')}${String(d.getUTCDate()).padStart(2,'0')}`; }
+function makeAudio(src){ const a = new Audio(src); a.preload = 'auto'; return a; }
+
+const SFX = {
+  muted:false, files:{}, pools:{}, unlocked:false, poolSize:3,
+  activeTick:null, tickCapTimer:null,
+  loadMute(){ this.muted = localStorage.getItem('scramble_muted') === '1'; },
+  init(){ Object.keys(ASSETS.sounds).forEach(key=>{ if(key !== 'music') this.files[key] = makeAudio(ASSETS.sounds[key]); }); },
+  // Mobile browsers (iOS Safari especially) only allow audio playback that's
+  // either triggered directly inside a user gesture (tap/click), or performed
+  // on an element that's already been "unlocked" by a gesture. SFX.play() used
+  // to clone a brand-new <audio> element every single call - fine for sounds
+  // fired straight out of a tap handler (correct/wrong), but sounds fired from
+  // a timer (tick, game-over, life lost/gained) were played on a never-touched
+  // clone and got silently blocked, with the failure swallowed by .catch(()=>{}).
+  // Fix: on the first tap anywhere on the page, pre-create and "unlock" a small
+  // reusable pool of clones per sound, then always play from that pool instead
+  // of creating fresh nodes later.
+  unlock(){
+    if(this.unlocked) return;
+    this.unlocked = true;
+    Object.keys(this.files).forEach(key=>{
+      const pool = [];
+      for(let i = 0; i < this.poolSize; i++){
+        const clone = this.files[key].cloneNode();
+        clone.volume = 0;
+        try {
+          const p = clone.play();
+          if(p && typeof p.catch === 'function'){
+            p.then(()=>{ clone.pause(); clone.currentTime = 0; }).catch(()=>{});
+          } else {
+            clone.pause(); clone.currentTime = 0;
+          }
+        } catch(e) {}
+        pool.push(clone);
+      }
+      this.pools[key] = { clones: pool, next: 0 };
+    });
+  },
+  play(key, volume){
+    if(this.muted) return null;
+    try {
+      const pool = this.pools[key];
+      let clone;
+      if(pool){
+        clone = pool.clones[pool.next];
+        pool.next = (pool.next + 1) % pool.clones.length;
+        if(!clone.paused){ clone.pause(); }
+        clone.currentTime = 0;
+      } else {
+        // Not unlocked yet (shouldn't normally happen once the page has been
+        // tapped once) - fall back to a fresh clone as a best effort.
+        clone = this.files[key].cloneNode();
+      }
+      clone.volume = volume;
+      const p = clone.play();
+      if(p && typeof p.catch === 'function') p.catch((e)=>{ console.warn('SFX.play blocked for', key, e); });
+      return clone;
+    } catch(e) { console.warn('SFX.play failed for', key, e); return null; }
+  },
+  correct(){ this.play('correct', 0.6); },
+  wrong(){ this.play('wrong', 0.6); },
+  lifeLost(){ this.play('lifeLost', 0.6); },
+  lifeGained(){ this.play('lifeGained', 0.6); },
+  gameOver(){ this.stopTick(); this.play('gameOver', 0.6); },
+  tick(){ this.stopTick(); const clone = this.play('tick', 0.4); if(clone){ this.activeTick = clone; this.tickCapTimer = setTimeout(()=>{ if(clone && !clone.paused) clone.pause(); }, 450); } },
+  stopTick(){ if(this.tickCapTimer){ clearTimeout(this.tickCapTimer); this.tickCapTimer = null; } if(this.activeTick){ this.activeTick.pause(); this.activeTick.currentTime = 0; this.activeTick = null; } }
+};
+SFX.init(); SFX.loadMute();
+document.addEventListener('pointerdown', () => SFX.unlock(), { once: true });
+
+const BGM = {
+  audioEl:null, playing:false, pendingStart:false,
+  ensureAudio(){ if(!this.audioEl){ this.audioEl = new Audio(ASSETS.sounds.music); this.audioEl.loop = true; this.audioEl.volume = 0.15; } },
+  start(){ if(SFX.muted){ this.pendingStart = true; return; } this.pendingStart = false; if(this.playing) return; this.playing = true; this.ensureAudio(); this.audioEl.play().catch(()=>{}); },
+  stop(){ this.playing = false; this.pendingStart = false; if(this.audioEl) this.audioEl.pause(); },
+  // Previously: muting while music was already playing called stop(), which cleared
+  // pendingStart back to false - so unmuting afterwards had no flag telling it to
+  // resume, and the music stayed off until the next full view change. Now mute
+  // remembers that it was playing so unmute can bring it straight back.
+  onMuteChanged(muted){
+    if(muted){
+      const wasPlaying = this.playing;
+      this.stop();
+      if(wasPlaying) this.pendingStart = true;
+    } else if(this.pendingStart){
+      this.start();
+    }
+  }
+};
+
+const LEADERBOARD_API = '/api/leaderboard';
+async function fetchLeaderboard(mode, limit){
+  const res = await fetch(`${LEADERBOARD_API}?mode=${mode}&limit=${limit || 20}`);
+  if(!res.ok) throw new Error('bad response');
+  return res.json();
+}
+async function postLeaderboardScore(mode, name, score){
+  const res = await fetch(`${LEADERBOARD_API}?mode=${mode}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, score })
+  });
+  if(!res.ok) throw new Error('bad response');
+  return res.json();
+}
+
+const engine={
+  hofTab:'MINE', lbSubmitting:false,
+  score:0, streak:0, bestStreak:0, combo:0, round:1, roundTime:CONFIG.baseRoundTime, lives:0, startTime:0,
+  currentWord:"", timeLeft:CONFIG.baseRoundTime, roundActive:false, timerInterval:null,
+  tiles:[], answer:[], history:[], mode:'CLIMB', rng:null, bossLevel: 0, bossInterval: null,
+  zone:1, selectedZone:1, climb:{cleared:0, best:{}}, travelBusy:false, pendingTravel:null, mapToken:0, roundToken:0,
+  init(){ this.loadHistory(); setMission('CLIMB'); this.missionId = 'CLIMB'; this.loadClimb(); this.updateMuteBtn(); this.updateDailyBtn(); updateStreakDisplay(); this.setupKeyboard(); this.showView('LANDING'); },
+  setupKeyboard(){ document.addEventListener('keydown', (e) => { if(!this.roundActive) return; const key = e.key.toUpperCase(); const tile = this.tiles.find(t => !t.used && t.letter === key); if(tile) this.pickTile(tile.id); if(key === 'BACKSPACE') this.removeSlot(this.answer.lastIndexOf(this.answer.find(a=>a!==null))); if(key === 'ENTER') this.checkAnswer(); }); },
+  rand(){ return this.rng ? this.rng() : Math.random(); },
+  later(fn, ms){ const tk = this.roundToken; setTimeout(()=>{ if(tk === this.roundToken) fn(); }, ms); },
+  baseLabel(){ if(this.mode === 'DAILY') return 'DAILY CHALLENGE'; if(this.mode === 'CLIMB') return (MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE ') + this.zone + ' \u00b7 ' + ZONES[this.zone-1].name.toUpperCase(); return 'WORD SCRAMBLE'; },
+  hasDoneDaily(){ return localStorage.getItem('scramble_daily_done_' + todayKey()) === '1'; },
+  updateDailyBtn(){ const btn = document.getElementById('dailyBtn'); if(!btn) return; if(this.hasDoneDaily()){ btn.disabled = true; btn.innerText = 'DAILY COMPLETED'; } else { btn.disabled = false; btn.innerText = 'DAILY CHALLENGE'; } },
+  loadHistory(){ try{ this.history = JSON.parse(localStorage.getItem('scramble_history')||'[]'); }catch(e){ this.history=[]; } },
+  saveHistory(){ localStorage.setItem('scramble_history', JSON.stringify(this.history)); },
+  cleanupBoss(){ if(this.bossInterval){ clearInterval(this.bossInterval); this.bossInterval = null; } },
+  toggleMute(){ SFX.muted = !SFX.muted; localStorage.setItem('scramble_muted', SFX.muted ? '1':'0'); this.updateMuteBtn(); BGM.onMuteChanged(SFX.muted); },
+  updateMuteBtn(){ const btn = document.getElementById('muteBtn'); if(btn) btn.innerText = SFX.muted ? '🔇' : '🔊'; },
+  beginGame(mode){ if(mode === 'DAILY' && this.hasDoneDaily()) return; if(!localStorage.getItem('scramble_seen_help')){ this.pendingGameMode = mode; this.showHelp(); return; } this.launch(mode); },
+  launch(mode){ if(mode === 'DAILY'){ this.mode = 'DAILY'; this.showView('GAME'); } else if(mode === 'ENDLESS'){ this.mode = 'ENDLESS'; this.showView('GAME'); } else { this.selectMission(mode === 'BIGLAP' ? 'BIGLAP' : 'CLIMB'); this.mode = 'CLIMB'; this.showView('MAP'); } },
+  selectMission(id){ setMission(id); this.missionId = MISSION.id; this.climb = {cleared:0, best:{}}; this.loadClimb(); this.selectedZone = this.frontier(); const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; document.getElementById('mapMarker').innerText = MISSION.marker; },
+  showColl(){ document.getElementById('collView').style.display = 'flex'; const grid = document.getElementById('collGrid'); const coll = JSON.parse(localStorage.getItem('scramble_collection') || '[]'); grid.innerHTML = coll.sort().map(w => `<div class="coll-item">${w}</div>`).join(''); },
+  showHelp(){ this.helpPausedGame = document.body.classList.contains('game-active') && this.roundActive; if(this.helpPausedGame) this.stopTimer(); document.getElementById('helpOverlay').style.display = 'flex'; },
+  hideHelp(){ document.getElementById('helpOverlay').style.display = 'none'; localStorage.setItem('scramble_seen_help', '1'); if(this.pendingGameMode){ const m = this.pendingGameMode; this.pendingGameMode = null; this.launch(m); return; } if(this.helpPausedGame){ this.helpPausedGame = false; this.startTimer(); } },
+  dailyBestKey(){ return 'scramble_daily_' + todayKey(); },
+  showView(view){ this.roundToken++; this.cleanupBoss(); SFX.stopTick(); ['bossOverlay','lifeLostOverlay','gameOverOverlay'].forEach(id => { document.getElementById(id).style.display = 'none'; }); document.body.classList.remove('game-active','critical'); document.getElementById('landingView').style.display = view==='LANDING' ? 'flex':'none'; document.getElementById('hofView').style.display = view==='HOF' ? 'flex':'none'; document.getElementById('mapView').style.display = view==='MAP' ? 'flex':'none'; document.getElementById('collView').style.display = view==='COLL' ? 'flex':'none'; if(view==='GAME'){ document.body.classList.add('game-active'); document.querySelector('.container').style.backgroundImage = (this.mode === 'CLIMB' && MISSION.bg) ? `url('${MISSION.bg(this.zone)}')` : ''; const badge = document.getElementById('stopBadge'); if(this.mode === 'CLIMB' && MISSION.badge){ badge.src = MISSION.badge(this.zone); badge.style.display = 'block'; } else { badge.style.display = 'none'; badge.removeAttribute('src'); } this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.resetSession(); this.nextRound(); this.startTimer(); BGM.start(); } else if(view==='HOF'){ this.renderHof(); BGM.stop(); } else if(view==='MAP'){ this.stopTimer(); this.mode = 'CLIMB'; BGM.stop(); this.openMapUI(); } else { this.stopTimer(); if(view==='LANDING'){ this.updateDailyBtn(); this.updateClimbNote(); updateStreakDisplay(); } this.mode = 'CLIMB'; BGM.stop(); } },
+  resetSession(){ this.cleanupBoss(); const climb = this.mode === 'CLIMB'; this.score=0; this.streak=0; this.bestStreak=0; this.round = climb ? zoneFirstRound(this.zone) : 1; this.roundTime = climb ? zoneRoundTime(this.zone) : CONFIG.baseRoundTime; this.lives = climb ? CONFIG.zoneStartLives : 0; this.rng = this.mode === 'DAILY' ? mulberry32(parseInt(todayKey())) : null; this.lastWord = null; if(climb){ const shuffled = Object.values(ZONE_WORDS[this.zone].words).flat(); for(let i = shuffled.length - 1; i > 0; i--){ const j = Math.floor(this.rand() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } this.zoneWordQueue = shuffled.slice(0, zoneRegularRounds(this.zone)); } document.getElementById('roundLabel').innerText = this.baseLabel(); document.getElementById('livesStat').style.display = (climb && CONFIG.zoneStartLives === 0 && !CONFIG.zoneBonusLifeRound) ? 'none' : ''; this.updateStats(); },
+  endSession(){ this.stopTimer(); this.cleanupBoss(); if(this.score > 0){ this.history.push({score:this.score, bestStreak:this.bestStreak, date:Date.now(), zone:(this.mode==='CLIMB' ? this.zone : 0), mission:(this.mode==='CLIMB' ? MISSION.id : null), daily:(this.mode==='DAILY')}); this.history.sort((a,b)=>b.score-a.score); this.history = this.history.slice(0,10); this.saveHistory(); } if(this.mode === 'DAILY'){ localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); } },
+  exitGame(){ if(this.mode === 'CLIMB'){ this.stopTimer(); this.showView('MAP'); return; } this.endSession(); this.showView('LANDING'); },
+  renderHof(){ this.setHofTab(this.hofTab || 'MINE'); },
+  setHofTab(tab){
+    this.hofTab = tab;
+    document.getElementById('hofTabMine').classList.toggle('active', tab === 'MINE');
+    document.getElementById('hofTabEndless').classList.toggle('active', tab === 'ENDLESS');
+    document.getElementById('hofTabDaily').classList.toggle('active', tab === 'DAILY');
+    const list = document.getElementById('hofList');
+    if(tab === 'MINE'){ this.renderLocalHof(list); return; }
+    const mode = tab === 'ENDLESS' ? 'endless' : 'daily';
+    list.innerHTML = '<p class="empty-note">Loading global scores…</p>';
+    fetchLeaderboard(mode, 20).then(data => this.renderGlobalHof(list, data.entries || [])).catch(() => {
+      list.innerHTML = '<p class="empty-note">Couldn\'t reach the global leaderboard — check your connection and try again.</p>';
+    });
+  },
+  renderLocalHof(list){
+    if(!this.history.length){ list.innerHTML = '<p class="empty-note">No runs yet — play a game to set your first score!</p>'; return; }
+    list.innerHTML = this.history.map((h,i)=>`<div class="hof-item rank-${i+1}"><div class="rank">#${i+1}</div><div class="label">${h.zone ? this.historyLabel(h) : (h.daily ? 'Daily Challenge' : 'Classic run')}<small>Best streak: ${h.bestStreak}</small></div><div class="score">${h.score} PTS</div></div>`).join('');
+  },
+  stopWord(){ return MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE '; },
+  historyLabel(h){ const m = MISSIONS[h.mission] || MISSIONS.CLIMB; const zn = m.zones[h.zone-1]; if(!zn) return m.shortName; return (m.id === 'BIGLAP' ? 'Big Lap · ' : 'Zone ' + h.zone + ' · ') + zn.name; },
+  renderGlobalHof(list, entries){
+    if(!entries.length){ list.innerHTML = '<p class="empty-note">No global scores yet — be the first to set one!</p>'; return; }
+    const myName = (localStorage.getItem('scramble_player_name') || '').trim();
+    list.innerHTML = entries.map((e,i)=>{
+      const mine = myName && e.name === myName;
+      return `<div class="hof-item rank-${i+1}${mine ? ' is-you' : ''}"><div class="rank">#${i+1}</div><div class="label">${e.name}${mine ? '<span class="you">YOU</span>' : ''}</div><div class="score">${e.score} PTS</div></div>`;
+    }).join('');
+  },
+  prepLeaderboardEntry(mode, score){
+    const box = document.getElementById('goLeaderboard');
+    const eligible = mode === 'ENDLESS' || mode === 'DAILY';
+    box.classList.toggle('visible', eligible);
+    if(!eligible) return;
+    this.lbMode = mode === 'ENDLESS' ? 'endless' : 'daily';
+    this.lbScore = score;
+    this.lbSubmitting = false;
+    document.getElementById('lbNameInput').value = localStorage.getItem('scramble_player_name') || '';
+    document.getElementById('lbStatus').innerText = '';
+    const btn = document.getElementById('lbSubmitBtn');
+    btn.disabled = false;
+    btn.innerText = 'SUBMIT';
+  },
+  submitLeaderboardScore(){
+    if(this.lbSubmitting) return;
+    const input = document.getElementById('lbNameInput');
+    const status = document.getElementById('lbStatus');
+    const btn = document.getElementById('lbSubmitBtn');
+    const name = input.value.trim().slice(0, 14) || 'Player';
+    localStorage.setItem('scramble_player_name', name);
+    this.lbSubmitting = true;
+    btn.disabled = true;
+    status.innerText = 'Submitting…';
+    postLeaderboardScore(this.lbMode, name, this.lbScore).then(data => {
+      status.innerText = data.rank ? `You're ranked #${data.rank} globally!` : 'Submitted!';
+      btn.innerText = 'SUBMITTED';
+    }).catch(() => {
+      status.innerText = "Couldn't reach the leaderboard — try again.";
+      btn.disabled = false;
+      this.lbSubmitting = false;
+    });
+  },
+  nextRound(){ if(this.mode === 'DAILY' && this.round > CONFIG.dailyRounds){ this.dailyComplete(); return; } this.roundActive = false; document.body.classList.remove('critical'); document.getElementById('hintBox').classList.remove('visible'); const isBoss = this.mode === 'CLIMB' ? this.round === zoneBossRound(this.zone) : (this.round % 10 === 0) && (this.round > 1); document.getElementById('roundLabel').innerText = isBoss ? 'BOSS ROUND' : this.baseLabel(); this.bossLevel = !isBoss ? 0 : this.mode === 'CLIMB' ? (((this.zone - 1) % 10) + 1) : (((Math.floor(this.round / 10) - 1) % 10) + 1); const setupAndStart = () => { this.cleanupBoss(); this.startTime = Date.now(); this.timeLeft = this.roundTime; if(this.mode === 'CLIMB' && !isBoss){ const idx = this.round - zoneFirstRound(this.zone); this.currentWord = this.zoneWordQueue[idx]; } else { const pool = this.mode === 'CLIMB' ? ZONE_WORDS[this.zone].boss : WORDS.filter(w => wordLengthsForRound(this.round, this.mode).includes(w.length)); const avoidRepeat = pool.length > 1 ? pool.filter(w => w !== this.lastWord) : pool; this.currentWord = avoidRepeat[Math.floor(this.rand()*avoidRepeat.length)]; } this.lastWord = this.currentWord; this.answer = new Array(this.currentWord.length).fill(null); let letters = this.currentWord.split(''), scrambled = letters.slice().sort(()=>this.rand()-0.5); if(scrambled.join('')===this.currentWord) scrambled.reverse(); this.tiles = scrambled.map((l,i)=>({ letter:l, id:i, used:false, driftDx: this.bossLevel===5 ? (4 + this.rand()*10) : 0, driftDy: this.bossLevel===5 ? (4 + this.rand()*10) : 0 })); this.renderTiles(); this.renderAnswer(); this.updateUI(); document.getElementById('roundNum').innerText = this.mode==='DAILY' ? `${this.round}/${CONFIG.dailyRounds}` : (this.mode==='CLIMB' ? `${this.round - zoneFirstRound(this.zone) + 1}/${zoneTotalRounds(this.zone)}` : this.round); if(this.timeLeft <= CONFIG.hintAt){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } this.roundActive = true; if(this.bossLevel === 1) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; document.querySelectorAll('.boss-encrypt').forEach(el => { const realChar = el.getAttribute('data-char'); const symbols = ['@','#','$','&','%','*','?']; el.innerText = Math.random() < 0.3 ? realChar : symbols[Math.floor(Math.random() * symbols.length)]; }); }, 150); } else if (this.bossLevel === 4 || this.bossLevel === 10) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; this.shuffleTiles(); }, 3500); } }; if (isBoss) { const bossOverlay = document.getElementById('bossOverlay'); bossOverlay.style.display = 'flex'; this.later(() => { bossOverlay.style.display = 'none'; setupAndStart(); }, 1500); } else { setupAndStart(); } },
+  renderTiles(){ const row = document.getElementById('tileRow'); if(row.children.length !== this.tiles.length) row.innerHTML = this.tiles.map((t, i) => `<button class="tile" id="t-${i}"></button>`).join(''); this.tiles.forEach((t, i) => { const el = document.getElementById(`t-${i}`); el.onpointerdown = () => this.pickTile(t.id); el.className = `tile ${t.used?'used':''} ${this.bossLevel===2?'boss2-spin':''} ${this.bossLevel===3||this.bossLevel===10?'boss3-mirror':''} ${this.bossLevel===5?'boss5-drift':''} ${this.bossLevel===6?'boss6-glitch':''} ${this.bossLevel===7?'boss7-blackout':''} ${this.bossLevel===9?(i%2===0?'boss9-cw':'boss9-ccw'):''}`; el.style.cssText = this.bossLevel===5 ? `--dx:${t.driftDx}px;--dy:${t.driftDy}px;` : ''; el.innerHTML = this.bossLevel === 1 ? `<span class="boss-encrypt" data-char="${t.letter}">${t.letter}</span>` : t.letter; }); },
+  renderAnswer(cls){ const row = document.getElementById('answerRow'); row.className = 'answer-row' + (cls?(' '+cls):''); if(row.children.length !== this.answer.length) row.innerHTML = this.answer.map((_, i) => `<div class="slot" id="s-${i}" onpointerdown="engine.removeSlot(${i})"></div>`).join(''); this.answer.forEach((a, i) => { const el = document.getElementById(`s-${i}`); el.className = `slot ${a!==null?'filled':''}`; el.innerText = a!==null ? a.letter : ''; }); },
+  shuffleTiles(){ const arr = this.tiles.slice(); for(let i = arr.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } this.tiles = arr; this.renderTiles(); },
+  pickTile(id){ if(!this.roundActive) return; const tile = this.tiles.find(t=>t.id===id && !t.used); if(!tile) return; const slot = this.answer.findIndex(a=>a===null); if(slot===-1) return; tile.used = true; this.answer[slot] = tile; this.renderTiles(); this.renderAnswer(); if(this.answer.every(a=>a!==null)) this.checkAnswer(); },
+  removeSlot(i){ if(!this.roundActive) return; const tile = this.answer[i]; if(!tile) return; tile.used = false; this.answer[i] = null; this.renderTiles(); this.renderAnswer(); },
+  clearAnswer(){ if(!this.roundActive) return; this.answer.forEach(a=>{ if(a) a.used=false; }); this.answer = this.answer.map(()=>null); this.renderTiles(); this.renderAnswer(); },
+  checkAnswer(){ const built = this.answer.map(a=>a.letter).join(''); if(built === this.currentWord){ this.roundActive = false; this.cleanupBoss(); SFX.stopTick(); this.renderAnswer('correct'); SFX.correct(); triggerBurst(document.getElementById('answerRow')); addToCollection(this.currentWord); this.combo++; if(this.combo > 1) { const b = document.createElement('div'); b.className = 'combo-badge'; b.innerText = 'COMBO x' + this.combo; document.querySelector('.container').appendChild(b); setTimeout(()=>b.remove(), 1000); } let points = this.timeLeft + (this.combo * 5); this.streak++; if(this.streak > this.bestStreak) this.bestStreak = this.streak; if(this.streak >= 3) points += Math.floor(this.streak/3)*5; this.score += points; this.updateStats(); const zoneEnd = this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone); this.later(()=>{ if(zoneEnd) this.zoneCleared(); else this.advanceRound(); }, 900); } else { this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.renderAnswer('wrong'); SFX.wrong(); setTimeout(()=>{ this.clearAnswer(); }, 500); } },
+  advanceRound(){ if(this.mode === 'CLIMB'){ const inZone = this.round - zoneFirstRound(this.zone) + 1; if(CONFIG.zoneBonusLifeRound && inZone === CONFIG.zoneBonusLifeRound){ this.lives++; SFX.lifeGained(); this.updateStats(); } } else if(this.round % 10 === 0){ this.lives++; SFX.lifeGained(); this.updateStats(); if(this.roundTime > CONFIG.minRoundTime){ this.roundTime = Math.max(CONFIG.minRoundTime, this.roundTime - 2); } } this.round++; this.nextRound(); },
+  onTimeout(){ this.roundActive = false; this.cleanupBoss(); SFX.stopTick(); this.streak = 0; this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.updateStats(); document.getElementById('answerRow').innerHTML = `<div style="font-family:'Orbitron';color:var(--red);font-size:18px;">TIME'S UP — IT WAS ${this.currentWord}</div>`; if(this.lives > 0){ this.lives--; SFX.lifeLost(); this.updateStats(); this.later(()=>{ const overlay = document.getElementById('lifeLostOverlay'); overlay.style.display = 'flex'; this.later(()=>{ overlay.style.display = 'none'; if(this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone)) this.nextRound(); else this.advanceRound(); }, 1000); }, 600); } else { SFX.gameOver(); this.later(()=>{ this.gameOver(); }, 800); } },
+  gameOver(){ this.stopTimer(); this.cleanupBoss(); if(this.mode === 'DAILY'){ localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); } document.getElementById('goTitle').innerHTML = this.mode==='DAILY' ? 'DAILY <span class="gold-text">OVER</span>' : this.mode==='CLIMB' ? 'ZONE <span class="gold-text">FAILED</span>' : 'GAME <span class="gold-text">OVER</span>'; document.getElementById('goWordLine').style.display = 'block'; document.getElementById('goWord').innerText = this.currentWord; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = this.mode==='CLIMB' ? (this.round - zoneFirstRound(this.zone)) : Math.max(0, this.round - 1); this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
+  dailyComplete(){ this.stopTimer(); SFX.lifeGained(); localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); document.getElementById('goTitle').innerHTML = 'DAILY <span class="gold-text">COMPLETE</span>'; document.getElementById('goWordLine').style.display = 'none'; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = CONFIG.dailyRounds; this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
+  loadClimb(){ try{ const c = JSON.parse(localStorage.getItem(MISSION.storageKey) || 'null'); if(c && typeof c.cleared === 'number'){ this.climb = { cleared: Math.min(ZONES.length, Math.max(0, Math.floor(c.cleared))), best: c.best || {} }; } }catch(e){} }, saveClimb(){ localStorage.setItem(MISSION.storageKey, JSON.stringify(this.climb)); }, frontier(){ return Math.min(ZONES.length, this.climb.cleared + 1); }, updateClimbNote(){ const el = document.getElementById('climbNote'); if(!el) return; const parts = Object.values(MISSIONS).map(m => { let c = 0; try{ const d = JSON.parse(localStorage.getItem(m.storageKey) || 'null'); if(d && typeof d.cleared === 'number') c = d.cleared; }catch(e){} if(c >= m.zones.length) return m.doneNote; return c > 0 ? m.shortName + ': ' + c + ' of ' + m.zones.length + (m.id === 'BIGLAP' ? ' stops' : ' zones') + ' cleared' : ''; }).filter(Boolean); el.innerText = parts.join('  \u00b7  '); }, zonePos(z){ const zn = ZONES[z-1]; return { x: zn.x / MAP_W, y: zn.y / MAP_H }; }, placeMarker(x, y, hop){ const m = document.getElementById('mapMarker'); m.style.left = (x*100) + '%'; m.style.top = (y*100) + '%'; m.style.transform = 'translate(-50%, calc(-88% - ' + (hop||0) + 'px))'; }, scrollToZone(z, smooth){ const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const y = this.zonePos(z).y * st.clientHeight; sc.scrollTo({ top: Math.max(0, y - sc.clientHeight * 0.42), behavior: smooth ? 'smooth' : 'auto' }); }, setFog(z, animate){ const fog = document.getElementById('mapFog'); const h = (!MISSION.fog || z > ZONES.length) ? 0 : Math.max(0, this.zonePos(z).y * 100 - 5); if(!animate){ fog.style.transition = 'none'; } fog.style.height = h + '%'; if(!animate){ void fog.offsetHeight; fog.style.transition = ''; } }, renderNodes(cl){ document.getElementById('mapNodes').innerHTML = ZONES.map(zn => { const st = zn.n <= cl ? 'cleared' : (zn.n === cl + 1 ? 'open' : 'locked'); const sel = zn.n === this.selectedZone ? ' selected' : ''; return '<div class="map-node ' + st + sel + '" data-z="' + zn.n + '" style="left:' + (zn.x/MAP_W*100).toFixed(3) + '%;top:' + (zn.y/MAP_H*100).toFixed(3) + '%;width:' + MISSION.nodeSize + '%" onpointerdown="engine.selectZone(' + zn.n + ')">' + (st === 'cleared' ? '\u2713' : zn.n) + '</div>'; }).join(''); }, showBanner(text, ms, warn){ const b = document.getElementById('mapBanner'); b.innerText = text; b.classList.toggle('warn', !!warn); b.style.animationDuration = (ms || 1600) + 'ms'; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }, updatePanel(busy){ const n = this.selectedZone, zn = ZONES[n-1]; const lens = Object.keys(ZONE_WORDS[n].words).map(Number).sort((x,y) => x - y); const lenText = lens.length === 1 ? lens[0] + '-letter words' : lens[0] + '\u2013' + lens[lens.length-1] + '-letter words'; const best = this.climb.best[n]; document.getElementById('mpZone').innerText = MISSION.id === 'BIGLAP' ? ('STOP ' + n + ' OF ' + ZONES.length + ' \u00b7 ' + zn.place.toUpperCase()) : ('ZONE ' + n + ' OF ' + ZONES.length); document.getElementById('mpName').innerText = zn.name; document.getElementById('mpMeta').innerText = lenText + ' \u00b7 ' + zoneRoundTime(n) + 's per word \u00b7 boss on round ' + zoneTotalRounds(n) + (best ? ' \u00b7 Best ' + best : ''); const btn = document.getElementById('mpStart'); btn.disabled = !!busy; btn.innerText = busy ? 'CLIMBING\u2026' : (n <= this.climb.cleared ? 'REPLAY ZONE' : 'START'); }, selectZone(n){ if(this.travelBusy) return; if(n > this.climb.cleared + 1){ this.showBanner('LOCKED \u2013 CLEAR ' + (MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE ') + this.frontier() + ' FIRST', 1400, true); return; } this.selectedZone = n; this.renderNodes(this.climb.cleared); this.updatePanel(false); }, startSelectedZone(){ if(this.travelBusy) return; this.zone = this.selectedZone; this.mode = 'CLIMB'; this.showView('GAME'); }, openMapUI(){ const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; const mk = document.getElementById('mapMarker'); mk.innerText = MISSION.marker; mk.style.width = MISSION.markerSize + '%'; mk.style.fontSize = 'min(' + (MISSION.markerSize * 0.45) + 'vw, ' + (MISSION.markerSize * 2.5) + 'px)'; const pt = this.pendingTravel; this.pendingTravel = null; const token = ++this.mapToken; const cl = this.climb.cleared, front = this.frontier(); this.travelBusy = false; document.getElementById('mapProgress').innerText = cl + '/' + ZONES.length; document.getElementById('mapBanner').classList.remove('show'); if(pt && !pt.replay){ this.travelBusy = true; this.selectedZone = pt.from; this.renderNodes(pt.from - 1); this.setFog(pt.from, false); const p = this.zonePos(pt.from); this.placeMarker(p.x, p.y, 0); this.updatePanel(true); this.scrollToZone(pt.from, false); this.runTravel(pt, token); return; } this.selectedZone = pt ? pt.from : front; this.renderNodes(cl); this.setFog(cl >= ZONES.length ? ZONES.length + 1 : front, false); const p = this.zonePos(front); this.placeMarker(p.x, p.y, 0); this.updatePanel(false); this.scrollToZone(front, false); if(pt && pt.replay) this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1600); }, async runTravel(pt, token){ const sleep = ms => new Promise(r => setTimeout(r, ms)); const alive = () => token === this.mapToken; await sleep(600); if(!alive()) return; this.renderNodes(this.climb.cleared); SFX.lifeGained(); if(pt.final){ this.showBanner(MISSION.finalBanner, 3400); this.setFog(ZONES.length + 1, true); this.travelBusy = false; this.updatePanel(false); return; } this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1500); await sleep(1500); if(!alive()) return; this.setFog(pt.to, true); await this.animateMarker(pt.from, pt.to, 2400, token); if(!alive()) return; this.selectedZone = pt.to; this.renderNodes(this.climb.cleared); this.travelBusy = false; this.updatePanel(false); this.showBanner(this.stopWord() + pt.to + ' \u00b7 ' + ZONES[pt.to-1].name.toUpperCase(), 1800); }, animateMarker(from, to, ms, token){ return new Promise(resolve => { const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const a = this.zonePos(from), b = this.zonePos(to), t0 = performance.now(); const step = (now) => { if(token !== this.mapToken){ resolve(); return; } const t = Math.min(1, (now - t0) / ms); const e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; const x = a.x + (b.x - a.x) * e, y = a.y + (b.y - a.y) * e; const hop = Math.abs(Math.sin(t * Math.PI * 9)) * st.clientWidth * 0.016; this.placeMarker(x, y, hop); sc.scrollTop = Math.max(0, y * st.clientHeight - sc.clientHeight * 0.42); if(t < 1) requestAnimationFrame(step); else resolve(); }; requestAnimationFrame(step); }); }, zoneCleared(){ this.stopTimer(); this.cleanupBoss(); SFX.stopTick(); const z = this.zone; const first = z > this.climb.cleared; if(this.score > (this.climb.best[z] || 0)) this.climb.best[z] = this.score; if(first) this.climb.cleared = z; this.saveClimb(); this.endSession(); this.pendingTravel = !first ? { from:z, to:z, replay:true } : (z >= ZONES.length ? { from:z, to:z, final:true } : { from:z, to:z + 1 }); this.showView('MAP'); }, setGameOverButtons(){ const p = document.getElementById('goPrimary'), s = document.getElementById('goSecondary'); if(this.mode === 'DAILY'){ p.innerText = 'THE CLIMB'; p.onclick = () => this.toMap(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else if(this.mode === 'ENDLESS'){ p.innerText = 'PLAY AGAIN'; p.onclick = () => this.retryZone(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else { p.innerText = 'RETRY ZONE'; p.onclick = () => this.retryZone(); s.innerText = 'MAP'; s.onclick = () => this.toMap(); } }, toMap(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('MAP'); }, retryZone(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('GAME'); }, backToMenuFromGameOver(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('LANDING'); }, updateStats(){ document.getElementById('scoreNum').innerText = this.score; document.getElementById('streakNum').innerText = this.streak; document.getElementById('livesNum').innerText = this.lives; },
+  startTimer(){ if(this.timerInterval) return; this.startTime = Date.now(); this.timerInterval = setInterval(()=>{ if(this.roundActive){ const elapsed = Math.floor((Date.now() - this.startTime) / 1000); this.timeLeft = Math.max(0, this.roundTime - elapsed); this.updateUI(); if(this.timeLeft <= CONFIG.hintAt && !document.getElementById('hintBox').classList.contains('visible')){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } if(this.timeLeft === 5) document.body.classList.add('critical'); if(this.timeLeft <= 5 && this.timeLeft > 0) SFX.tick(); if(this.timeLeft <= 0) this.onTimeout(); } }, 100); },
+  stopTimer(){ clearInterval(this.timerInterval); this.timerInterval = null; },
+  updateUI(){ document.getElementById('timerLabel').innerText = this.timeLeft + "s"; document.getElementById('progress').style.width = (this.timeLeft/this.roundTime*100) + "%"; },
+  recoverFromBackground(){
+    // A backgrounded/suspended tab (phone locked, app switched away for a while) can leave
+    // the climb map's travel animation stuck partway through, with the START button
+    // disabled forever. If that's happened, snap everything to its correct resting state
+    // instead of leaving the player stranded.
+    if(!this.travelBusy) return;
+    if(document.getElementById('mapView').style.display === 'none') return;
+    this.mapToken++;
+    this.travelBusy = false;
+    const cl = this.climb.cleared;
+    this.selectedZone = this.frontier();
+    this.renderNodes(cl);
+    this.setFog(cl >= ZONES.length ? ZONES.length + 1 : this.frontier(), false);
+    const p = this.zonePos(this.selectedZone);
+    this.placeMarker(p.x, p.y, 0);
+    this.updatePanel(false);
+  },
+  recoverFromError(){
+    // Last-resort safety net: something threw an uncaught error somewhere (audio,
+    // a boss effect, anything). Rather than leave the player stuck on a dead
+    // screen, clean up timers/intervals and drop them back at the menu. Climb
+    // progress is saved to localStorage whenever a zone is cleared, so nothing
+    // earned is lost - only the round in progress.
+    document.getElementById('errorRecovery').classList.remove('show');
+    this.travelBusy = false;
+    this.roundActive = false;
+    this.mapToken++;
+    try {
+      this.stopTimer();
+      this.cleanupBoss();
+      this.showView('LANDING');
+    } catch(e) {
+      console.warn('recoverFromError: cleanup failed', e);
+    }
+  }
+};
+
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'visible') engine.recoverFromBackground();
+});
+
+(() => {
+  // Global catch-all: if anything throws an uncaught error or rejects a promise
+  // during play, surface the "tap to continue" banner instead of leaving the
+  // player on a silently frozen screen. Debounced so a burst of errors only
+  // shows one banner rather than spamming it.
+  let lastShown = 0;
+  function showErrorBanner(err){
+    console.warn('Unhandled error, showing recovery banner:', err);
+    const now = Date.now();
+    if(now - lastShown < 2000) return;
+    lastShown = now;
+    const el = document.getElementById('errorRecovery');
+    if(el) el.classList.add('show');
+  }
+  window.addEventListener('error', (e) => showErrorBanner(e.error || e.message));
+  window.addEventListener('unhandledrejection', (e) => showErrorBanner(e.reason));
+})();
+
+engine.init();
+</script>
+</body>
+</html>

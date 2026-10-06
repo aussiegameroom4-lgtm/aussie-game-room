@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aussie Game Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f7e8c4;
+  --walnut:#2b1b12;
+  --teal:#0e5c5c;
+  --coral:#ff5a5f;
+  --mustard:#e8a33d;
+  --paper:#fffaf0;
+  --sp-bg:#0d0f16;
+  --sp-gold:#ffd700;
+  --sp-gold-glow:rgba(255,215,0,0.6);
+  --sp-accent:#b38728;
+  --sp-red:#ff4444;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  min-height:100vh;
+  background-color:var(--cream);
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.35) 0, transparent 45%),
+    repeating-linear-gradient(0deg, rgba(43,27,18,0.035) 0px, rgba(43,27,18,0.035) 1px, transparent 1px, transparent 26px),
+    repeating-linear-gradient(90deg, rgba(43,27,18,0.03) 0px, rgba(43,27,18,0.03) 1px, transparent 1px, transparent 26px);
+  color:var(--walnut);
+  font-family:'Nunito',sans-serif;
+}
+
+header{text-align:center;padding:56px 20px 36px;}
+.sign{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  background:var(--teal);
+  color:var(--paper);
+  padding:18px 34px;
+  border-radius:10px;
+  transform:rotate(-1.4deg);
+  box-shadow:0 10px 0 rgba(43,27,18,0.18), 0 10px 24px rgba(43,27,18,0.25);
+  position:relative;
+}
+.sign::before, .sign::after{
+  content:"";
+  position:absolute;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--mustard);
+  box-shadow:inset 0 2px 3px rgba(0,0,0,0.3);
+}
+.sign::before{ top:8px; left:10px; }
+.sign::after{ top:8px; right:10px; }
+.sign-title{
+  font-family:'Lilita One',cursive;
+  font-size:clamp(28px,6vw,52px);
+  line-height:1;
+  letter-spacing:0.5px;
+}
+.sign-title .small{display:block;font-size:0.36em;letter-spacing:3px;color:var(--mustard);margin-bottom:4px;}
+.hero-sub{
+  margin:20px 0 0;
+  font-family:'Nunito',sans-serif;
+  font-weight:700;
+  color:var(--walnut);
+  opacity:0.65;
+  font-size:15px;
+}
+
+main{max-width:1040px;margin:0 auto;padding:10px 24px 80px;}
+.section-title{
+  font-family:'Lilita One',cursive;
+  font-size:26px;
+  color:var(--teal);
+  margin:46px 4px 22px;
+  transform:rotate(-0.6deg);
+}
+.section-title.first{margin-top:10px;}
+
+/* main cabinet card */
+.cabinet{
+  position:relative;
+  max-width:540px;
+  background:var(--paper);
+  border:3px solid var(--walnut);
+  border-radius:16px 16px 10px 10px;
+  padding:28px 28px 26px;
+  transform:rotate(-0.8deg);
+  box-shadow:0 14px 0 -6px rgba(43,27,18,0.12), 0 18px 30px rgba(43,27,18,0.22);
+}
+.tape{
+  position:absolute;
+  width:70px;height:26px;
+  background:rgba(232,163,61,0.75);
+  border:1px solid rgba(43,27,18,0.15);
+}
+.tape.left{ top:-12px; left:28px; transform:rotate(-8deg); }
+.tape.right{ top:-12px; right:28px; transform:rotate(7deg); }
+
+.cabinet-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.cabinet-icon{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--teal);
+  display:flex;align-items:center;justify-content:center;
+  flex:none;
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,0.15);
+}
+.tag{
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  font-size:11px;
+  color:var(--paper);
+  background:var(--coral);
+  padding:5px 12px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+.cabinet h3{
+  font-family:'Lilita One',cursive;
+  font-size:30px;
+  margin:16px 0 8px;
+  color:var(--walnut);
+}
+.cabinet p{
+  font-size:15px;
+  line-height:1.5;
+  margin:0 0 20px;
+  color:var(--walnut);
+  opacity:0.8;
+  max-width:70ch;
+}
+.play-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-family:'Lilita One',cursive;
+  font-size:18px;
+  color:var(--paper);
+  background:var(--coral);
+  padding:12px 26px;
+  border-radius:40px;
+  box-shadow:0 5px 0 #c73b40;
+  transition:transform .12s, box-shadow .12s;
+}
+.play-btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #c73b40;}
+.play-btn svg{width:16px;height:16px;}
+
+/* ----- Scramble Pro card: matches the game's own landing screen ----- */
+.cabinet.scramble-theme{
+  background:
+    linear-gradient(rgba(13,15,22,0.45), rgba(13,15,22,0.8)),
+    url('games/scramble-pro/landing-bg.jpg') center/cover no-repeat;
+  border:2px solid rgba(255,215,0,0.35);
+  box-shadow:0 14px 0 -6px rgba(0,0,0,0.4), 0 18px 34px rgba(0,0,0,0.5), 0 0 34px rgba(255,215,0,0.14);
+}
+.cabinet.scramble-theme .cabinet-top{ justify-content:flex-end; }
+.cabinet.scramble-theme .tape{
+  background:rgba(255,215,0,0.22);
+  border-color:rgba(255,215,0,0.3);
+}
+.cabinet.scramble-theme .tag{
+  background:var(--sp-red);
+  color:#fff;
+  box-shadow:0 0 10px rgba(255,68,68,0.5);
+}
+.cabinet.scramble-theme h3.scramble-hero{
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:clamp(32px,7vw,46px);
+  line-height:0.95;
+  letter-spacing:-0.5px;
+  color:#fff;
+  margin:14px 0 14px;
+  text-align:left;
+}
+.scramble-gold{
+  background:linear-gradient(to bottom,#fff,var(--sp-gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 18px var(--sp-gold-glow));
+}
+.cabinet.scramble-theme p{
+  color:#e4e5ea;
+  opacity:0.9;
+}
+.cabinet.scramble-theme .play-btn{
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+  background:var(--sp-gold);
+  color:#000;
+  box-shadow:0 0 22px var(--sp-gold-glow), 0 5px 0 var(--sp-accent);
+}
+.cabinet.scramble-theme .play-btn:hover{
+  box-shadow:0 0 28px var(--sp-gold-glow), 0 3px 0 var(--sp-accent);
+}
+.cabinet.scramble-theme .play-btn svg path{ fill:#000; }
+
+/* coming soon strip */
+.pin-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px 22px;
+}
+.pin{
+  width:150px;
+  background:var(--paper);
+  border:2px solid var(--walnut);
+  border-radius:8px;
+  padding:14px 12px 12px;
+  text-align:center;
+  position:relative;
+}
+.pin:nth-child(odd){transform:rotate(-2.2deg);}
+.pin:nth-child(even){transform:rotate(2deg);}
+.pin::before{
+  content:"";
+  position:absolute;
+  top:-7px; left:50%; transform:translateX(-50%);
+  width:14px;height:14px;border-radius:50%;
+  background:var(--coral);
+  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+}
+.pin-icon{
+  width:34px;height:34px;border-radius:50%;
+  margin:0 auto 10px;
+  background:var(--cream);
+  border:2px solid var(--walnut);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.pin h4{
+  font-family:'Lilita One',cursive;
+  font-size:14px;
+  margin:0 0 6px;
+  color:var(--walnut);
+  line-height:1.2;
+}
+.pin span{
+  font-family:'Nunito',sans-serif;
+  font-weight:700;
+  font-size:10px;
+  color:var(--teal);
+  letter-spacing:0.5px;
+}
+
+footer{text-align:center;padding:40px 20px;font-size:13px;color:var(--walnut);opacity:0.5;font-weight:700;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sign">
+    <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+      <rect x="10" y="22" width="44" height="24" rx="12" fill="none" stroke="#f7e8c4" stroke-width="3"/>
+      <line x1="24" y1="30" x2="24" y2="38" stroke="#f7e8c4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="20" y1="34" x2="28" y2="34" stroke="#f7e8c4" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="40" cy="31" r="2.6" fill="#f7e8c4"/>
+      <circle cx="46" cy="37" r="2.6" fill="#f7e8c4"/>
+    </svg>
+    <div class="sign-title"><span class="small">Welcome to the</span>Aussie Game Room</div>
+  </div>
+  <p class="hero-sub">Pull up a chair — new games added as they're built</p>
+</header>
+
+<main>
+  <div class="section-title first">Play now</div>
+  <div class="cabinet scramble-theme">
+    <div class="tape left"></div>
+    <div class="tape right"></div>
+    <div class="cabinet-top">
+      <span class="tag">Live now</span>
+    </div>
+    <h3 class="scramble-hero">WORD<br><span class="scramble-gold">SCRAMBLE</span></h3>
+    <p>Tap the scrambled letters to spell the word before time runs out. Lives, boss rounds, a daily challenge, a 13-zone climb, and a new 15-stop road trip around Australia's Big Things.</p>
+    <a class="play-btn" href="games/scramble-pro/index.html">
+      Play now
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 4l12 8-12 8V4z" fill="#fffaf0"/></svg>
+    </a>
+  </div>
+
+  <div class="section-title">Coming soon</div>
+  <div class="pin-strip">
+    <div class="pin">
+      <div class="pin-icon">🌱</div>
+      <h4>Blade of Grass</h4>
+      <span>In progress</span>
+    </div>
+    <div class="pin">
+      <div class="pin-icon">🎪</div>
+      <h4>Airborne Circus</h4>
+      <span>In progress</span>
+    </div>
+    <div class="pin">
+      <div class="pin-icon">🧩</div>
+      <h4>3D Maze</h4>
+      <span>In progress</span>
+    </div>
+    <div class="pin">
+      <div class="pin-icon">🎯</div>
+      <h4>Spot It Pro</h4>
+      <span>In progress</span>
+    </div>
+  </div>
+</main>
+
+<footer>Made in Australia &middot; Aussie Game Room</footer>
+
+</body>
+</html>

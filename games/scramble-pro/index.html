@@ -17,14 +17,64 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 #landingBg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:url('landing-bg.jpg') center/cover no-repeat;pointer-events:none;}
 
 .landing-view,.hof-view,.coll-view{position:fixed;top:0;left:0;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;z-index:100;overflow-y:auto;}
-.hof-view,.coll-view{background:radial-gradient(circle at center,#282b38 0%,#0d0f16 100%);}
+.hof-view,.coll-view{background:radial-gradient(circle at center,#282b38 0%,#0d0f16 100%);justify-content:flex-start;padding-top:50px;padding-bottom:40px;}
+.btn-gold2{background:linear-gradient(180deg,#ffd45a 0%,#ffb300 55%,#e08a00 100%);color:#2a1800;padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:2px solid #fff1b8;cursor:pointer;transition:.3s;box-shadow:0 0 18px rgba(255,190,40,.55),inset 0 1px 0 rgba(255,255,255,.6);text-shadow:0 1px 0 rgba(255,255,255,.35);}
+.btn-gold2:hover{transform:scale(1.06);box-shadow:0 0 28px rgba(255,200,60,.85),inset 0 1px 0 rgba(255,255,255,.6);}
+.coll-view>*:not(.lava){position:relative;z-index:2;}
+.lava{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#14072b 0%,#2a0b3d 55%,#3d0f2a 100%);}
+.lava i{position:absolute;bottom:-45vmax;left:var(--l);width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--c) 0%,var(--c) 45%,transparent 72%);opacity:.85;filter:blur(14px);animation:lavaRise var(--d) ease-in-out var(--dl) infinite,lavaMorph 9s ease-in-out var(--dl) infinite alternate;mix-blend-mode:screen;}
+@keyframes lavaRise{0%{transform:translate(0,0) scale(.8);}25%{transform:translate(var(--w),-35vh) scale(1.1);}50%{transform:translate(calc(var(--w) * -1),-80vh) scale(.9);}75%{transform:translate(var(--w),-125vh) scale(1.15);}100%{transform:translate(0,-170vh) scale(.8);}}
+@keyframes lavaMorph{0%{border-radius:50% 50% 50% 50%;}50%{border-radius:42% 58% 55% 45%;}100%{border-radius:58% 42% 46% 54%;}}
+@media (prefers-reduced-motion:reduce){.lava i{animation:none;bottom:20%;}}
+.backup-link{margin-top:18px;background:none;border:none;color:rgba(255,255,255,.55);font-family:'Orbitron';font-size:10px;letter-spacing:1px;cursor:pointer;padding:8px 12px;text-decoration:underline;text-underline-offset:3px;}
+.backup-link:hover{color:#fff;}
+.bk-note{font-size:13px;opacity:.8;line-height:1.5;margin:8px 0;}
+.bk-box{width:100%;box-sizing:border-box;background:rgba(0,0,0,.4);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:10px;font-family:monospace;font-size:11px;resize:none;word-break:break-all;}
+.bk-box:focus{outline:none;border-color:var(--gold);}
+.st-name{font-family:'Orbitron';font-size:14px;letter-spacing:2px;opacity:.85;margin-bottom:6px;}
+.st-row{display:flex;justify-content:center;gap:10px;margin:14px 0 8px;}
+.st-row .st{font-size:64px;line-height:1;color:rgba(255,255,255,.15);transform:scale(.2);opacity:0;animation:starIn .55s cubic-bezier(.2,1.6,.4,1) both;}
+.st-row .st.on{color:#ffd700;text-shadow:0 0 22px rgba(255,200,40,.9),0 0 6px #fff3b0;}
+@keyframes starIn{0%{transform:scale(.2) rotate(-40deg);opacity:0;}100%{transform:scale(1) rotate(0);opacity:1;}}
+.st-msg{font-family:'Orbitron';font-size:20px;letter-spacing:2px;color:var(--gold);margin-top:4px;}
+.st-score{font-family:'Orbitron';font-size:13px;margin-top:8px;opacity:.9;}
+.st-hint{font-size:12px;opacity:.65;margin-top:10px;}
+.map-node{overflow:visible;}
+.map-node .nstars{position:absolute;left:50%;top:92%;transform:translateX(-50%);font-size:min(2.6vw,13px);line-height:1;color:#ffd700;letter-spacing:-1px;text-shadow:0 1px 3px #000,0 0 6px rgba(255,200,40,.8);white-space:nowrap;pointer-events:none;}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 4px;max-width:600px;}
+.badge-chip{font-family:'Orbitron';font-size:11px;padding:8px 12px;border-radius:30px;background:rgba(10,4,24,.6);border:1px solid rgba(255,215,0,.6);color:#ffe9a8;}
+.badge-chip.locked{opacity:.5;border-style:dashed;border-color:rgba(255,255,255,.35);color:#ddd;}
+.badge-label{font-family:'Orbitron';font-size:11px;letter-spacing:2px;opacity:.7;margin-top:14px;}
+.hof-view .hof-list{min-height:200px;}
+.hof-view .hof-title{filter:drop-shadow(0 2px 8px rgba(0,0,0,.9));}
+.hof-view .hof-tab:not(.active),.hof-view .back-btn{background:rgba(8,12,30,.7);}
+.hof-view .hof-item{background:rgba(8,12,30,.6);}
+.hof-view{padding-top:calc(62vw + 24px);}
+@media (min-width:800px){.hof-view{padding-top:calc(max(14vw,25vh) + 24px);}}
+.hof-view{--hofp:url('bg/hall-of-fame.jpg');--hofw:url('bg/hall-of-fame-wide.jpg');}
+.hof-view>*:not(.hof-bg):not(.hof-beam):not(.hof-fx){position:relative;z-index:2;}
+.hof-bg{position:fixed;inset:0;z-index:-3;background:var(--hofp),radial-gradient(ellipse at 50% 12%,#6b4a10 0%,#1b2147 38%,#070914 78%);background-size:cover,cover;background-position:center top,center;background-color:#070914;animation:hofDrift 26s ease-in-out infinite alternate;}
+@media (min-width:800px){.hof-bg{background-image:var(--hofw),radial-gradient(ellipse at 50% 12%,#6b4a10 0%,#1b2147 38%,#070914 78%);}}
+@keyframes hofDrift{from{transform:scale(1);}to{transform:scale(1.09) translateY(-1%);}}
+.hof-beam{position:fixed;bottom:-10%;left:50%;width:34vmax;height:120vmax;z-index:-2;pointer-events:none;transform-origin:50% 100%;background:linear-gradient(to top,rgba(255,225,140,.30),rgba(255,225,140,.06) 55%,rgba(255,225,140,0));clip-path:polygon(46% 100%,54% 100%,100% 0,0 0);mix-blend-mode:screen;opacity:.55;}
+.hof-beam.b1{animation:beamA 9s ease-in-out infinite alternate;}
+.hof-beam.b2{animation:beamB 12s ease-in-out infinite alternate;opacity:.4;}
+.hof-beam.b3{animation:beamC 15s ease-in-out infinite alternate;opacity:.35;}
+@keyframes beamA{from{transform:translateX(-50%) rotate(-24deg);}to{transform:translateX(-50%) rotate(-6deg);}}
+@keyframes beamB{from{transform:translateX(-50%) rotate(26deg);}to{transform:translateX(-50%) rotate(8deg);}}
+@keyframes beamC{from{transform:translateX(-50%) rotate(-10deg);}to{transform:translateX(-50%) rotate(12deg);}}
+.hof-fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+@media (prefers-reduced-motion:reduce){.hof-bg,.hof-beam{animation:none;}}
+
 .landing-view{background:linear-gradient(rgba(13,15,22,0.32),rgba(13,15,22,0.58));}
 .hero-title{font-family:'Orbitron';font-size:clamp(45px,10.8vw,99px);line-height:0.9;margin-bottom:20px;letter-spacing:-2px;}
 .gold-text{background:linear-gradient(to bottom,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px var(--gold-glow));}
 .hero-subtitle{font-family:'Orbitron';letter-spacing:6px;color:var(--accent);font-size:16px;margin-bottom:40px;}
+#missionsView .landing-buttons{flex-direction:column;align-items:center;gap:16px;}#missionsView .btn-primary{width:270px;}
 .landing-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;}
 .btn-primary{background:var(--gold);color:#000;padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:none;cursor:pointer;transition:.3s;box-shadow:0 0 20px var(--gold-glow);}
 .btn-primary:hover{transform:scale(1.06);}
+.mission-btn.locked{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.55);box-shadow:none;border:2px dashed rgba(255,255,255,0.25);cursor:not-allowed;line-height:1.3;}.mission-btn.locked:hover{transform:none;}.mission-btn small{display:block;font-size:10px;font-weight:normal;letter-spacing:.5px;margin-top:3px;}
 .btn-secondary{background:rgba(255,255,255,0.08);color:#fff;padding:15px 40px;border-radius:50px;font-family:'Orbitron';border:2px solid rgba(255,255,255,0.25);cursor:pointer;transition:.3s;}
 .btn-secondary:hover{background:rgba(255,255,255,0.16);border-color:#fff;}
 .btn-daily{background:rgba(0,242,234,0.12);color:var(--aqua);padding:15px 40px;border-radius:50px;font-family:'Orbitron';font-weight:bold;border:2px solid var(--aqua);cursor:pointer;transition:.3s;}
@@ -36,6 +86,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 @media(max-width:768px){.hero-title{font-size:50px;}}
 
 .back-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:10px 20px;border-radius:50px;cursor:pointer;font-family:'Orbitron';margin-bottom:20px;}
+.back-btn.site-back{position:absolute;top:15px;left:15px;margin:0;padding:8px 14px;font-size:11px;text-decoration:none;}
 .hof-title{font-family:'Orbitron';font-size:32px;margin:0 0 20px;}
 .hof-list{display:flex;flex-direction:column;gap:10px;width:100%;max-width:500px;}
 .hof-item{display:flex;align-items:center;padding:16px 24px;background:rgba(255,255,255,0.06);border-radius:15px;border:1px solid rgba(255,255,255,0.1);}
@@ -50,6 +101,8 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 .hof-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
 .hof-item .you{color:var(--aqua);font-size:11px;letter-spacing:1px;margin-left:6px;}
 .hof-item.is-you{border-color:var(--aqua);background:rgba(0,242,234,0.08);}
+.go-reward{margin:14px 0 4px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(255,200,60,.25),rgba(255,120,40,.2));border:1px solid rgba(255,215,0,.55);font-family:'Orbitron';font-size:13px;line-height:1.5;color:#ffe9a8;animation:rewardPop .7s ease both;}
+@keyframes rewardPop{0%{transform:scale(.7);opacity:0;}70%{transform:scale(1.06);}100%{transform:scale(1);opacity:1;}}
 .go-leaderboard{margin:18px 0;padding:16px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.1);display:none;}
 .go-leaderboard.visible{display:block;}
 .go-leaderboard .lb-label{font-family:'Orbitron';font-size:12px;letter-spacing:2px;color:var(--accent);margin-bottom:10px;}
@@ -60,10 +113,21 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 .go-leaderboard .lb-submit:disabled{opacity:.5;cursor:default;}
 .go-leaderboard .lb-status{margin-top:10px;font-size:13px;opacity:.85;min-height:18px;}
 .coll-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(80px, 1fr));gap:10px;width:100%;max-width:600px;margin-top:20px;max-height:60vh;overflow-y:auto;padding:10px;}
-.coll-item{padding:10px;background:rgba(255,255,255,0.05);border-radius:5px;font-family:'Orbitron';font-size:12px;}
+.coll-item{padding:10px;background:rgba(10,4,24,0.55);border-radius:5px;font-family:'Orbitron';font-size:12px;}
 
 .container{display:none;flex:1;padding:5vh 5%;flex-direction:column;justify-content:center;position:relative;z-index:1;background-size:cover;background-position:center;background-repeat:no-repeat;transition:background-image .25s ease;}
 .game-active .container{display:flex;}
+@media (min-width:800px){
+  .container.fitbg{background-image:none !important;background-color:#080c1c;overflow:hidden;}
+  .container.fitbg::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--bgp) center/auto 100% no-repeat;}
+  .container.fitbg .vip-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,12,28,0.45);}
+  .container.fitbg::before{content:"";position:absolute;inset:-40px;z-index:-1;background:var(--bgp) center/cover no-repeat;filter:blur(36px) brightness(.55);}
+}
+.container.scenic{background-size:cover;background-color:#080c1c;background-image:var(--bgp);}
+@media (min-width:800px){.container.scenic{background-image:var(--bgw);}}
+.container.scenic.bgswap::before{content:'';position:absolute;inset:0;background:#000;z-index:0;pointer-events:none;animation:bgDip .9s ease both;}
+@keyframes bgDip{0%{opacity:0;}40%{opacity:1;}60%{opacity:1;}100%{opacity:0;}}
+.container.scenic .vip-card{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,12,28,0.5);}
 .game-active .landing-view,.game-active .hof-view,.game-active .coll-view{display:none;}
 
 .vip-card{padding:58px 20px 30px;text-align:center;position:relative;width:100%;max-width:700px;margin:0 auto;border-radius:20px;background:var(--glass);border:1px solid rgba(255,255,255,0.14);backdrop-filter:blur(10px);}
@@ -124,6 +188,9 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 .help-btn:hover{background:rgba(255,215,0,0.15);border-color:var(--gold);}
 .help-btn.floating{position:absolute;top:15px;right:65px;width:30px;height:30px;font-size:13px;}
 .help-card{text-align:left;max-width:460px;padding:30px 24px;}
+#helpOverlay{overflow-y:auto;-webkit-overflow-scrolling:touch;background:rgba(8,10,20,.97);}
+#helpOverlay .help-card{margin:auto;}
+@media (max-height:900px){.help-card{padding:22px 18px;}.help-list{gap:10px;margin-bottom:18px;}.help-list li{font-size:13px;}}
 .help-title{font-family:'Orbitron';font-size:26px;margin:0 0 20px;text-align:center;}
 .help-list{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:14px;}
 .help-list li{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.4;opacity:.9;}
@@ -170,6 +237,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 /* ===== THE CLIMB (map) ===== */
 .climb-note{font-family:'Orbitron';font-size:12px;opacity:.65;margin:-30px 0 30px;}
 .hof-item .label small{display:block;font-size:11px;opacity:.6;margin-top:2px;}
+.streak-counter small{display:block;font-size:10px;opacity:.75;margin-top:3px;letter-spacing:.5px;}
 .streak-counter{font-family:'Orbitron';font-size:12px;color:var(--gold);margin-top:10px;text-align:center;}
 
 .map-view{position:fixed;inset:0;display:none;flex-direction:column;z-index:100;background:#05060c;}
@@ -221,40 +289,61 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 </div>
 
 <div id="landingView" class="landing-view">
+  <a href="/" class="back-btn site-back">&larr; AUSSIE GAME ROOM</a>
   <h1 class="hero-title">WORD<br><span class="gold-text">SCRAMBLE</span></h1>
   <div class="landing-buttons">
-    <button onpointerdown="engine.beginGame('CLIMB')" class="btn-primary">THE CLIMB</button>
-    <button onpointerdown="engine.beginGame('BIGLAP')" class="btn-primary">THE BIG LAP</button>
+    <button onpointerdown="engine.showView('MISSIONS')" class="btn-primary">MISSIONS</button>
     <button onpointerdown="engine.beginGame('DAILY')" class="btn-daily" id="dailyBtn">DAILY CHALLENGE</button>
     <button onpointerdown="engine.beginGame('ENDLESS')" class="btn-endless">ENDLESS MODE</button>
-    <button onpointerdown="engine.showView('HOF')" class="btn-secondary">HIGH SCORES</button>
+    <button onpointerdown="engine.showView('HOF')" class="btn-gold2">🏆 HIGH SCORES</button>
     <button onpointerdown="engine.showColl()" class="btn-secondary">COLLECTION</button>
     <button onpointerdown="engine.showHelp()" class="help-btn" title="How to play">?</button>
   </div>
   <p class="climb-note" id="climbNote"></p>
   <div id="streakDisplay" class="streak-counter"></div>
+  <button class="backup-link" onpointerdown="engine.openBackup()">💾 BACK UP / RESTORE PROGRESS</button>
+</div>
+
+<div id="missionsView" class="landing-view" style="display:none">
+  <button onpointerdown="engine.showView('LANDING')" class="back-btn site-back">&larr; BACK</button>
+  <h1 class="hof-title">CHOOSE YOUR <span class="gold-text">MISSION</span></h1>
+  <div class="landing-buttons">
+    <button onpointerdown="engine.beginGame('CLIMB')" class="btn-primary mission-btn" id="mbtn_CLIMB" data-name="RAGS TO RICHES">RAGS TO RICHES</button>
+    <button onpointerdown="engine.beginGame('BIGLAP')" class="btn-primary mission-btn" id="mbtn_BIGLAP" data-name="ROAD TRIP">ROAD TRIP</button>
+    <button onpointerdown="engine.beginGame('WORLD')" class="btn-primary mission-btn" id="mbtn_WORLD" data-name="WORLD TOUR">WORLD TOUR</button>
+    <button onpointerdown="engine.beginGame('PAYIT')" class="btn-primary mission-btn" id="mbtn_PAYIT" data-name="PAY IT FORWARD">PAY IT FORWARD</button>
+    <button onpointerdown="engine.beginGame('INNER')" class="btn-primary mission-btn" id="mbtn_INNER" data-name="THE INNER JOURNEY">THE INNER JOURNEY</button>
+  </div>
 </div>
 
 <div id="hofView" class="hof-view">
+  <div class="hof-bg" id="hofBg"></div>
+  <div class="hof-beam b1"></div><div class="hof-beam b2"></div><div class="hof-beam b3"></div>
+  <canvas id="hofFx" class="hof-fx"></canvas>
   <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
   <h1 class="hof-title">HIGH <span class="gold-text">SCORES</span></h1>
   <div class="hof-tabs">
     <button class="hof-tab active" id="hofTabMine" onpointerdown="engine.setHofTab('MINE')">MY BEST</button>
     <button class="hof-tab" id="hofTabEndless" onpointerdown="engine.setHofTab('ENDLESS')">🌏 ENDLESS</button>
     <button class="hof-tab" id="hofTabDaily" onpointerdown="engine.setHofTab('DAILY')">🌏 DAILY</button>
+    <button class="hof-tab" id="hofTabMissions" onpointerdown="engine.setHofTab('MISSIONS')">🌏 MISSIONS</button>
   </div>
+  <div class="hof-tabs" id="hofMissionPick" style="display:none"></div>
   <div id="hofList" class="hof-list"></div>
 </div>
 
 <div id="collView" class="coll-view" style="display:none">
+  <div class="lava"><i style="--c:#ff4d6d;--s:34vmax;--l:8%;--d:26s;--dl:-4s;--w:7vmax"></i><i style="--c:#ff9e00;--s:26vmax;--l:62%;--d:31s;--dl:-17s;--w:-6vmax"></i><i style="--c:#c026d3;--s:30vmax;--l:34%;--d:36s;--dl:-9s;--w:8vmax"></i><i style="--c:#ffd60a;--s:20vmax;--l:80%;--d:22s;--dl:-12s;--w:-5vmax"></i><i style="--c:#fb5607;--s:28vmax;--l:-6%;--d:29s;--dl:-22s;--w:6vmax"></i><i style="--c:#7c3aed;--s:32vmax;--l:50%;--d:40s;--dl:-30s;--w:-9vmax"></i><i style="--c:#ff5ea8;--s:18vmax;--l:20%;--d:24s;--dl:-15s;--w:5vmax"></i></div>
   <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
   <h1 class="hof-title">COLLECTION</h1>
+  <div class="badge-label">STREAK BADGES</div>
+  <div id="badgeRow" class="badge-row"></div>
   <div id="collGrid" class="coll-grid"></div>
 </div>
 
 <div id="mapView" class="map-view">
   <div class="map-header">
-    <button onpointerdown="engine.showView('LANDING')" class="back-btn">&larr; MENU</button>
+    <button onpointerdown="engine.showView('MISSIONS')" class="back-btn">&larr; MISSIONS</button>
     <div class="map-title" id="mapTitle">THE <span class="gold-text">CLIMB</span></div>
     <div class="map-progress" id="mapProgress">0/13</div>
   </div>
@@ -272,6 +361,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
     <div class="mp-name" id="mpName">The Street</div>
     <div class="mp-meta" id="mpMeta"></div>
     <button class="btn-primary mp-start" id="mpStart" onpointerdown="engine.startSelectedZone()">START</button>
+    <button class="btn-secondary mp-lb" id="mpLb" style="display:none;margin-top:10px;padding:10px 24px;font-size:12px;" onpointerdown="engine.openMissionLb()">🌏 SUBMIT SCORE TO LEADERBOARD</button>
   </div>
 </div>
 
@@ -320,15 +410,60 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
     <h2 class="help-title">HOW TO <span class="gold-text">PLAY</span></h2>
     <ul class="help-list">
       <li><span class="help-icon">👆</span><span>Tap the scrambled letters in order to spell the word before the timer runs out. Tap a filled slot to undo it, or use <b>CLEAR</b> / <b>SHUFFLE</b> for help.</span></li>
-      <li><span class="help-icon">⚡</span><span>Solving fast scores more points. Chain correct answers for a growing <b>streak bonus</b>.</span></li>
-      <li><span class="help-icon">🏔️</span><span><b>The Climb</b> has 13 zones, from The Street up to Galaxy Tycoon. Each zone is 10 rounds. Beat its boss to climb to the next zone. Your progress is saved.</span></li>
-      <li><span class="help-icon">🚐</span><span><b>The Big Lap</b> is a 15-stop road trip around Australia's Big Things, from the Big Swoop in Canberra to the Big Tasmanian Devil. It works just like The Climb.</span></li>
-      <li><span class="help-icon">👹</span><span>Round 10 of every zone is a <b>BOSS ROUND</b>. The tiles get messed with (spinning, drifting, glitching and more). Run out of time and you retry the zone from its first round.</span></li>
-      <li><span class="help-icon">📅</span><span><b>Daily Challenge</b> gives everyone the same 15 words, once a day. You start with no lives and earn one at the boss round.</span></li>
+      <li><span class="help-icon">⚡</span><span>Solving fast scores more points. Chain correct answers for <b>streak</b> and <b>combo</b> bonuses. A ticking clock starts when 10 seconds are left.</span></li>
+      <li><span class="help-icon">🗺️</span><span><b>Missions:</b> five journeys with a map of stops to climb. Clear every stop to unlock the next mission. Choose one from <b>MISSIONS</b> on the home screen.</span></li>
+      <li><span class="help-icon">👹</span><span>The last word of every stop is a <b>BOSS ROUND</b>, where the tiles get messed with. Run out of time and you retry the stop from the start.</span></li>
+      <li><span class="help-icon">⭐</span><span><b>Stars:</b> clearing a stop earns 1 to 3 stars. The faster you answer, the more you earn. Replay any stop to improve. Finish a mission to post your total on the global leaderboard.</span></li>
+      <li><span class="help-icon">📅</span><span><b>Daily Challenge:</b> everyone gets the same 15 words, once a day. Finish it to build your daily streak, then share your result.</span></li>
+      <li><span class="help-icon">♾️</span><span><b>Endless Mode:</b> keep going as long as you can. You earn a life every 10 words, but the timer gets shorter. Daily and Endless scores go on the global leaderboard.</span></li>
+      <li><span class="help-icon">🔥</span><span><b>Streak rewards:</b> play the Daily on back-to-back days. At 5, 10 and 30 days (then every 30) you earn a badge and a bonus life, used automatically at your next mission stop.</span></li>
+      <li><span class="help-icon">💾</span><span>Your progress is saved in this browser. Use <b>BACK UP / RESTORE PROGRESS</b> on the home screen to keep a safe copy.</span></li>
     </ul>
     <div class="landing-buttons">
       <button onpointerdown="engine.hideHelp()" class="btn-primary">GOT IT</button>
     </div>
+  </div>
+</div>
+
+<div id="starOverlay" class="flash-overlay solid" style="display:none">
+  <div class="game-over-card">
+    <h2 class="go-title" id="stTitle">STOP <span class="gold-text">CLEARED</span></h2>
+    <div class="st-name" id="stName"></div>
+    <div class="st-row" id="stRow"></div>
+    <div class="st-msg" id="stMsg"></div>
+    <div class="st-score" id="stScore"></div>
+    <div class="st-hint" id="stHint"></div>
+    <div class="landing-buttons" style="margin-top:22px"><button id="stShare" class="btn-secondary" onpointerdown="engine.shareStop()">📤 SHARE</button><button class="btn-primary" onpointerdown="engine.starsContinue()">CONTINUE</button></div>
+  </div>
+</div>
+
+<div id="backupOverlay" class="flash-overlay solid" style="display:none;background:rgba(8,10,20,.97)">
+  <div class="game-over-card" style="max-width:480px">
+    <h2 class="go-title">BACK UP <span class="gold-text">PROGRESS</span></h2>
+    <p class="bk-note">Your progress is saved in this browser only. Copy this code and keep it somewhere safe (a notes app, or email it to yourself). If you ever lose your progress, paste it back in below.</p>
+    <textarea id="bkOut" class="bk-box" readonly rows="4" onfocus="this.select()"></textarea>
+    <div class="landing-buttons" style="margin:10px 0 18px"><button id="bkCopy" class="btn-secondary" onpointerdown="engine.copyBackup()">COPY CODE</button></div>
+    <p class="bk-note">Restore from a code:</p>
+    <textarea id="bkIn" class="bk-box" rows="3" placeholder="Paste your code here"></textarea>
+    <div class="landing-buttons" style="margin:10px 0 6px"><button id="bkRestore" class="btn-primary" style="padding:12px 30px" onpointerdown="engine.restoreBackup()">RESTORE</button></div>
+    <div class="lb-status" id="bkStatus" style="min-height:36px"></div>
+    <div class="landing-buttons"><button class="btn-secondary" onpointerdown="engine.closeBackup()">CLOSE</button></div>
+  </div>
+</div>
+
+<div id="lbMissionOverlay" class="flash-overlay solid" style="display:none">
+  <div class="game-over-card">
+    <h2 class="go-title" id="lbmTitle">MISSION <span class="gold-text">COMPLETE</span></h2>
+    <div class="go-stats"><div><span class="num" id="lbmTotal">0</span><span class="lbl">TOTAL SCORE (BEST OF EVERY STOP)</span></div><div><span class="num" id="lbmStars">0</span><span class="lbl">STARS EARNED</span></div></div>
+    <div class="go-leaderboard visible">
+      <div class="lb-label">SUBMIT TO THE GLOBAL LEADERBOARD</div>
+      <div class="lb-row">
+        <input type="text" id="lbmName" maxlength="14" placeholder="Your name">
+        <button class="lb-submit" id="lbmBtn" onpointerdown="engine.submitMissionScore()">SUBMIT</button>
+      </div>
+      <div class="lb-status" id="lbmStatus"></div>
+    </div>
+    <div class="landing-buttons"><button id="lbmShare" class="btn-secondary" onpointerdown="engine.shareMission()">📤 SHARE</button><button class="btn-secondary" onpointerdown="engine.closeMissionLb()">CLOSE</button></div>
   </div>
 </div>
 
@@ -341,6 +476,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
       <div><span class="num" id="goStreak">0</span><span class="lbl">BEST STREAK</span></div>
       <div><span class="num" id="goRound">0</span><span class="lbl">ROUNDS SURVIVED</span></div>
     </div>
+    <div class="go-reward" id="goReward" style="display:none"></div>
     <div class="go-leaderboard" id="goLeaderboard">
       <div class="lb-label">SUBMIT TO THE GLOBAL LEADERBOARD</div>
       <div class="lb-row">
@@ -349,6 +485,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
       </div>
       <div class="lb-status" id="lbStatus"></div>
     </div>
+    <div class="landing-buttons" style="margin-bottom:12px"><button id="goShare" class="btn-secondary" style="display:none" onpointerdown="engine.shareResult()">📤 SHARE RESULT</button></div>
     <div class="landing-buttons">
       <button id="goPrimary" onpointerdown="engine.retryZone()" class="btn-primary">RETRY ZONE</button>
       <button id="goSecondary" onpointerdown="engine.toMap()" class="btn-secondary">MAP</button>
@@ -357,7 +494,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 </div>
 
 <script>
-const ASSETS = { map: 'rags-to-riches-map.jpg', map2: 'big-lap-map.jpg', sounds: { correct: 'sounds/correct.mp3', wrong: 'sounds/wrong.mp3', tick: 'sounds/tick.mp3', lifeLost: 'sounds/life-lost.mp3', lifeGained: 'sounds/life-gained.mp3', gameOver: 'sounds/game-over.mp3', music: 'sounds/music-loop.mp3' } };
+const ASSETS = { map: 'rags-to-riches-map.jpg', map2: 'big-lap-map.jpg', sounds: { correct: 'sounds/correct.mp3', wrong: 'sounds/wrong.mp3', lifeLost: 'sounds/life-lost.mp3', lifeGained: 'sounds/life-gained.mp3', gameOver: 'sounds/game-over.mp3' } };
 (function preloadAssets() { const allUrls = [ASSETS.map, ASSETS.map2, ...Object.values(ASSETS.sounds)]; let loadedCount = 0; allUrls.forEach(url => { const isAudio = url.endsWith('.mp3'); const el = isAudio ? new Audio(url) : new Image(); el.onload = el.oncanplaythrough = () => { loadedCount++; if(loadedCount === allUrls.length) console.log("Assets loaded"); }; if(!isAudio) el.src = url; }); })();
 
 function triggerBurst(el) {
@@ -375,26 +512,46 @@ function triggerBurst(el) {
   }
 }
 
+function isMilestone(n){ return n === 5 || n === 10 || (n >= 30 && n % 30 === 0); }
+function nextMilestone(streak){ if(streak < 5) return 5; if(streak < 10) return 10; if(streak < 30) return 30; return (Math.floor(streak / 30) + 1) * 30; }
+function badgeInfo(n){ const t = { 5:['\u{1F525}','Warming Up'], 10:['\u26A1','On a Roll'], 30:['\u{1F3C5}','Month Master'] }; if(t[n]) return { icon:t[n][0], name:t[n][1] }; const cyc = ['\u{1F48E}','\u{1F451}','\u{1F31F}','\u{1F680}','\u{1F3C6}']; return { icon:cyc[(Math.max(2, n / 30) - 2) % cyc.length], name:n + '-Day Legend' }; }
+function loadBadges(){ try{ const a = JSON.parse(localStorage.getItem('scramble_badges') || '[]'); return Array.isArray(a) ? a.filter(x => Number.isFinite(x)) : []; }catch(e){ return []; } }
+function getBonusLives(){ return Math.max(0, Math.min(3, parseInt(localStorage.getItem('scramble_bonus_lives') || '0') || 0)); }
+function setBonusLives(n){ localStorage.setItem('scramble_bonus_lives', String(Math.max(0, Math.min(3, n)))); }
+function awardStreakRewards(streak){
+  const earned = loadBadges(), fresh = [];
+  for(let n = 5; n <= streak; n++){ if(isMilestone(n) && !earned.includes(n)){ fresh.push(n); earned.push(n); } }
+  if(fresh.length){ localStorage.setItem('scramble_badges', JSON.stringify(earned)); setBonusLives(getBonusLives() + fresh.length); }
+  return fresh;
+}
 function updateStreakDisplay() {
   const lastDate = localStorage.getItem('scramble_streak_date');
   const today = new Date().toDateString();
   let streak = parseInt(localStorage.getItem('scramble_streak') || '0');
+  let alive = lastDate === today;
   if(lastDate !== today) {
     const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-    if(lastDate !== yesterday.toDateString()) streak = 0;
+    if(lastDate !== yesterday.toDateString()) streak = 0; else alive = false;
   }
-  document.getElementById('streakDisplay').innerText = streak > 0 ? `🔥 DAILY STREAK: ${streak} DAYS` : '';
+  const bank = getBonusLives(), parts = [];
+  if(streak > 0){ parts.push(`\u{1F525} DAILY STREAK: ${streak} DAYS`); parts.push(`<small>Next reward at ${nextMilestone(streak)} days${alive ? '' : ' \u00B7 play today\u2019s Daily to keep your streak!'}</small>`); }
+  else parts.push('<small>Finish the Daily Challenge to start a streak!</small>');
+  if(bank > 0) parts.push(`<small>\u2764\uFE0F ${bank} bonus ${bank === 1 ? 'life' : 'lives'} ready for your next mission stop</small>`);
+  document.getElementById('streakDisplay').innerHTML = parts.join('');
 }
 
 function updateStreakDate() {
   const today = new Date().toDateString();
   const lastDate = localStorage.getItem('scramble_streak_date');
+  let fresh = [];
   if(lastDate !== today) {
     const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
     let streak = (lastDate === yesterday.toDateString()) ? parseInt(localStorage.getItem('scramble_streak') || '0') + 1 : 1;
     localStorage.setItem('scramble_streak', streak);
     localStorage.setItem('scramble_streak_date', today);
+    fresh = awardStreakRewards(streak);
   }
+  return fresh;
 }
 
 function addToCollection(word) {
@@ -421,21 +578,21 @@ const CLIMB_WORDS = { 1: { words: { 3:["MUD","RAT","BUM","LOW","WET"] }, boss: [
 // ===== THE BIG LAP: 15 Aussie Big Things, anticlockwise around the country =====
 const BIGLAP_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
 const BIGLAP_ZONES = [
-  {n:1,  name:'Big Swoop',            place:'Canberra, ACT',            x:650, y:836},
-  {n:2,  name:'Big Golden Guitar',    place:'Tamworth, NSW',            x:683, y:737},
-  {n:3,  name:'Big Banana',           place:'Coffs Harbour, NSW',       x:722, y:738},
-  {n:4,  name:'Big Pineapple',        place:'Sunshine Coast, QLD',      x:726, y:670},
-  {n:5,  name:'Big Gumboot',          place:'Tully, QLD',               x:603, y:499},
-  {n:6,  name:'Big Boxing Crocodile', place:'Humpty Doo, NT',           x:330, y:362},
-  {n:7,  name:'Big Prawn',            place:'Exmouth, WA',              x:42,  y:567},
-  {n:8,  name:'Big Ram',              place:'Wagin, WA',                x:114, y:779},
-  {n:9,  name:'Big Kangaroo',         place:'Border Village, SA',       x:291, y:749},
-  {n:10, name:'Big Galah',            place:'Kimba, SA',                x:396, y:760},
-  {n:11, name:'Big Lobster',          place:'Kingston SE, SA',          x:472, y:827},
-  {n:12, name:'Big Koala',            place:'Dadswells Bridge, VIC',    x:510, y:891},
-  {n:13, name:'Giant Murray Cod',     place:'Swan Hill, VIC',           x:540, y:833},
-  {n:14, name:'Big Ned Kelly',        place:'Glenrowan, VIC',           x:580, y:885},
-  {n:15, name:'Big Tasmanian Devil',  place:'Mole Creek, TAS',          x:603, y:981}
+  {n:1,  name:'Big Swoop',            place:'Canberra, ACT',            x:635, y:1315},
+  {n:2,  name:'Big Golden Guitar',    place:'Tamworth, NSW',            x:160, y:1250},
+  {n:3,  name:'Big Banana',           place:'Coffs Harbour, NSW',       x:625, y:1140},
+  {n:4,  name:'Big Pineapple',        place:'Sunshine Coast, QLD',      x:140, y:1075},
+  {n:5,  name:'Big Gumboot',          place:'Tully, QLD',               x:650, y:960},
+  {n:6,  name:'Big Boxing Crocodile', place:'Humpty Doo, NT',           x:200, y:925},
+  {n:7,  name:'Big Prawn',            place:'Exmouth, WA',              x:640, y:785},
+  {n:8,  name:'Big Ram',              place:'Wagin, WA',                x:140, y:780},
+  {n:9,  name:'Big Kangaroo',         place:'Border Village, SA',       x:360, y:665},
+  {n:10, name:'Big Galah',            place:'Kimba, SA',                x:155, y:610},
+  {n:11, name:'Big Lobster',          place:'Kingston SE, SA',          x:630, y:575},
+  {n:12, name:'Big Koala',            place:'Dadswells Bridge, VIC',    x:140, y:455},
+  {n:13, name:'Giant Murray Cod',     place:'Swan Hill, VIC',           x:640, y:410},
+  {n:14, name:'Big Ned Kelly',        place:'Glenrowan, VIC',           x:145, y:250},
+  {n:15, name:'Big Tasmanian Devil',  place:'Mole Creek, TAS',          x:630, y:210}
 ];
 const BIGLAP_WORDS = {
   1:  { words: { 3:["CAW","FLY","EGG","SKY","FRY"] }, boss: ["PECK","DIVE","CHIP"] },
@@ -455,9 +612,208 @@ const BIGLAP_WORDS = {
   15: { words: { 8:["DEVILISH","SNARLING","GROWLING"], 9:["NOCTURNAL","MARSUPIAL","CAVERNOUS","LIMESTONE","SCAVENGER","FEROCIOUS"] }, boss: ["TASMANIAN","WILDLIFE","NIGHTFALL"] }
 };
 
+// ===== WORLD TOUR: 16 stops around the globe, starting from Sydney =====
+// x/y positions match the World Tour map picture.
+const WORLD_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+const WORLD_ZONES = [
+  {n:1,  name:'Sydney',        place:'Opera House, Australia',     x:277,y:1300},
+  {n:2,  name:'Bali',          place:'Indonesia',                  x:612,y:1235},
+  {n:3,  name:'Tokyo',         place:'Japan',                      x:155,y:1150},
+  {n:4,  name:'Great Wall',    place:'China',                      x:612,y:1065},
+  {n:5,  name:'Taj Mahal',     place:'India',                      x:158,y:950},
+  {n:6,  name:'Dubai',         place:'United Arab Emirates',       x:620,y:885},
+  {n:7,  name:'Palestine',     place:'Palestine',                  x:355,y:805},
+  {n:8,  name:'Pyramids',      place:'Egypt',                      x:612,y:695},
+  {n:9,  name:'Santorini',     place:'Greece',                     x:155,y:705},
+  {n:10, name:'Colosseum',     place:'Rome, Italy',                x:338,y:528},
+  {n:11, name:'Eiffel Tower',  place:'Paris, France',              x:612,y:520},
+  {n:12, name:'Big Ben',       place:'London, England',            x:240,y:448},
+  {n:13, name:'New York',      place:'United States',              x:140,y:448},
+  {n:14, name:'Rio',           place:'Brazil',                     x:455,y:372},
+  {n:15, name:'Machu Picchu',  place:'Peru',                       x:612,y:262},
+  {n:16, name:'Hawaii',        place:'United States',              x:150,y:215}
+];
+const WORLD_WORDS = {
+  1:  { words: { 3:["SEA","SUN","BAY","ARC","JET","FUN"] }, boss: ["SAIL","WAVE","OPERA"] },
+  2:  { words: { 3:["SPA","ART","RAY"], 4:["RICE","SURF","PALM","DUSK","GONG"] }, boss: ["TEMPLE","ISLAND","SHRINE"] },
+  3:  { words: { 4:["NEON","SAKE","RAIL","KITE","FUJI","MISO","TOFU"] }, boss: ["SUSHI","RAMEN","GEISHA"] },
+  4:  { words: { 4:["WALL","STEP","HIKE","MIST"], 5:["TOWER","STONE","PANDA","CLIMB","RIDGE"] }, boss: ["DRAGON","BRICKS","WATCH"] },
+  5:  { words: { 5:["DOMES","PEARL","CURRY","SPICE","TIGER","LOTUS","JEWEL","ROYAL","RIVER"] }, boss: ["MARBLE","PALACE","GARDEN"] },
+  6:  { words: { 5:["CAMEL","DUNES","DATES","YACHT"], 6:["DESERT","FALCON","SAFARI","SUNSET","MARINA"] }, boss: ["TOWERS","OASIS","ARABIAN"] },
+  7:  { words: { 6:["ZAATAR","KNAFEH","HUMMUS","TAHINI","OLIVES","NABLUS","LABNEH","MOSAIC"], 7:["FALAFEL","TATREEZ","MAFTOUL","BAKLAVA","JASMINE","SUNBIRD","HARVEST","POTTERY"] }, boss: ["KEFFIYEH","BETHLEHEM","MUSAKHAN"] },
+  8:  { words: { 6:["SPHINX","SCARAB","TEMPLE","CAMELS"], 7:["PHARAOH","PAPYRUS","OBELISK","PYRAMID","MUMMIES"] }, boss: ["PYRAMIDS","TREASURE","MUMMIFIED"] },
+  9:  { words: { 7:["SUNSETS","VOLCANO","CALDERA","DONKEYS","HARBOUR","LAGOONS","SAILING","TAVERNA","CHAPELS"] }, boss: ["WINDMILL","SANTORINI","SEAFRONT"] },
+  10: { words: { 7:["EMPEROR","CHARIOT","COLUMNS","LEGIONS","ANCIENT","SENATOR","LASAGNA"], 8:["FOUNTAIN","TIRAMISU","PANTHEON"] }, boss: ["COLOSSEUM","GLADIATOR","AQUEDUCT"] },
+  11: { words: { 8:["BAGUETTE","PASTRIES","LANDMARK","ARTISTIC","MIDNIGHT","ROMANTIC","PAVEMENT","SKETCHES","TREASURE"] }, boss: ["CROISSANT","CHAMPAGNE","BOULEVARD"] },
+  12: { words: { 8:["UMBRELLA","SANDWICH","CRUMPETS","MONARCHY","DRIZZLES","CHIMNEYS","PLATFORM","LANTERNS","CRICKETS"] }, boss: ["POSTCARDS","TEAROOMS","LANDMARKS"] },
+  13: { words: { 8:["BROADWAY","TAXICABS","PRETZELS","BROOKLYN","SKYLINES","BASEBALL"], 9:["MANHATTAN","FIREWORKS","NEWSPAPER"] }, boss: ["HEADLINES","NIGHTLIFE","COMMUTERS"] },
+  14: { words: { 9:["CARNIVALS","FESTIVALS","COASTLINE","SUNBATHER","MOUNTAINS","WATERFALL","DRUMBEATS","CELEBRATE","FOOTBALLS"] }, boss: ["SPECTACLE","LANDSCAPE","ADVENTURE"] },
+  15: { words: { 9:["EXPLORERS","HIGHLANDS","STONEWORK","FOOTPATHS","ALTITUDES","TREASURES","TRADITION","ARCHITECT","CLIFFSIDE"] }, boss: ["MYSTERIES","SANCTUARY","WONDERFUL"] },
+  16: { words: { 9:["VOLCANOES","SURFBOARD","PINEAPPLE","HURRICANE","LIFEGUARD","SEASHELLS","SUNSCREEN","ISLANDERS","CATAMARAN"] }, boss: ["WORLDWIDE","FAREWELLS","SOUVENIRS"] }
+};
+
+// ===== PAY IT FORWARD: 16 acts of kindness spreading outward like a ripple =====
+const PAYIT_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+const PAYIT_ZONES = [
+  {n:1, name:'Lemonade Stand', place:'Where it all begins', x:365, y:655},
+  {n:2, name:'Story Time', place:'Reading to the little ones', x:640, y:815},
+  {n:3, name:'Community Garden', place:'Growing together', x:635, y:585},
+  {n:4, name:'Animal Shelter', place:'Finding forever homes', x:150, y:610},
+  {n:5, name:'Tree Planting', place:'A greener tomorrow', x:140, y:770},
+  {n:6, name:'Beach Clean-Up', place:'Clean, shiny sands', x:200, y:925},
+  {n:7, name:'School Builders', place:'Building classrooms', x:630, y:1115},
+  {n:8, name:'Elder Visit', place:'Tea with a neighbour', x:640, y:945},
+  {n:9, name:'Food & Coat Drive', place:'Warm hearts, full pantries', x:640, y:420},
+  {n:10, name:'Helping Hand', place:'A neighbour in need', x:480, y:335},
+  {n:11, name:'Community Dinner', place:'Everyone gets a seat', x:260, y:335},
+  {n:12, name:'Toy Drive', place:'Gifts for the kids', x:140, y:450},
+  {n:13, name:'Clean Water', place:'A well for the village', x:140, y:1050},
+  {n:14, name:'Disaster Relief', place:'Standing together', x:160, y:1235},
+  {n:15, name:'Kids\' Hospital', place:'Bringing smiles', x:400, y:1295},
+  {n:16, name:'Pay It Forward Festival', place:'The kindness comes full circle', x:630, y:1300}
+];
+const PAYIT_WORDS = {
+  1:  { words: { 3:["SUN","JAR","ICE","CUP","FUN","SIP","TIP"] }, boss: ["COIN","SHARE","SMILE"] },
+  2:  { words: { 3:["BED","CAT","OWL"], 4:["BOOK","TALE","PAGE","LAMP","SONG"] }, boss: ["STORY","RHYME","LISTEN"] },
+  3:  { words: { 4:["SEED","ROOT","BEAN","PEAS","CORN","LEEK","KALE","BEET"] }, boss: ["PLANT","TOMATO","HARVEST"] },
+  4:  { words: { 4:["PUPS","KITS","BARK","PAWS","LEAD"], 5:["PUPPY","KITTY","ADOPT","TREAT","FURRY"] }, boss: ["KENNEL","RESCUED","SHELTER"] },
+  5:  { words: { 5:["SPADE","ROOTS","TRUNK","LEAFY","BIRCH","CEDAR","MAPLE","SHADE","ACORN","GROVE"] }, boss: ["SAPLING","FORESTS","PLANTING"] },
+  6:  { words: { 5:["SANDY","WAVES","SHELL","SHORE","TIDES"], 6:["BOTTLE","GLOVES","BUCKET","SUNSET"] }, boss: ["SEAWEED","CLEANUP","SHORELINE"] },
+  7:  { words: { 6:["BRICKS","HAMMER","LADDER","PENCIL","LESSON","SCHOOL","PLANKS","TIMBER","CEMENT"] }, boss: ["TEACHER","BUILDERS","TEAMWORK"] },
+  8:  { words: { 6:["TEACUP","GRANNY","WISDOM","COOKIE"], 7:["BISCUIT","COMFORT","VISITOR","SWEATER","SLIPPER","KNITTED"] }, boss: ["GRANDPA","MEMORIES","COMPANY"] },
+  9:  { words: { 7:["PRODUCE","LENTILS","CARROTS","JACKETS","SCARVES","MITTENS","HOODIES","BEANIES","BASKETS","SHELVES"] }, boss: ["SWEATERS","DONATION","SHARING"] },
+  10: { words: { 7:["GROCERY","WELCOME","CARRIED","KINDEST","HELPFUL","SMILING"], 8:["NEIGHBOR","DOORSTEP","SHOPPING","FRIENDLY","THANKFUL"] }, boss: ["GENEROUS","COURTESY","GRATEFUL"] },
+  11: { words: { 8:["BANQUETS","LANTERNS","PLATTERS","SERVINGS","CHEERFUL","WELCOMES","FEASTING","TOGETHER","GATHERED"] }, boss: ["HOMEMADE","KITCHENS","VOLUNTEER"] },
+  12: { words: { 8:["BALLOONS","BIRTHDAY","PLAYTIME","TRICYCLE","WRAPPING","PRESENTS","STICKERS","SURPRISE","LAUGHTER"] }, boss: ["DONATIONS","WONDERFUL","DOLLHOUSE"] },
+  13: { words: { 8:["DRINKING","PIPELINE","VILLAGES","RAINFALL","PURIFIED","HYDRATED","FILTERED","SANITARY"], 9:["WATERFALL","CLEANSING","VILLAGERS"] }, boss: ["CLEANEST","REFRESHED","FOUNTAINS"] },
+  14: { words: { 9:["EMERGENCY","LIFELINES","PARAMEDIC","SUPPLYING","SHELTERED","PROVIDING","RECOVERED","SURVIVORS","COMFORTED"] }, boss: ["STRENGTH","RESILIENT","HOPEFUL"] },
+  15: { words: { 9:["HEALTHIER","CHAMPIONS","HEARTFELT","SPARKLING","PLAYMATES","GOODNIGHT","BUTTERFLY","HAPPINESS","WELCOMING"] }, boss: ["ENCOURAGE","CELEBRATE","HOSPITALS"] },
+  16: { words: { 9:["FESTIVALS","GRATITUDE","NEIGHBOUR","BEAUTIFUL","FIREWORKS","COMMUNITY","DECORATED","MUSICIANS","ABUNDANCE","BLESSINGS"] }, boss: ["KINDNESS","GENEROUS","SHARING"] }
+};
+
+// ===== THE INNER JOURNEY: 15 calm stops spiralling inward and upward =====
+const INNER_REGULAR_ROUNDS = [5, 6, 7, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9];
+const INNER_ZONES = [
+  {n:1, name:'Morning Rush', place:'Where the day begins', x:620, y:1295},
+  {n:2, name:'Deep Breath', place:'A pause under the tree', x:385, y:1295},
+  {n:3, name:'Singing Bowls', place:'Sounds that settle the mind', x:320, y:945},
+  {n:4, name:'Waterfall', place:'Let it all wash away', x:170, y:885},
+  {n:5, name:'Stone Temple', place:'A quiet place to rest', x:90, y:748},
+  {n:6, name:'Quiet Library', place:'Wisdom in silence', x:105, y:580},
+  {n:7, name:'Stargazing', place:'Small beneath the stars', x:200, y:440},
+  {n:8, name:'Above the Clouds', place:'A wider view', x:340, y:405},
+  {n:9, name:'Dawn Stretch', place:'Greeting the sunrise', x:480, y:420},
+  {n:10, name:'Forest Walk', place:'Slow steps, open mind', x:610, y:495},
+  {n:11, name:'Gratitude Journal', place:'Counting blessings', x:690, y:600},
+  {n:12, name:'Mountain Stream', place:'Clear and flowing', x:685, y:740},
+  {n:13, name:'Zen Garden', place:'Stillness within', x:620, y:868},
+  {n:14, name:'Lotus Pond', place:'Blooming in calm', x:485, y:948},
+  {n:15, name:'The Summit', place:'Peace, at last', x:385, y:640}
+];
+const INNER_WORDS = {
+  1: { words: { 3:["BUS","CAB","RUN","CAR","MAP","TAP","HUM"] }, boss: ["HURRY","NOISE","TRAFFIC"] },
+  2: { words: { 3:["AIR","SIT","SKY"], 4:["CALM","REST","SOFT","SLOW","EASE"] }, boss: ["BREATH","STILL","PEACE"] },
+  3: { words: { 4:["BOWL","GONG","BELL","TONE","RING","WAVE","ECHO","NOTE"] }, boss: ["CHIME","MALLET","CUSHION"] },
+  4: { words: { 4:["MIST","FALL","POOL","FLOW","ROCK"], 5:["SPRAY","CLIFF","RAPID","MOSSY"] }, boss: ["CASCADE","TORRENT","RAINBOW"] },
+  5: { words: { 5:["STONE","STEPS","QUIET","SHADE","CARVE","RELIC","HALLS","LIGHT","TRAIL"] }, boss: ["PILLARS","ANCIENT","SERENE"] },
+  6: { words: { 5:["BOOKS","SHELF","NOVEL","PAGES","STUDY"], 6:["CANDLE","WISDOM","READER","PAPERS","SILENT"] }, boss: ["LIBRARY","SCHOLAR","ARCHIVES"] },
+  7: { words: { 6:["GALAXY","COMETS","ORBITS","PLANET","NEBULA","COSMOS","METEOR","STARRY","SUNSET"] }, boss: ["TELESCOPE","STARLIGHT","UNIVERSE"] },
+  8: { words: { 6:["CLOUDS","ALPINE","BREEZE","HEIGHT"], 7:["HORIZON","SUNRISE","SOARING","WEATHER","SKYLINE"] }, boss: ["ALTITUDE","FREEDOM","PEACEFUL"] },
+  9: { words: { 7:["STRETCH","BALANCE","POSTURE","MORNING","SUNBEAM","BREATHE","ROOFTOP","FOCUSED","WARMING"] }, boss: ["SUNSHINE","FLEXIBLE","STANDING"] },
+  10: { words: { 7:["PATHWAY","BIRCHES","FOLIAGE"], 8:["WOODLAND","SUNBEAMS","CANOPIES","GREENERY","TREETOPS","BIRDSONG","FOOTPATH"] }, boss: ["EVERGREEN","WANDERING","RUSTLING"] },
+  11: { words: { 8:["THANKFUL","BLESSING","GRATEFUL","MORNINGS","JOURNALS","NOTEBOOK","PLEASURE","MEMORIES","KINDNESS"] }, boss: ["CHERISHED","ABUNDANCE","GRATITUDE"] },
+  12: { words: { 8:["RIPPLING","SPARKLES","CRYSTALS","BUBBLING","BOULDERS","STEPPING","SNOWMELT","CLEARING","TRICKLES"] }, boss: ["MOUNTAINS","REFRESHED","TRANQUIL"] },
+  13: { words: { 8:["BALANCED","SPACIOUS","PATTERNS","SMOOTHED","GARDENER","CALMNESS","SERENITY","LANTERNS"], 9:["STILLNESS","MINDFULLY"] }, boss: ["MEDITATE","SOOTHING","BONSAI"] },
+  14: { words: { 9:["FLOWERING","UNFOLDING","REFLECTED","DRAGONFLY","SHIMMERED","BEAUTIFUL","BREATHING","CONTENTED","AFTERNOON"] }, boss: ["SERENITY","PEACEFUL","BLOSSOMS"] },
+  15: { words: { 9:["AWAKENING","FULFILLED","WONDERFUL","UNIVERSAL","BLESSINGS","CONNECTED","BEGINNING","SPIRITUAL","EXPANSIVE","ENLIGHTEN"] }, boss: ["HARMONY","SERENITY","STILLNESS"] }
+};
+
+const HofFx = {
+  raf:null, parts:[], w:0, h:0,
+  start(){
+    const cv = document.getElementById('hofFx'); if(!cv || this.raf) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = cv.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => { this.w = window.innerWidth; this.h = window.innerHeight; cv.width = this.w * dpr; cv.height = this.h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    resize(); this.onResize = resize; window.addEventListener('resize', resize);
+    const cols = ['#ffd700','#ffe58a','#fff4c2','#e8e8f0','#ff5a5a','#ffb347'];
+    const n = Math.round(Math.min(110, Math.max(45, this.w * this.h / 9000)));
+    const mk = (top) => ({ x:Math.random()*this.w, y: top ? -20 - Math.random()*this.h*0.3 : Math.random()*this.h, s:3+Math.random()*5, vy:30+Math.random()*60, vx:(Math.random()-.5)*24, r:Math.random()*6.28, vr:(Math.random()-.5)*5, c:cols[Math.floor(Math.random()*cols.length)], kind:Math.random()<.7?'rect':'dot', ph:Math.random()*6.28 });
+    this.parts = Array.from({length:n}, () => mk(false));
+    const stars = Array.from({length:28}, () => ({ x:Math.random()*this.w, y:Math.random()*this.h, ph:Math.random()*6.28, sp:1+Math.random()*2, s:1.5+Math.random()*2.5 }));
+    let last = performance.now();
+    const loop = (t) => {
+      const dt = Math.min(.05, (t - last) / 1000); last = t;
+      ctx.clearRect(0, 0, this.w, this.h);
+      stars.forEach(st => { const a = (Math.sin(t/1000*st.sp + st.ph) + 1) / 2; ctx.globalAlpha = a * .9; ctx.fillStyle = '#fff6cf'; ctx.beginPath(); ctx.arc(st.x, st.y, st.s * (.5 + a*.7), 0, 6.283); ctx.fill(); });
+      this.parts.forEach((p, i) => {
+        p.y += p.vy * dt; p.x += (p.vx + Math.sin(t/900 + p.ph) * 14) * dt; p.r += p.vr * dt;
+        if(p.y > this.h + 20){ this.parts[i] = mk(true); return; }
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = .85; ctx.fillStyle = p.c;
+        const flip = Math.abs(Math.cos(p.r * 1.7));
+        if(p.kind === 'rect') ctx.fillRect(-p.s, -p.s/2 * flip, p.s*2, p.s * flip + .5); else { ctx.beginPath(); ctx.arc(0, 0, p.s/2, 0, 6.283); ctx.fill(); }
+        ctx.restore();
+      });
+      ctx.globalAlpha = 1; this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  },
+  stop(){ if(this.raf){ cancelAnimationFrame(this.raf); this.raf = null; } if(this.onResize){ window.removeEventListener('resize', this.onResize); this.onResize = null; } }
+};
+
+// Shared name filter (used in the game AND on the server).
+const NF_STRONG = ['fuck','fuk','shit','bitch','cunt','nigg','faggot','retard','whore','slut','bastard','wank','twat','piss','bollock','rapist','nazi','hitler','kike','spic','chink','tranny','porn','penis','vagina','dildo','jizz','pussy','asshole','arsehole','dickhead','cocksuck','motherf','blowjob','handjob','cumshot','paedo','pedo','molest','bukake','bukkake','clit','scrote','shag','knobhead','prick','coon','gook','wetback','dyke','sodom','incest','masturbat','orgasm','genital','nutsack','ballsack','kkk','isis','rimjob'];
+const NF_TOKENS = ['ass','arse','tit','tits','cum','cock','dick','fag','fags','paki','anus','boob','boobs','sex','sexy','rape','raped','nig','nigga','hoe','hoes','coons','homo','pimp','bum','crap','damn','hell','balls','nuts','butt','poo','piss','wtf','stfu'];
+function nameAllowed(raw){
+  const name = String(raw || '');
+  if(/[<>&"`\\]/.test(name)) return false;
+  const leet = { '0':'o','1':'i','3':'e','4':'a','5':'s','7':'t','8':'b','@':'a','$':'s','!':'i','+':'t','|':'i','(':'c' };
+  const norm = name.toLowerCase().replace(/[01345788@$!+|(]/g, ch => leet[ch] || ch);
+  const safe = ['scunthorpe','shiitake','shitake','therapist','matsushita','cocktail','cockatoo','cockatiel','peacock','hancock','dickson','dickinson','dickens','analyst','assassin','assist','assume','classic','class','mass','bass','glass','grass','brass','passion','compass','sussex','essex','middlesex'];
+  let collapsed = norm.replace(/[^a-z]/g, '').replace(/(.)\1{2,}/g, '$1');
+  safe.forEach(w => { collapsed = collapsed.split(w).join(''); });
+  if(NF_STRONG.some(w => collapsed.includes(w))) return false;
+  const tokens = norm.split(/[^a-z]+/).filter(Boolean).map(t => t.replace(/(.)\1+/g, '$1'));
+  const weak = NF_TOKENS.map(t => t.replace(/(.)\1+/g, '$1'));
+  return !tokens.some(t => weak.includes(t));
+}
+
+function escapeHtml(t){ return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+const Backup = {
+  keys(){ const out = {}; for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(/^scramble_[A-Za-z0-9_]+$/.test(k)) out[k] = localStorage.getItem(k); } return out; },
+  hash(str){ let h = 2166136261; for(let i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); },
+  b64(u8){ let bin = ''; for(let i = 0; i < u8.length; i += 8192) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
+  unb64(t){ t = t.replace(/-/g, '+').replace(/_/g, '/'); while(t.length % 4) t += '='; const bin = atob(t), u8 = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8; },
+  async pipe(u8, stream){ return new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(stream)).arrayBuffer()); },
+  async encode(){
+    const json = JSON.stringify(this.keys()); let data = new TextEncoder().encode(json), tag = 'SP1';
+    if(window.CompressionStream){ try{ data = await this.pipe(data, new CompressionStream('gzip')); tag = 'SP1z'; }catch(e){ data = new TextEncoder().encode(json); tag = 'SP1'; } }
+    return tag + '.' + this.b64(data) + '.' + this.hash(json);
+  },
+  async decode(code){
+    const parts = String(code || '').replace(/\s+/g, '').split('.');
+    if(parts.length !== 3 || (parts[0] !== 'SP1' && parts[0] !== 'SP1z')) throw new Error('That does not look like a progress code.');
+    let u8 = this.unb64(parts[1]);
+    if(parts[0] === 'SP1z'){ if(!window.DecompressionStream) throw new Error('This browser cannot read that code.'); u8 = await this.pipe(u8, new DecompressionStream('gzip')); }
+    const json = new TextDecoder().decode(u8);
+    if(this.hash(json) !== parts[2]) throw new Error('The code looks damaged - copy it again.');
+    const obj = JSON.parse(json), out = {};
+    if(!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('That does not look like a progress code.');
+    Object.keys(obj).forEach(k => { if(/^scramble_[A-Za-z0-9_]+$/.test(k) && typeof obj[k] === 'string' && obj[k].length < 400000) out[k] = obj[k]; });
+    return out;
+  },
+  summary(data){
+    const lines = []; Object.keys(MISSIONS).forEach(id => { try{ const d = JSON.parse(data[MISSIONS[id].storageKey] || 'null'); if(d && d.cleared) lines.push(MISSIONS[id].shortName + ' ' + d.cleared + '/' + MISSIONS[id].zones.length); }catch(e){} });
+    let words = 0; try{ words = JSON.parse(data.scramble_collection || '[]').length; }catch(e){}
+    return (lines.length ? lines.join(', ') : 'no mission progress') + ' \u00B7 ' + words + ' collected words';
+  }
+};
+
+const MODE_BG_POOL = ['zone-bg-1', 'zone-bg-2', 'zone-bg-3', 'zone-bg-4', 'zone-bg-5', 'zone-bg-6', 'zone-bg-7', 'zone-bg-8', 'zone-bg-9', 'zone-bg-10', 'zone-bg-11', 'zone-bg-12', 'zone-bg-13', 'big-lap-1', 'big-lap-2', 'big-lap-3', 'big-lap-4', 'big-lap-5', 'big-lap-6', 'big-lap-7', 'big-lap-8', 'big-lap-9', 'big-lap-10', 'big-lap-11', 'big-lap-12', 'big-lap-13', 'big-lap-14', 'big-lap-15', 'world-tour-1', 'world-tour-2', 'world-tour-3', 'world-tour-4', 'world-tour-5', 'world-tour-6', 'world-tour-7', 'world-tour-8', 'world-tour-9', 'world-tour-10', 'world-tour-11', 'world-tour-12', 'world-tour-13', 'world-tour-14', 'world-tour-15', 'world-tour-16', 'pay-it-forward-1', 'pay-it-forward-2', 'pay-it-forward-3', 'pay-it-forward-4', 'pay-it-forward-5', 'pay-it-forward-6', 'pay-it-forward-7', 'pay-it-forward-8', 'pay-it-forward-9', 'pay-it-forward-10', 'pay-it-forward-11', 'pay-it-forward-12', 'pay-it-forward-13', 'pay-it-forward-14', 'pay-it-forward-15', 'pay-it-forward-16', 'inner-journey-1', 'inner-journey-2', 'inner-journey-3', 'inner-journey-4', 'inner-journey-5', 'inner-journey-6', 'inner-journey-7', 'inner-journey-8', 'inner-journey-9', 'inner-journey-10', 'inner-journey-11', 'inner-journey-12', 'inner-journey-13', 'inner-journey-14', 'inner-journey-15'];
+
 const MISSIONS = {
   CLIMB: {
-    id:'CLIMB', titleHtml:'THE <span class="gold-text">CLIMB</span>', shortName:'The Climb',
+    id:'CLIMB', titleHtml:'<span class="gold-text">RAGS TO RICHES</span>', shortName:'Rags to Riches',
     map:'rags-to-riches-map.jpg', storageKey:'scramble_climb_v1',
     zones:CLIMB_ZONES, words:CLIMB_WORDS, regularRounds:CLIMB_REGULAR_ROUNDS,
     bg:(z) => `bg/zone-bg-${z}.jpg`, fog:true, marker:'\u{1F3A9}', nodeSize:7, markerSize:8.4,
@@ -465,18 +821,58 @@ const MISSIONS = {
     finalBanner:'RAGS TO RICHES – COMPLETE!', doneNote:'Rags to riches complete!'
   },
   BIGLAP: {
-    id:'BIGLAP', titleHtml:'THE BIG <span class="gold-text">LAP</span>', shortName:'The Big Lap',
-    map:'big-lap-map.jpg', storageKey:'scramble_biglap_v1',
+    id:'BIGLAP', titleHtml:'<span class="gold-text">ROAD TRIP</span>', shortName:'Road Trip',
+    map:'road-trip-map.jpg', storageKey:'scramble_biglap_v1',
     zones:BIGLAP_ZONES, words:BIGLAP_WORDS, regularRounds:BIGLAP_REGULAR_ROUNDS,
-    bg:(z) => `bg/big-lap-${z}.jpg`, badge:(z) => `bg/big-lap-badge-${z}.png`, fog:false, marker:'\u{1F690}', nodeSize:4.6, markerSize:6,
+    bg:(z) => `bg/big-lap-${z}.jpg`, fog:false, marker:'\u{1F690}', nodeSize:7, markerSize:8.4,
     roundTime:(z) => Math.max(16, CONFIG.baseRoundTime - (z - 1)),
-    finalBanner:'BIG LAP – COMPLETE!', doneNote:'Big Lap complete!'
+    finalBanner:'ROAD TRIP – COMPLETE!', doneNote:'Road Trip complete!', stops:true
+  },
+  PAYIT: {
+    id:'PAYIT', titleHtml:'<span class="gold-text">PAY IT FORWARD</span>', shortName:'Pay It Forward',
+    map:'pay-it-forward-map.jpg', storageKey:'scramble_payit_v1',
+    zones:PAYIT_ZONES, words:PAYIT_WORDS, regularRounds:PAYIT_REGULAR_ROUNDS,
+    bg:(z) => `bg/pay-it-forward-${z}.jpg`, fog:false, marker:'\u{1F49B}', nodeSize:7, markerSize:8.4,
+    roundTime:(z) => Math.max(16, CONFIG.baseRoundTime - (z - 1)),
+    finalBanner:'PAY IT FORWARD – COMPLETE!', doneNote:'Pay It Forward complete!', stops:true
+  },
+  INNER: {
+    id:'INNER', titleHtml:'<span class="gold-text">THE INNER JOURNEY</span>', shortName:'The Inner Journey',
+    map:'inner-journey-map.jpg', storageKey:'scramble_inner_v1',
+    zones:INNER_ZONES, words:INNER_WORDS, regularRounds:INNER_REGULAR_ROUNDS,
+    bg:(z) => `bg/inner-journey-${z}.jpg`, fog:false, marker:'\u{1F9D8}', nodeSize:7, markerSize:8.4,
+    roundTime:(z) => Math.max(16, CONFIG.baseRoundTime - (z - 1)),
+    finalBanner:'THE INNER JOURNEY – COMPLETE!', doneNote:'The Inner Journey complete!', stops:true
+  },
+  WORLD: {
+    id:'WORLD', titleHtml:'<span class="gold-text">WORLD TOUR</span>', shortName:'World Tour',
+    map:'world-tour-map.jpg', storageKey:'scramble_world_v1',
+    zones:WORLD_ZONES, words:WORLD_WORDS, regularRounds:WORLD_REGULAR_ROUNDS,
+    bg:(z) => `bg/world-tour-${z}.jpg`, fog:true, marker:'\u2708\uFE0F', nodeSize:7, markerSize:8.4,
+    roundTime:(z) => Math.max(15, CONFIG.baseRoundTime - (z - 1)),
+    finalBanner:'WORLD TOUR – COMPLETE!', doneNote:'World Tour complete!', stops:true
   }
 };
 let MISSION = MISSIONS.CLIMB, ZONES = CLIMB_ZONES, ZONE_WORDS = CLIMB_WORDS, ZONE_REGULAR_ROUNDS = CLIMB_REGULAR_ROUNDS;
+const MISSION_ORDER = ['CLIMB','BIGLAP','WORLD','PAYIT','INNER'];
+function missionCleared(id){ try{ const m = MISSIONS[id]; const c = JSON.parse(localStorage.getItem(m.storageKey) || 'null'); return (c && typeof c.cleared === 'number') ? c.cleared : 0; }catch(e){ return 0; } }
+function missionDone(id){ return missionCleared(id) >= MISSIONS[id].zones.length; }
+function missionUnlocked(id){ const i = MISSION_ORDER.indexOf(id); if(i <= 0) return true; return missionDone(MISSION_ORDER[i-1]); }
+function refreshMissionButtons(){ MISSION_ORDER.forEach((id,i) => { const b = document.getElementById('mbtn_'+id); if(!b) return; const ok = missionUnlocked(id); b.classList.toggle('locked', !ok); b.innerHTML = ok ? (b.dataset.name + (missionDone(id) ? '<small>\u2713 COMPLETE</small>' : '')) : ('\u{1F512} ' + b.dataset.name + '<small>Complete ' + MISSIONS[MISSION_ORDER[i-1]].shortName + ' to unlock</small>'); }); }
 function setMission(id){ MISSION = MISSIONS[id] || MISSIONS.CLIMB; ZONES = MISSION.zones; ZONE_WORDS = MISSION.words; ZONE_REGULAR_ROUNDS = MISSION.regularRounds; }
 
 function wordLengthsForRound(round, mode){ if(mode === 'DAILY'){ return [DAILY_WORD_LENGTHS[round - 1] || 6]; } const block = Math.floor((round - 1) / 10); const pairIndex = Math.floor(block / 2); const base = Math.min(3 + pairIndex, 9); if(block % 2 === 0) return [base]; return [...new Set([base, Math.min(base + 1, 9)])]; }
+// Big word bank for Endless Mode only (Daily Challenge and the missions keep their own lists)
+const ENDLESS_WORDS = {
+  3:"ACE ACT ADD AGE AID AIM AIR ALE ALL ANT APE ARC ARM ART ASH BAG BAN BAR BAT BAY BED BEE BEG BET BIB BID BIG BIN BIT BOW BOX BOY BUD BUG BUN BUS BUY CAB CAM CAN CAP CAR CAT COB COD COG COP COT COW CRY CUB CUE CUP CUR CUT DAD DAM DAY DEN DEW DIG DIM DIP DOG DOT DRY DUB DUG DUO EAR EAT EEL EGG ELF ELM EMU END EYE FAN FAR FAT FAX FED FEE FEW FIG FIN FIR FIT FIX FLU FLY FOG FOX FRY FUN FUR GAP GAS GEL GEM GNU GOD GUM GUN GUT GUY GYM HAM HAT HAY HEN HIP HIT HOG HOP HOT HUB HUG HUT ICE INK INN JAM JAR JAW JET JIG JOB JOG JOY JUG KEG KEY KID KIT LAB LAD LAP LAW LAY LEG LID LIP LOG LOT LOW MAD MAP MAT MAY MEN MIX MOB MOP MUD MUG NAP NET NEW NOD NUT OAK OAR OAT ODD OIL OLD ORB OWL PAD PAN PAW PEA PEG PEN PET PIE PIG PIN PIT POD POP POT PUP RAG RAM RAP RAT RAW RAY RED RIB RID RIM RIP ROB ROD ROT ROW RUB RUG RUM RUN RYE SAD SAG SAP SAW SAY SEA SET SEW SHY SIN SIP SIR SIT SIX SKI SKY SLY SOB SON SOW SOY SPA SPY SUB SUM SUN TAB TAG TAN TAP TAR TAX TEA TEN TIE TIN TIP TOE TON TOP TOY TUB TUG URN VAN VAT VET VOW WAG WAR WAX WAY WEB WET WIN WIT WOK WON YAK YAM YAP YES YET YEW ZIP ZOO".split(" "),
+  4:"ACRE ARCH AREA ARMY ATOM AUNT AWAY BABY BACK BAIT BAKE BALL BAND BANK BARN BASE BATH BEAD BEAK BEAM BEAN BEAR BEAT BEDS BEEF BEER BELL BELT BEND BIKE BILL BIRD BITE BLOW BLUE BOAT BODY BOLD BOLT BONE BOOK BOOT BOSS BOWL BREW BULB BULL BUMP BURN BUSH BUSY CAFE CAGE CAKE CALF CALM CAMP CANE CAPE CARD CARE CART CASE CASH CAST CAVE CELL CHEF CHIN CHIP CITY CLAM CLAP CLAW CLAY CLIP CLUB COAL COAT CODE COIN COLA COLD COMB CONE COOK COOL CORD CORE CORK CORN COST COVE CRAB CREW CROP CROW CUBE CURE CURL DARK DART DASH DATA DAWN DECK DEEP DEER DESK DIAL DICE DIME DIRT DISH DIVE DOCK DOME DOOR DOVE DOWN DRAG DRAW DRIP DROP DRUM DUCK DUNE DUSK DUST DUTY EACH EARN EASE EAST EDGE ENVY EPIC EXIT FACE FACT FAIL FAIR FALL FARM FAST FATE FAWN FEAR FEED FEEL FERN FILE FILM FIND FINE FIRE FIRM FISH FIST FLAG FLAT FLEA FLIP FLOW FOAM FOLD FOLK FOOD FOOT FORK FORM FORT FREE FROG FUEL FULL FUND GALE GAME GATE GEAR GIFT GIRL GLAD GLOW GLUE GOAL GOAT GOLD GOLF GOOD GOWN GRAB GRAY GRIN GRIP GROW GULF HAIR HALF HALL HAND HANG HARD HARP HAWK HEAL HEAP HEAR HEAT HEEL HELM HELP HERB HERO HIDE HIGH HIKE HILL HINT HIVE HOLD HOLE HOME HOOD HOOF HOOK HOPE HORN HOSE HOST HOUR HUNT HURT ICON IDEA INCH IRON ISLE ITEM JADE JAIL JAZZ JEEP JOIN JOKE JUMP JURY KEEN KEEP KELP KICK KIND KING KISS KITE KNEE KNIT KNOT LACE LACK LADY LAKE LAMB LAMP LAND LANE LARK LAST LAVA LAWN LEAD LEAF LEAN LEAP LEND LENS LIFE LIFT LILY LIME LINE LINK LION LIST LIVE LOAD LOAF LOAN LOCK LOFT LONG LOOP LOST LOUD LOVE LUCK LUMP LUNG MAIL MAIN MANE MAPS MARK MASK MAST MATE MAZE MEAL MEAT MELT MENU MICE MILD MILK MILL MIND MINE MINT MIST MOAT MOLE MOON MOSS MOTH MOVE MUCH MULE NAIL NAME NAVY NEAR NEAT NECK NEST NEWS NEXT NICE NINE NODE NOON NOSE NOTE OATS ONCE ONLY OPEN OVEN PACE PACK PAGE PAIL PAIN PAIR PALM PARK PART PAST PATH PEAK PEAR PEEL PEEP PEST PIER PINE PINK PIPE PLAN PLAY PLOT PLUM PLUS POEM POLE POLL POND PONY POOL PORT POSE POST POUR PRAY PULL PUMP PURE PUSH QUIT QUIZ RACE RACK RAIN RAKE RAMP RANK RARE RATE REAL REEF RENT REST RICE RICH RIDE RING RISE ROAD ROAM ROAR ROBE ROCK ROLE ROLL ROOF ROOM ROOT ROPE ROSE RULE RUSH RUST SACK SAFE SAGE SAIL SALE SALT SAND SASH SAVE SEAL SEAT SEED SEEK SELF SELL SEND SHED SHIN SHIP SHOE SHOP SHOT SHOW SHUT SICK SIDE SIGN SILK SING SINK SITE SIZE SKIN SKIP SLAM SLAP SLED SLID SLIM SLIP SLOW SNOW SOAK SOAP SOCK SODA SOFA SOFT SOIL SOLE SONG SOON SORT SOUL SOUP SOUR SPAN SPIN SPOT STAR STAY STEM STEP STEW STIR STOP SUCH SUIT SURE SWAN SWIM TAIL TALE TALK TALL TANK TAPE TASK TAXI TEAM TEAR TECH TELL TENT TERM TEST TEXT THEN THIN TIDE TIDY TILE TILL TIME TINY TIRE TOAD TOES TOLD TOLL TOMB TONE TOOL TOUR TOWN TRAP TRAY TREE TRIP TRUE TUBA TUBE TUNA TUNE TURN TWIN TYPE UNIT USER VASE VAST VEIL VEIN VEST VIEW VINE VOID VOTE WAGE WAIT WAKE WALK WALL WAND WARM WASH WASP WAVE WEAK WEAR WEED WEEK WELL WEST WHIP WIDE WIFE WILD WILL WIND WINE WING WINK WIPE WIRE WISE WISH WOLF WOOD WOOL WORD WORK WORM WRAP YARD YARN YEAR YOGA ZERO ZONE ZOOM".split(" "),
+  5:"ACORN ACTOR ADULT AGENT ALARM ALBUM ALIEN ALIVE ALLEY ALPHA AMBER ANGEL ANGLE ANKLE APPLE APRON ARENA ARMOR ARROW ASIDE ATTIC AWARD BACON BADGE BAKER BANJO BASIL BASIN BATCH BEACH BEARD BEAST BENCH BERRY BIBLE BISON BLACK BLADE BLANK BLAST BLAZE BLEAK BLEND BLESS BLIMP BLINK BLOCK BLOOM BLUSH BOARD BOAST BONUS BOOST BOOTH BOUND BRAIN BRAKE BRAND BRASS BRAVE BREAD BREAK BRICK BRIDE BRIEF BRING BRISK BROAD BROOK BROOM BROWN BRUSH BUDDY BUILD BUNCH BUNNY BURST CABIN CABLE CACTI CAMEL CANDY CANOE CARGO CAROL CARRY CARVE CAUSE CHAIN CHAIR CHALK CHARM CHART CHASE CHEAP CHECK CHEEK CHEER CHESS CHEST CHICK CHIEF CHILD CHILL CHIME CHORD CHUNK CIDER CIGAR CIVIC CLAIM CLASH CLASS CLEAN CLEAR CLERK CLICK CLIFF CLIMB CLING CLOAK CLOCK CLOSE CLOTH CLOUD CLOWN COACH COAST COBRA COCOA COLON COLOR COMET COMIC CORAL COUCH COUGH COUNT COURT COVER CRACK CRAFT CRANE CRASH CRATE CRAWL CRAZY CREAM CREEK CREEP CREST CRISP CROSS CROWD CROWN CRUMB CRUSH CRUST CUBIC CURRY CURVE CYCLE DAILY DAIRY DAISY DANCE DEALT DECAY DECOR DELTA DENSE DEPTH DERBY DIARY DINER DIRTY DITCH DIZZY DODGE DOING DONOR DOUBT DOUGH DOZEN DRAFT DRAIN DRAMA DRANK DRAPE DREAM DRESS DRIFT DRILL DRINK DRIVE DRONE DROWN DRUMS DRYER EAGLE EARLY EARTH EASEL EIGHT ELBOW ELDER ELECT ELITE EMPTY ENEMY ENJOY ENTER ENTRY EQUAL ERROR ESSAY EVENT EVERY EXACT EXIST EXTRA FABLE FAIRY FAITH FALSE FANCY FAULT FEAST FENCE FERRY FEVER FIBER FIELD FIFTH FIFTY FIGHT FINAL FIRST FLAME FLARE FLASH FLEET FLESH FLICK FLING FLINT FLOAT FLOCK FLOOD FLOOR FLOUR FLUID FLUTE FOCUS FOGGY FORCE FORGE FORTY FORUM FOUND FRAME FRANK FRESH FRONT FROST FRUIT FUDGE FUNNY FUZZY GAMER GAUGE GHOST GIANT GIVEN GLASS GLEAM GLOBE GLORY GLOVE GOING GRACE GRADE GRAIN GRAND GRANT GRAPE GRAPH GRASP GRASS GRAVE GREAT GREED GREEN GREET GRILL GROOM GROUP GROVE GROWL GROWN GUARD GUESS GUEST GUIDE GUILT HABIT HAPPY HARSH HASTE HATCH HAVEN HEART HEAVY HEDGE HELLO HINGE HOBBY HOLLY HONEY HONOR HORSE HOTEL HOUSE HOVER HUMAN HUMOR HURRY HYENA ICING IDEAL IMAGE INBOX INDEX INNER INPUT IRONY ISSUE IVORY JELLY JEWEL JOINT JOKER JOLLY JUDGE JUICE JUMBO JUMPY KEYED KIOSK KNACK KNEEL KNIFE KNOCK LABEL LABOR LANCE LARGE LASER LATER LAUGH LAYER LEACH LEARN LEASE LEAST LEAVE LEDGE LEMON LEVEL LEVER LIGHT LILAC LIMIT LINEN LINER LOBBY LOCAL LODGE LOGIC LOOSE LOTUS LUCKY LUNAR LUNCH LYRIC MACRO MAGIC MAJOR MAKER MANGO MANOR MAPLE MARCH MARSH MASON MATCH MAYOR MEDAL MEDIA MELON MERCY MERGE MERIT MERRY METAL METER MIDST MIGHT MIMIC MINOR MINUS MIRTH MIXER MODEL MOIST MONEY MONTH MOOSE MORAL MOTEL MOTOR MOUNT MOUSE MOUTH MOVIE MUDDY MURAL MUSIC NAIVE NANNY NASTY NAVAL NERVE NEVER NEWLY NIGHT NOBLE NOISE NORTH NOTCH NOVEL NURSE NYLON OASIS OCEAN OFFER OFTEN OLIVE ONION OPERA ORBIT ORDER ORGAN OTHER OTTER OUGHT OUNCE OUTER OWNER OXIDE OZONE PAINT PANDA PANEL PANIC PAPER PARTY PASTA PASTE PATCH PAUSE PEACE PEACH PEARL PEDAL PENNY PERCH PERIL PHASE PHONE PHOTO PIANO PIECE PILOT PINCH PITCH PIXEL PIZZA PLACE PLAIN PLANE PLANT PLATE PLAZA PLEAD PLUCK PLUMB PLUME PLUMP PLUSH POACH POINT POLAR POLKA POUCH POUND POWER PRANK PRAWN PRESS PRICE PRIDE PRIME PRINT PRIOR PRISM PRIZE PROBE PROOF PROUD PROVE PRUNE PULSE PUNCH PUPIL PUPPY PURSE QUACK QUEEN QUERY QUEST QUEUE QUICK QUIET QUILT QUIRK QUOTE RABBI RADAR RADIO RALLY RANCH RANGE RAPID RATIO RAVEN RAZOR REACH REACT READY REALM REBEL REFER REIGN RELAX RELAY RENEW REPLY RESET RIDER RIDGE RIFLE RIGHT RIGID RISKY RIVAL RIVER ROAST ROBIN ROBOT ROCKY RODEO ROGUE ROMAN ROUGH ROUND ROUTE ROVER ROYAL RUGBY RULER RURAL SADLY SAINT SALAD SALON SANDY SAUCE SCALE SCARF SCENE SCENT SCOOP SCOPE SCORE SCOUT SCRAP SCREW SEIZE SENSE SERVE SEVEN SHADE SHAFT SHAKE SHALL SHAME SHAPE SHARE SHARK SHARP SHAVE SHEEP SHEER SHEET SHELF SHELL SHIFT SHINE SHINY SHIRT SHOCK SHORE SHORT SHOUT SHOWN SHRUB SIGHT SILLY SINCE SIXTH SKATE SKILL SKIRT SKULL SLATE SLEEP SLICE SLIDE SLOPE SMALL SMART SMELL SMILE SMOKE SNACK SNAIL SNAKE SNEAK SOLAR SOLID SOLVE SORRY SOUND SOUTH SPACE SPARE SPARK SPEAK SPEED SPELL SPEND SPICE SPICY SPIKE SPILL SPINE SPLIT SPOIL SPOKE SPOON SPORT SPRAY SQUAD STACK STAFF STAGE STAIN STAIR STAKE STAMP STAND STARE START STATE STEAK STEAM STEEL STEEP STEER STERN STICK STIFF STILL STING STOCK STONE STOOD STOOL STORE STORM STORY STOVE STRAW STRIP STUCK STUDY STUFF STYLE SUGAR SUITE SUNNY SUPER SURGE SWAMP SWARM SWEAR SWEAT SWEEP SWEET SWEPT SWIFT SWING SWORD SYRUP TABLE TACOS TAFFY TAKEN TALES TANGO TASTE TASTY TEACH TEASE TEMPO TENOR TENSE TENTH THANK THEME THICK THIEF THIGH THING THINK THIRD THORN THOSE THREE THROW THUMB TIDAL TIGER TIGHT TIMER TIMID TIRED TITLE TOAST TODAY TOKEN TONIC TOOTH TOPIC TORCH TOTAL TOUCH TOUGH TOWEL TOWER TOXIC TRACE TRACK TRADE TRAIL TRAIN TRAIT TRAMP TRASH TREAT TREND TRIAL TRIBE TRICK TRIED TROOP TROUT TRUCK TRULY TRUNK TRUST TRUTH TULIP TUTOR TWICE TWIST ULTRA UNCLE UNITE UNITY UNTIL UPPER UPSET URBAN USAGE USUAL UTTER VAGUE VALID VALUE VALVE VAPOR VAULT VENUE VERSE VIDEO VIGOR VINYL VIOLA VIPER VIRUS VISIT VISOR VITAL VIVID VOCAL VODKA VOICE VOTER WAGON WAIST WALTZ WASTE WATCH WATER WAVER WEARY WEAVE WEDGE WEIGH WEIRD WHALE WHEAT WHEEL WHERE WHICH WHILE WHIRL WHITE WHOLE WHOSE WIDEN WIDOW WIDTH WIELD WITCH WOMAN WORLD WORRY WORTH WOUND WRATH WRECK WRIST WRITE WRONG YACHT YIELD YOUNG YOUTH ZEBRA".split(" "),
+  6:"ABSORB ACCEPT ACCESS ACROSS ACTION ACTIVE ACTUAL ADJUST ADMIRE ADVICE AFFAIR AFFORD AGENCY AGENDA ALMOND ALMOST ALWAYS AMOUNT ANCHOR ANIMAL ANNUAL ANSWER ANYONE APPEAL APPEAR AROUND ARRIVE ARTIST ASCEND ASPECT ASSESS ASSIST ASSUME ATTACH ATTACK ATTEND AUGUST AUTHOR AUTUMN AVENUE BABBLE BACKUP BAKING BALLET BAMBOO BANANA BANNER BARREL BASKET BATTLE BEAUTY BEAVER BECAME BECOME BEFORE BEHAVE BEHIND BELIEF BELONG BESIDE BETTER BEYOND BISHOP BLAZER BLONDE BONNET BORDER BORROW BOTTLE BOTTOM BOUNCE BRANCH BREATH BREEZE BRIDGE BRIGHT BROKEN BRONZE BUBBLE BUCKET BUDGET BUFFER BUNDLE BURDEN BURGER BURNER BUTTER BUTTON CACTUS CAMERA CAMPUS CANARY CANDLE CANVAS CARPET CARROT CASTLE CASUAL CATTLE CAUGHT CAVIAR CENTER CEREAL CHANCE CHANGE CHARGE CHEESE CHERRY CHILLY CHOICE CHOOSE CHORUS CIRCLE CIRCUS CLEVER CLIENT CLINIC CLOSET CLOVER COFFEE COLLAR COLUMN COMEDY COMMON COPPER CORNER COTTON COUPLE COUSIN CRADLE CRAYON CREATE CREDIT CRISIS CUSTOM DAMAGE DANCER DANGER DAZZLE DEBATE DECADE DECENT DECIDE DEEPLY DEFEND DEGREE DELETE DEMAND DENTAL DESERT DESIGN DINNER DIRECT DIVIDE DOCTOR DOLLAR DONKEY DOUBLE DRAGON DRAWER DREAMY DRIVER DURING EASILY EATING EDITOR EFFECT EFFORT ELEVEN EMBLEM EMPIRE ENABLE ENERGY ENGINE ENOUGH ENTIRE ESCAPE ESTATE EVENLY EXCEED EXCEPT EXCUSE EXPAND EXPERT EXPORT FABRIC FACTOR FAIRLY FALCON FAMILY FAMOUS FARMER FATHER FAUCET FELLOW FIDDLE FIGURE FILTER FINGER FINISH FLAVOR FLOWER FLYING FOREST FORGET FORMAL FOSSIL FOSTER FOURTH FRYING FUTURE GADGET GALAXY GALLOP GARAGE GARDEN GARLIC GATHER GENTLE GLIDER GLOBAL GLOSSY GOBLIN GOLDEN GOSPEL GOSSIP GOVERN GRAVEL GROOVE GROUND GROWTH GUITAR GUTTER HAMMER HANDLE HAPPEN HARBOR HATRED HAZARD HEALTH HEARTY HEATER HEIGHT HELMET HERMIT HIDDEN HOCKEY HOLLOW HONEST HUNTER HYBRID ICICLE IMPACT IMPORT IMPOSE INDEED INFANT INSIDE INVENT INVEST ISLAND ITSELF JACKET JAGUAR JERSEY JIGSAW JOCKEY JUNGLE JUNIOR KENNEL KETTLE KIDNEY KITTEN KNIGHT LADDER LAGOON LAMBDA LAPTOP LAUNCH LAWYER LAYOUT LEADER LEAGUE LEGEND LESSON LETTER LIZARD LONELY LOUNGE LUXURY MAGNET MANAGE MANTLE MARBLE MARGIN MARINE MARKET MASTER MATTER MEADOW MEDIUM MEMBER MEMORY MENTAL MENTOR METHOD MIDDLE MIGHTY MINUTE MIRROR MITTEN MOBILE MODERN MODEST MOMENT MONKEY MOTHER MOTION MUFFIN MURMUR MUSCLE MUSEUM MUTTON NATURE NEARBY NEEDLE NEPHEW NESTED NICKEL NOODLE NORMAL NOTICE NUMBER NUTMEG OBJECT OBTAIN OFFICE ONLINE ORANGE ORIGIN OUTFIT OUTLET OYSTER PACKET PADDLE PALACE PARADE PARCEL PARENT PARROT PASTRY PATROL PEBBLE PENCIL PEOPLE PEPPER PERIOD PERSON PIGEON PILLOW PIRATE PLANET PLAYER PLEASE PLEDGE PLENTY POCKET POETRY POLICE POLISH PONDER POODLE POTATO POWDER PRAISE PREFER PRETTY PRINCE PRISON PROFIT PROMPT PROPER PUBLIC PUPPET PURPLE PUZZLE RABBIT RACING RADISH RAFTER RANDOM RATHER RATION READER REASON RECENT RECORD REDUCE REFORM REGION RELATE RELIEF REMAIN REMEDY REMOTE REPAIR REPEAT REPORT RESCUE RESULT REVEAL RHYTHM RIBBON ROCKET RUBBER SADDLE SAFARI SAFETY SALMON SAMPLE SANDAL SAUCER SCARCE SCENIC SCHOOL SCREAM SCREEN SCRIPT SEARCH SEASON SECOND SECRET SELECT SENIOR SERIES SERVER SETTLE SHADOW SHIELD SHOWER SHRIMP SIGNAL SILENT SILVER SIMPLE SINGER SISTER SKETCH SLIDER SMOOTH SNEEZE SOCCER SOCIAL SOCKET SOFTEN SOLEMN SORBET SOURCE SPIDER SPIRIT SPLASH SPRING SQUARE SQUASH STABLE STAIRS STATUE STEADY STICKY STITCH STREAM STREET STRESS STRING STRONG STUDIO STURDY SUBMIT SUDDEN SUMMER SUNSET SUPPER SUPPLY SURELY SURVEY SWITCH SYMBOL TABLET TACKLE TAILOR TALENT TARGET TEMPLE TENDER TENNIS THANKS THEORY THIRTY THRILL THRONE TICKET TICKLE TOMATO TONGUE TRAVEL TREATY TRICKY TROPHY TUNNEL TURKEY TURTLE TWELVE TWENTY UNIQUE UNLESS UNLOCK UPDATE USEFUL VALLEY VELVET VENDOR VESSEL VICTOR VIOLIN VIRTUE VISION VISUAL VOLUME WAFFLE WALLET WALNUT WANDER WARMTH WEALTH WEAPON WEEKLY WEIGHT WINDOW WINNER WINTER WISDOM WIZARD WONDER WOODEN WORKER YELLOW ZIGZAG ZIPPER".split(" "),
+  7:"ABILITY ABSENCE ACADEMY ACCOUNT ACHIEVE ACQUIRE ACROBAT ACTRESS ADAPTER ADDRESS ADVANCE ADVERSE ADVISER ADVISOR AGAINST AIRPORT ALLEGED ALREADY AMAZING ANALYST ANCHOVY ANCIENT ANDROID ANGLING ANIMALS ANOTHER ANTHILL ANTIQUE ANXIETY ANYBODY APOLOGY APPAREL APPEALS APPLAUD APPOINT APPROVE ARCHERY ARCHIVE ARRANGE ARRIVAL ARTICLE ARTISAN ASHTRAY ASSAULT ATHLETE ATTEMPT ATTRACT AUCTION AVERAGE AWESOME BACKING BAGGAGE BAGPIPE BALANCE BALCONY BALLOON BANDAGE BANKING BARGAIN BARRIER BATTERY BEARING BEASTLY BECAUSE BEDROOM BEEHIVE BEETLES BELIEVE BELOVED BENEATH BENEFIT BICYCLE BIGGEST BILLION BIOLOGY BISCUIT BLANKET BLESSED BLOSSOM BOATING BONFIRE BOOKLET BOUQUET BRACKET BREWERY BROTHER BROWNIE BRUSHES BUCKETS BUFFALO BUILDER BULLDOG BULLPEN BURRITO CABBAGE CABINET CALCIUM CALIBER CAMPING CANDIES CANNONS CAPITAL CAPTAIN CARAMEL CARAVAN CARTOON CASHIER CASTING CASTLES CATERER CAVALRY CEILING CELLIST CENTAUR CENTURY CERAMIC CERTAIN CHAMBER CHANNEL CHAPTER CHARITY CHARTER CHATTER CHICKEN CHIMNEY CIRCUIT CITIZEN CLASSIC CLIMATE CLOSING CLOTHES CLUSTER COASTER COCKPIT COCONUT COLLAGE COLLEGE COMFORT COMMAND COMPANY COMPASS CONCERT CONNECT CONTAIN CONTEST CONTROL COOKIES COOKING COTTAGE COUNCIL COUNTER COUNTRY COURAGE COUSINS COWBELL CRACKER CRAYONS CREATED CREATOR CRESTED CRICKET CRIMSON CRYSTAL CULTURE CUPCAKE CURATOR CURRENT CURTAIN CUSHION CUSTARD CYCLIST DANCING DAYTIME DEEPEST DEFENSE DELIVER DENSITY DENTIST DESKTOP DESSERT DESTINY DIAMOND DIPLOMA DISTANT DOLPHIN DONKEYS DOORWAY DRAGONS DRAWING DRESSER DRIFTER DRIZZLE DROUGHT DUNGEON DURABLE DYNAMIC EARRING EASTERN ECONOMY EDITION EFFECTS ELASTIC ELECTED ELEMENT ELEVATE EMBRACE EMERALD EMPEROR EMPRESS ENCHANT ENDLESS ENEMIES ENGAGED ENJOYED EPISODE EQUATOR ERASERS EVENING EXACTLY EXAMPLE EXHAUST EXHIBIT EXPENSE EXPLORE EXPRESS EXTREME FACTORY FAILURE FAIRIES FALCONS FANTASY FARMING FASHION FEATHER FEATURE FERRIES FICTION FIFTEEN FIGHTER FINALLY FINANCE FINDERS FIREMAN FITNESS FLANNEL FLAVORS FLOWERS FLUTTER FOLDING FOLLOWS FOOLISH FOOTAGE FOREVER FORMULA FORTUNE FORWARD FRAGILE FREEDOM FREEZER FREIGHT FRIENDS FROSTED FUNNELS FURNACE FURNISH GADGETS GALLERY GALLONS GARDENS GATEWAY GENERAL GENUINE GIRAFFE GLACIER GLASSES GLITTER GLOWING GOBLINS GORILLA GRAMMAR GRANITE GRAVITY GREATLY GROCERY GROWING GUMDROP GYMNAST HABITAT HACKERS HALFWAY HALLWAY HAMMOCK HAMSTER HANDBAG HANDLES HANGING HAPPILY HARVEST HATCHES HAUNTED HEALTHY HEARING HEATING HEAVENS HELPFUL HERSELF HIGHWAY HIMSELF HISTORY HOLIDAY HOSTESS HUNDRED HUNTING HURDLES HUSBAND ICEBERG IDEALLY IMAGINE IMMENSE IMPULSE INCLUDE INKWELL INSTEAD INVITED JACKETS JASMINE JEWELER JOURNEY JUKEBOX JUNIPER JUSTICE KEEPERS KENNELS KETTLES KINGDOM KITCHEN KNIGHTS LADDERS LANTERN LASTING LAUNDRY LEATHER LECTURE LEGENDS LEISURE LETTUCE LIBERTY LIBRARY LICENSE LIGHTER LIZARDS LOBSTER LOCALLY LONGEST LOTTERY MACHINE MAGNETS MAILBOX MAMMOTH MANAGER MANSION MARINER MARVELS MASSIVE MATCHES MAXIMUM MEADOWS MEASURE MEDICAL MEETING MELTING MENTION MERMAID MESSAGE MICROBE MILLION MINIMUM MINUTES MIRACLE MISSION MIXTURE MOBILES MONITOR MONSTER MORNING MOTHERS MUSTARD MYSTERY NAPKINS NATIONS NATURAL NEAREST NEITHER NEPHEWS NETWORK NEUTRAL NIBBLES NICKELS NOTHING NOTICED NOVELTY NUGGETS NURSERY OATMEAL OBSERVE OBVIOUS OCTOPUS OFFERED OFFICER OPENING OPINION OPTICAL ORCHARD ORGANIC ORIGAMI OSTRICH OUTDOOR OUTFITS OUTSIDE PADDLES PAINTER PALACES PALETTE PANCAKE PANTHER PARENTS PARKING PARROTS PARTNER PASSAGE PASSION PASTURE PATIENT PATTERN PAYMENT PEACHES PEANUTS PELICAN PENGUIN PENNIES PERFECT PERFUME PERHAPS PHANTOM PICNICS PICTURE PILLOWS PIONEER PIRATES PITCHER PLANETS PLANNER PLASTIC PLAYFUL PLAYING PLEASED PLUMBER POINTER POPCORN PORTION POSTAGE POTTERY POULTRY PRAIRIE PREMIUM PRESENT PRETEND PRETZEL PRIMARY PRINTER PROBLEM PRODUCE PRODUCT PROGRAM PROJECT PROMISE PROTECT PROUDLY PROVIDE PUMPKIN PUPPETS PURPOSE PUZZLES PYRAMID QUARTER QUARTET QUICKER QUICKLY RABBITS RACCOON RAINBOW RAISINS RAMPART RATTLES READING REALITY RECEIPT RECEIVE RECIPES RECYCLE REFLECT REGULAR RELATED RELEASE REMAINS REMOVED RESTING RESULTS REVERSE RHUBARB RIDDLES ROARING ROCKETS ROLLING ROMANCE ROOFTOP ROOSTER ROSEBUD ROUTINE ROWBOAT ROYALTY RUBBISH RUNNING SADDLES SADNESS SAILING SAMPLER SANDALS SANDBOX SATCHEL SAUSAGE SAVINGS SCARLET SCATTER SCENERY SCHOOLS SCIENCE SCOOTER SCRAPER SCRATCH SEAGULL SEASIDE SEASONS SEAWEED SECRETS SECTION SEEKING SELLING SENATOR SENSORS SERIOUS SERVANT SERVICE SESSION SETTING SEVENTH SEVERAL SHAMPOO SHARING SHELTER SHERIFF SHIFTED SHINING SHIPPED SHORTLY SHOVELS SHOWERS SHUTTLE SILENCE SIMILAR SINGERS SIPPING SKATING SKILLET SKIPPER SKYLINE SLENDER SLIPPER SMILING SNOWMAN SOARING SOCIETY SOLDIER SOMEONE SONNETS SORTING SOULFUL SPANNER SPARROW SPECIAL SPECIES SPECKLE SPIDERS SPINACH SPIRITS SPONGES SPONSOR SPRINTS STADIUM STAFFER STAMINA STAPLER STARTER STATION STATUES STEAMER STEPPED STIRRUP STOMACH STORAGE STORIES STORING STRANGE STRETCH STRIKES STRINGS STRIPES STUDENT STUDIES STUFFED SUBJECT SUCCESS SUGGEST SUNBEAM SUNDIAL SUNRISE SUPPORT SUPREME SURFACE SURFERS SURGEON SURPLUS SURREAL SUSPECT SWEATER SWIMMER TABLETS TACKLES TADPOLE TAILORS TALENTS TANGLED TANKERS TAPIOCA TARGETS TEACHER TEAPOTS TEASING TENSION TERRACE THEATER THERAPY THERMOS THICKET THIRSTY THOUGHT THREADS THRILLS THUNDER TICKETS TIMBERS TOASTER TODDLER TONIGHT TOOLBOX TOPPING TORNADO TOURIST TOWARDS TRADING TRAFFIC TRAILER TRAINED TRAINER TRAVELS TREATED TRELLIS TRINKET TROUBLE TRUCKER TRUMPET TUNNELS TURBINE TURKEYS TURNIPS TURTLES TWINKLE TYPICAL UNICORN UNIFORM UNKNOWN UNUSUAL UPRIGHT USUALLY UTENSIL VALLEYS VAMPIRE VANILLA VARIETY VEHICLE VENTURE VERSION VESSELS VETERAN VICTORY VILLAGE VINTAGE VIOLETS VIRTUAL VISIBLE VISITOR VITAMIN VIVIDLY VOLCANO WALKING WALNUTS WARMING WARRIOR WASHING WATCHED WEALTHY WEASELS WEATHER WEDDING WEEKEND WEIGHTS WELCOME WESTERN WHISPER WHISTLE WIDGETS WILLOWS WINNERS WISHING WITCHES WITHOUT WIZARDS WOMBATS WONDERS WOOLENS WORKERS WORKING WORSHIP WRAPPED WRESTLE WRITERS WRITING ZEALOUS ZOMBIES".split(" "),
+  8:"ABSOLUTE ABSTRACT ACADEMIC ACCIDENT ACCURATE ACROBATS ACTIVITY ACTUALLY ADDITION ADEQUATE ADJACENT ADVANCED ADVISORY ADVOCATE AIRCRAFT AIRPLANE ALLIANCE ALPHABET ALTHOUGH ALUMINUM AMBITION ANALYSIS ANCESTOR ANYTHING ANYWHERE APPARENT APPETITE APPLAUSE APPROACH APPROVAL AQUARIUM ARGUMENT ARMCHAIR ARTISTIC ASSEMBLY ASSORTED ATHLETIC ATTACHED ATTORNEY AUDIENCE AUTONOMY BACHELOR BACKBONE BACKPACK BACKYARD BACTERIA BALANCED BALLROOM BANDAGED BASEBALL BASEMENT BATHROOM BATTERED BENEFITS BICYCLES BIRTHDAY BLIZZARD BLOSSOMS BLUEBIRD BOOKCASE BOOKMARK BORROWED BOUNDARY BRACELET BREAKOUT BRIGHTER BROCCOLI BROCHURE BROWNIES BUILDING BULLETIN BUSHLAND BUSINESS BUTCHERS CABINETS CALENDAR CAMPAIGN CAMPFIRE CAMPSITE CANOEING CAPACITY CAPTURED CARDIGAN CARNIVAL CAROUSEL CARRIAGE CARTOONS CASHMERE CATCHING CATEGORY CATHOLIC CAUTIOUS CEREMONY CHAMPION CHANDLER CHAPTERS CHARCOAL CHARMING CHECKERS CHEERFUL CHEMICAL CHESTNUT CHILDREN CHIMNEYS CHIPMUNK CINNAMON CIRCULAR CITIZENS CIVILIAN CLASSICS CLEARING CLIMBING CLIPPING CLOTHING COACHING COCONUTS COLLAPSE COLLECTS COLORFUL COLOSSAL COMBINED COMEDIAN COMFORTS COMMONLY COMMUTER COMPARED COMPLETE COMPOSER COMPOUND COMPUTER CONCERTS CONCLUDE CONCRETE CONFUSED CONGRESS CONSIDER CONSTANT CONTAINS CONTESTS CONTINUE CONTRACT CORNERED CORRIDOR COSTUMES COTTAGES COUNTING COURTESY CRACKERS CRAFTING CRASHING CREATIVE CREATURE CRICKETS CROSSING CRUMBLES CRYSTALS CUPBOARD CURTAINS CUSHIONS CYCLISTS DAFFODIL DARKNESS DAUGHTER DAYLIGHT DEADLINE DECORATE DEFENDER DELICATE DENTISTS DEPARTED DESIGNER DESSERTS DETECTOR DIAGONAL DIAMETER DINOSAUR DIRECTED DISABLED DISCOVER DISGUISE DISTANCE DIVIDING DIVISION DOLPHINS DOMESTIC DOORBELL DOORSTEP DRAWINGS DRESSING DRIFTING DRINKING DRIVEWAY DROPPING DUMPLING DURATION DYNAMITE EARPHONE ECONOMIC EDUCATED EGGPLANT ELECTION ELECTRIC ELEPHANT ELEVATOR EMOTIONS EMPERORS EMPLOYEE ENDEAVOR ENGINEER ENORMOUS ENTERING ENTRANCE ENVELOPE EQUATION EQUIPPED ESCALATE EVIDENCE EXAMPLES EXCHANGE EXCITING EXERCISE EXISTING EXPLODED EXPLORER EXPOSURE EXTENDED EXTERNAL FABULOUS FAITHFUL FAMILIAR FARMLAND FASHIONS FAVORITE FEATHERS FESTIVAL FIDDLERS FIGHTING FIGURINE FILAMENT FILTERED FINALIST FINDINGS FINISHED FIREBALL FIRESIDE FISHBOWL FISHHOOK FLAGPOLE FLAMINGO FLASHING FLEXIBLE FLIGHTED FLOATING FLOODING FLOURISH FLOWERED FLUTTERS FOLKLORE FOLLOWER FOOTBALL FOOTPATH FOOTSTEP FORECAST FOREMOST FORESTED FORGIVEN FORMALLY FORMERLY FORTRESS FOUNTAIN FRACTION FRECKLES FREEDOMS FREEZING FRIENDLY FRIGHTEN FRONTIER FROSTING FRUITFUL FULFILLS FUNCTION GARDENER GASOLINE GATHERED GENEROUS GIGANTIC GIGGLING GINGERLY GIRAFFES GLADNESS GLORIOUS GOLDFISH GOODNESS GORGEOUS GRACIOUS GRADUATE GRATEFUL GREETING GUARDIAN GUESSING GUIDANCE GUMBOOTS GYMNASTS HALFBACK HALLWAYS HAMMOCKS HANDCUFF HANDFULS HANDSOME HARDWARE HARMLESS HATCHERY HEADBAND HEADLINE HEAVENLY HEDGEROW HESITATE HIGHLAND HIGHWAYS HISTORIC HOLIDAYS HOMELAND HOMEMADE HOMEWORK HONESTLY HONEYBEE HORRIBLE HOSPITAL HUMANITY HUNDREDS HUNGRILY HUSBANDS ICEBERGS IMMUNITY INFLATED INFORMAL INKWELLS INNOCENT INSPIRED INTEREST INTERIOR INTERNET INTERVAL INVASION INVENTED INVOLVED JEALOUSY JINGLING JUGGLING JUNCTION KEYBOARD KINDNESS KINGDOMS KITCHENS KNAPSACK KNITTING LADYBIRD LAKESIDE LANDMARK LANGUAGE LANTERNS LAUGHTER LEAFLETS LEARNING LEATHERS LEFTOVER LIFEBOAT LIFETIME LIPSTICK LISTENER LITERARY LOBSTERS LOCATION LOLLIPOP LOVEBIRD LUNCHBOX MACHINES MAGAZINE MAGNETIC MAJESTIC MANDOLIN MARATHON MARCHING MARIGOLD MARINATE MARRIAGE MATCHING MATERIAL MEASURES MEDICINE MEETINGS MELODIES MEMORIAL MEMORIES MERCHANT MERMAIDS MIDNIGHT MILITARY MINERALS MINISTER MIRRORED MISSIONS MISTAKEN MOBILITY MODELING MOISTURE MONARCHS MONITORS MONSTERS MOONBEAM MOSQUITO MOUNTAIN MOUTHFUL MOVEMENT MULTIPLE MUSICIAN MUSTACHE NAMELESS NAVIGATE NEATNESS NEGATIVE NEIGHBOR NETWORKS NEWSROOM NIBBLING NICKNAME NIGHTCAP NOBILITY NORMALLY NORTHERN NOTEBOOK NOVELIST NUTSHELL OBSTACLE OCCASION OFFERING OFFICERS OFFICIAL ONCOMING ONLOOKER OPERATOR OPINIONS OPPOSITE OPTICIAN OPTIMIST ORCHARDS ORDINARY ORGANIZE ORIGINAL ORNAMENT OUTDOORS OUTLINES OUTSIDER OVERSIZE PACIFIER PACKAGES PADDLING PAINTERS PAINTING PANCAKES PANORAMA PANTHERS PARADISE PARAKEET PARALLEL PARTNERS PASSAGES PASSPORT PAVEMENT PEACEFUL PEACOCKS PENGUINS PENNANTS PERSONAL PHARMACY PHEASANT PHYSICAL PICTURES PIONEERS PIPELINE PITCHERS PIZZERIA PLANKTON PLANNERS PLANTING PLATFORM PLATYPUS PLAYROOM PLEASANT PLEASURE POINTING POLISHED POLITELY PONYTAIL PORTRAIT POSITION POSITIVE POSSIBLE POSTCARD POTATOES PRACTICE PRAIRIES PRECIOUS PRETZELS PREVIOUS PRINCESS PRINTING PRISONER PROPERTY PROVINCE PUNCTUAL PURCHASE QUANTITY QUESTION RACCOONS RADIATOR RADISHES RAILROAD RAINDROP REACHING RECKLESS RELATIVE REMEMBER REPAIRED ROADSIDE ROOMMATE ROWBOATS RUCKSACK SAILBOAT SANDWICH SAPPHIRE SAUCEPAN SCHEDULE SCISSORS SCORPION SCRIBBLE SCULPTOR SEARCHED SEEDLING SEMESTER SENSIBLE SENTENCE SEQUENCE SERGEANT SESSIONS SHAMROCK SHEARING SHEEPDOG SHIPMENT SHIPPING SHOELACE SHOOTING SHOPPERS SHOULDER SICKNESS SIDEKICK SIDEWALK SILENTLY SKELETON SKILLFUL SKIPPING SKYLIGHT SLIGHTLY SMALLEST SNOWBALL SNOWFALL SOFTBALL SONGBIRD SOOTHING SOUTHERN SOUVENIR SPACIOUS SPANNING SPECIMEN SPEECHES SPLENDID SPLINTER SQUADRON SQUIRREL STAFFERS STAIRWAY STANDARD STARFISH STEADILY STEAMING STEPPING STIRRING STITCHES STOCKING STRAIGHT STRANGER STRATEGY STRENGTH STRIKING STROLLED STRONGLY STUDYING STUFFING SUITABLE SUITCASE SUNLIGHT SUNSHINE SUPERIOR SUPPLIES SURPRISE SURROUND SWEEPING SWEETEST SWELLING SWIMMING SWINGING SWITCHES SYMPATHY SYMPHONY TAPESTRY TEAMWORK TENTACLE TERRIFIC TEXTBOOK THICKEST THINKING THIRTEEN THOROUGH THOUSAND THRILLED THRIVING THROWING TIRELESS TOGETHER TOLERATE TORTOISE TOUCHING TOWNSHIP TRAINING TREKKING TRIANGLE TROPICAL TROUSERS TWILIGHT UMBRELLA UNBROKEN UNDERWAY UNIVERSE UNLIKELY UPSTAIRS VENTURED WATCHING WAVERING WEIGHING WHATEVER WHENEVER WHEREVER WHISKERS WICKEDLY WILDLIFE WINDMILL WINDSOCK WINGSPAN WOODLAND WORKSHOP WRAPPING YACHTING YELLOWED YOUNGEST YOURSELF YOUTHFUL ZEPPELIN".split(" "),
+  9:"ABANDONED ABUNDANCE ACCESSORY ACCIDENTS ACCOMPANY ACCORDING ACHIEVING ACOUSTICS ADMISSION ADVANTAGE ADVENTURE ADVERTISE AESTHETIC AFFECTION AFTERNOON AGREEMENT ALBATROSS ALIGNMENT ALLIGATOR ALLOWANCE ALTERNATE AMBULANCE AMENDMENT AMPLIFIER AMUSEMENT ANCHORAGE ANCHORING ANIMATION ANNOUNCER ANSWERING ANTARCTIC APARTMENT APOLOGIZE APPARATUS APPEALING APPLIANCE APPLICANT APPRAISAL ARCHITECT ASPARAGUS ASTRONAUT ATTENTION AUTOGRAPH AVALANCHE AWARENESS BADMINTON BANDSTAND BEAUTIFUL BEGINNING BEHAVIOUR BELLYACHE BILLBOARD BLACKBIRD BLUEBERRY BOARDWALK BOOKSTORE BREAKFAST BRILLIANT BROADCAST BUBBLEGUM BUILDINGS BULLDOZER BUTTERCUP BUTTERFLY CALCULATE CAMPAIGNS CANDIDATE CARPENTER CARTWHEEL CASSEROLE CELEBRATE CENTIPEDE CHALLENGE CHAMPAGNE CHARACTER CHOCOLATE CLASSROOM CLOCKWORK COASTLINE COLLISION COLORLESS COMEDIANS COMMANDER COMMUNITY COMPUTERS CONCERNED CONDITION CONNECTED CONTAINER CONTINENT CORNFIELD CORRIDORS COUNTLESS CRESCENDO CROCODILE CUSTOMERS DANDELION DASHBOARD DECORATED DEDICATED DELICIOUS DENTISTRY DETECTIVE DIFFERENT DINOSAURS DIRECTION DISCOVERY DOUGHNUTS DRAGONFLY DRUGSTORE DRUMSTICK EDUCATION ELABORATE ELEPHANTS EMBROIDER EMERGENCY EMOTIONAL ENCOURAGE ENERGETIC ENGINEERS ENTERTAIN ENVELOPES EQUIPMENT EVERGREEN EXCELLENT EXCHANGED EXCURSION EXPLORING EXPLOSION EXTENSION FAIRYTALE FANTASTIC FASCINATE FAVORITES FIREPLACE FIREWORKS FISHERMAN FLATTERER FOOTPRINT FOOTSTEPS FORECASTS FOREIGNER FORGOTTEN FORTUNATE FOUNTAINS FRAMEWORK FREQUENCY FROSTBITE FRUITCAKE FURNITURE GALLOPING GARDENING GATHERING GENERATOR GENTLEMAN GEOGRAPHY GOLDFINCH GRADUATES GRATITUDE GREETINGS GROCERIES GUARANTEE GUIDEBOOK GYMNASTIC HAIRBRUSH HAIRSTYLE HAMBURGER HANDLEBAR HANDSHAKE HAPPINESS HARMONICA HEADLIGHT HEADPHONE HEARTBEAT HIBERNATE HIGHLIGHT HILARIOUS HISTORIAN HITCHHIKE HOBGOBLIN HOMEMAKER HONEYCOMB HORSEBACK HORSESHOE HOURGLASS HOUSEHOLD HURRICANE IDENTICAL IMAGINARY IMPORTANT INNOCENCE INSPECTOR INTERRUPT INTERVIEW INVENTION JELLYFISH KILOMETER KNOWLEDGE LANDSCAPE LAWNMOWER LIBRARIAN LIFEGUARD LIGHTNING LIMOUSINE LOCKSMITH LOLLIPOPS LONGITUDE LUNCHTIME MACHINERY MAGNIFIER MAILBOXES MARMALADE MARSHLAND MARVELOUS MEANWHILE MEASURING MELODIOUS MEMORABLE MESSENGER MICROWAVE MILKSHAKE MINIATURE MISTLETOE MOONLIGHT MOONSTONE MOTORBIKE MOUNTAINS MOUSETRAP MUSHROOMS MUSICALLY NARRATIVE NATURALLY NAVIGATOR NEIGHBORS NIGHTFALL NIGHTGOWN NIGHTMARE NORTHWEST NOTEBOOKS NUTRITION OBSTACLES OPERATING ORCHESTRA ORGANIZER OTHERWISE OUTNUMBER OUTSKIRTS OVERBOARD OVERNIGHT OVERSIGHT PACKAGING PAINTINGS PAPERBACK PAPERCLIP PARACHUTE PARAGRAPH PARAKEETS PERFORMER PERISCOPE PERMANENT PETTICOAT PHEASANTS PHOTOCOPY PHYSICIAN PINEAPPLE PISTACHIO PLANETARY PLAYTHING POCKETFUL POISONOUS POLICEMAN POLLUTION PONYTAILS PORCUPINE PRACTICAL PREPARING PRESIDENT PRINTABLE PRIVILEGE PROFESSOR PROMISING PROPELLER PROTECTOR PUPPETEER QUARTERLY QUICKSAND QUOTATION RAILROADS RAINSTORM REALISTIC RECTANGLE REFLECTOR REFRESHER REGULARLY REHEARSAL RELATIVES REMAINDER REWARDING RIVERBANK ROADBLOCK SAILBOATS SANDPAPER SATELLITE SCARECROW SCHOOLBOY SCIENTIST SCORPIONS SCRAPBOOK SCRIBBLED SCULPTURE SEASONING SECRETARY SENSATION SENTENCES SERIOUSLY SEVENFOLD SHIPWRECK SHORELINE SHOULDERS SHRINKING SIDEWALKS SIGNATURE SINGALONG SLINGSHOT SNOWFLAKE SNOWSTORM SOMETHING SOMETIMES SOMEWHERE SPACESHIP SPAGHETTI SPARKLING SPECIALLY SPECTACLE SPIDERWEB SPOTLIGHT SPRINKLER SQUIRRELS STAIRWELL STARLIGHT STATEMENT STEAMBOAT STOCKINGS STORYBOOK STORYLINE STREAMERS STREETCAR STRETCHER STRONGEST STRUCTURE SUBMARINE SUNFLOWER SUNSCREEN SUPERHERO SURPRISED SURVIVORS SWALLOWED TANGERINE TECHNIQUE TELEPHONE TELESCOPE TEMPERATE TENTACLES TERRITORY TESTIMONY TEXTBOOKS THICKNESS TIGHTROPE TIMETABLE TOOTHPICK TORNADOES TRANSPORT TREMBLING TURQUOISE UNDERLINE UNDERWEAR VANISHING VEGETABLE VENTILATE VIBRATION VICTORIES VIEWPOINT VIOLINIST VOLCANOES VOLUNTEER WALLPAPER WAREHOUSE WASTELAND WATERFALL WELCOMING WHIRLWIND WHISTLING WHOLESOME WINDMILLS WINDSTORM WOLFHOUND WONDERFUL WORKBENCH WORKPLACE WORKSHOPS WORTHLESS WRISTBAND YESTERDAY YOUNGSTER ZOOKEEPER".split(" ")
+};
+function endlessPool(eng){ const lens = wordLengthsForRound(eng.round, 'ENDLESS'); const pool = lens.flatMap(l => ENDLESS_WORDS[l] || []); const used = eng.usedEndless || (eng.usedEndless = new Set()); let fresh = pool.filter(x => !used.has(x)); if(!fresh.length){ pool.forEach(x => used.delete(x)); fresh = pool; } return fresh; }
 function mulberry32(seed){ return function(){ seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 function todayKey(){ const d = new Date(); return `${d.getUTCFullYear()}${String(d.getUTCMonth()+1).padStart(2,'0')}${String(d.getUTCDate()).padStart(2,'0')}`; }
 function makeAudio(src){ const a = new Audio(src); a.preload = 'auto'; return a; }
@@ -543,17 +939,132 @@ const SFX = {
   lifeLost(){ this.play('lifeLost', 0.6); },
   lifeGained(){ this.play('lifeGained', 0.6); },
   gameOver(){ this.stopTick(); this.play('gameOver', 0.6); },
-  tick(){ this.stopTick(); const clone = this.play('tick', 0.4); if(clone){ this.activeTick = clone; this.tickCapTimer = setTimeout(()=>{ if(clone && !clone.paused) clone.pause(); }, 450); } },
-  stopTick(){ if(this.tickCapTimer){ clearTimeout(this.tickCapTimer); this.tickCapTimer = null; } if(this.activeTick){ this.activeTick.pause(); this.activeTick.currentTime = 0; this.activeTick = null; } }
+  tickLast:null,
+  // Built-in ticking clock: starts at 10s left (1 tick/sec), faster at 5s (2/sec), fastest at 2s (4/sec).
+  tickUpdate(remMs){
+    if(this.muted) return;
+    if(remMs > 10000 || remMs <= 0){ return; }
+    const interval = remMs <= 2000 ? 250 : remMs <= 5000 ? 500 : 1000;
+    if(this.tickLast === null){ this.tickLast = remMs + interval; BGM.duck(); }
+    if(this.tickLast - remMs >= interval - 5){ this.tickLast = remMs; this.tickBeep(remMs <= 5000 ? (remMs <= 2000 ? 2 : 1) : 0); }
+  },
+  tickBeep(level){
+    try{
+      if(!GenMusic.ensure()) return; const c = GenMusic.ctx; if(c.state === 'suspended') c.resume();
+      const t = c.currentTime + .01, g = c.createGain(), o = c.createOscillator(), o2 = c.createOscillator();
+      o.type = 'square'; o2.type = 'sine'; const f = 1300 + level * 250; o.frequency.value = f; o2.frequency.value = f / 2;
+      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
+      const v = .09 + level * .03;
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + .004); g.gain.exponentialRampToValueAtTime(0.0001, t + .07);
+      o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(c.destination); o.start(t); o2.start(t); o.stop(t + .09); o2.stop(t + .09);
+    }catch(e){}
+  },
+  stopTick(){ if(this.tickLast !== null){ this.tickLast = null; BGM.unduck(); } if(this.tickCapTimer){ clearTimeout(this.tickCapTimer); this.tickCapTimer = null; } if(this.activeTick){ this.activeTick.pause(); this.activeTick.currentTime = 0; this.activeTick = null; } }
 };
 SFX.init(); SFX.loadMute();
 document.addEventListener('pointerdown', () => SFX.unlock(), { once: true });
 
+// ===== Built-in generated background music: a different calm soundtrack per mission / mode =====
+const GenMusic = {
+  ctx:null, master:null, bus:null, timer:null, theme:null, step:0, nextTime:0, bar:0, progIdx:0, lead:7, fading:null,
+  SCALES:{ major:[0,2,4,5,7,9,11], mixo:[0,2,4,5,7,9,10], lydian:[0,2,4,6,7,9,11], minor:[0,2,3,5,7,8,10], dorian:[0,2,3,5,7,9,10] },
+  PROGS:[[0,4,5,3],[0,5,3,4],[0,3,4,3],[5,3,0,4],[0,2,5,4],[3,4,0,0]],
+  THEMES:{
+    CLIMB:  { root:60, scale:'major',  bpm:100, wave:'triangle', leadP:.55, leadLen:1.6, bass:'walk',  arp:0,   pad:0,   hat:1, vol:1,   echo:.22 },
+    BIGLAP: { root:55, scale:'mixo',   bpm:116, wave:'triangle', leadP:.5,  leadLen:1.3, bass:'drive', arp:.55, pad:0,   hat:1, vol:1,   echo:.25 },
+    WORLD:  { root:62, scale:'lydian', bpm:96,  wave:'sine',     leadP:.5,  leadLen:2.2, bass:'long',  arp:.3,  pad:.8,  hat:0, vol:1,   echo:.35 },
+    PAYIT:  { root:65, scale:'major',  bpm:76,  wave:'sine',     leadP:.42, leadLen:2.4, bass:'long',  arp:0,   pad:.7,  hat:0, vol:.95, echo:.4, bell:1 },
+    INNER:  { root:57, scale:'dorian', bpm:54,  wave:'sine',     leadP:.2,  leadLen:5,   bass:'long',  arp:0,   pad:1,   hat:0, vol:1,   echo:.5, bell:1 },
+    DAILY:  { root:64, scale:'major',  bpm:120, wave:'triangle', leadP:.6,  leadLen:1.1, bass:'drive', arp:.6,  pad:0,   hat:1, vol:.9,  echo:.2 },
+    ENDLESS:{ root:57, scale:'dorian', bpm:108, wave:'triangle', leadP:.5,  leadLen:1.3, bass:'drive', arp:.5,  pad:.3,  hat:1, vol:.95, echo:.25 }
+  },
+  ensure(){
+    if(this.ctx) return true;
+    const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return false;
+    this.ctx = new AC(); const c = this.ctx;
+    this.master = c.createGain(); this.master.gain.value = 0;
+    this.bus = c.createGain();
+    this.delay = c.createDelay(1.5); this.fb = c.createGain(); this.fb.gain.value = .38; this.wet = c.createGain(); this.wet.gain.value = .25;
+    this.bus.connect(this.master); this.bus.connect(this.delay); this.delay.connect(this.fb); this.fb.connect(this.delay); this.delay.connect(this.wet); this.wet.connect(this.master);
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3800;
+    this.master.connect(lp); lp.connect(c.destination);
+    const len = c.sampleRate * .1, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
+    for(let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * (1 - i/len);
+    this.noise = buf;
+    return true;
+  },
+  hz(m){ return 440 * Math.pow(2, (m - 69) / 12); },
+  deg(t, d){ const s = this.SCALES[t.scale], n = s.length, o = Math.floor(d / n); return t.root + s[((d % n) + n) % n] + 12 * o; },
+  tone(f, time, dur, type, vol, atk, rel){
+    const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, time);
+    g.gain.linearRampToValueAtTime(vol, time + atk);
+    g.gain.setValueAtTime(vol, time + Math.max(atk, dur - rel));
+    g.gain.exponentialRampToValueAtTime(0.0001, time + dur + .05);
+    o.connect(g); g.connect(this.bus); o.start(time); o.stop(time + dur + .1);
+  },
+  pluck(f, time, dur, type, vol){ this.tone(f, time, dur, type, vol, .008, dur * .95); },
+  hatAt(time, vol){
+    const c = this.ctx, s = c.createBufferSource(), g = c.createGain(), hp = c.createBiquadFilter();
+    s.buffer = this.noise; hp.type = 'highpass'; hp.frequency.value = 6500; g.gain.value = vol;
+    s.connect(hp); hp.connect(g); g.connect(this.bus); s.start(time);
+  },
+  schedStep(t, time){
+    const sec = 60 / t.bpm / 2, s = this.step % 8, prog = this.PROGS[this.progIdx], r = prog[this.bar % prog.length];
+    const chord = [r, r + 2, r + 4];
+    if(s === 0){
+      if(t.pad){ chord.forEach(d => this.tone(this.hz(this.deg(t, d)), time, sec * 8, 'sine', .05 * t.pad, sec * 3, sec * 3)); }
+      this.pluck(this.hz(this.deg(t, r - 7)), time, sec * (t.bass === 'long' ? 7 : 2), 'sine', .16);
+    }
+    if(t.bass === 'drive' && s === 4) this.pluck(this.hz(this.deg(t, r - 7 + 4)), time, sec * 1.6, 'sine', .11);
+    if(t.bass === 'walk' && (s === 3 || s === 5)) this.pluck(this.hz(this.deg(t, r - 7 + (s === 3 ? 2 : 4))), time, sec * 1.3, 'sine', .09);
+    if(t.arp && Math.random() < t.arp && s % 2 === 0){
+      const d = chord[(s / 2 + this.bar) % 3] + 7 + (Math.random() < .25 ? 7 : 0);
+      this.pluck(this.hz(this.deg(t, d)), time, sec * 1.4, 'sine', .05);
+    }
+    if(Math.random() < t.leadP * (s % 2 === 0 ? 1 : .45) && (s % 2 === 0 || Math.random() < .5)){
+      const pool = [r, r + 2, r + 4, r + 1, r + 3, r + 5];
+      let best = pool[0] + 7, bd = 99;
+      [...pool.map(p => p + 7), ...pool.map(p => p + 14)].forEach(c => { const dist = Math.abs(c - this.lead) + Math.random() * 2.2; if(dist < bd){ bd = dist; best = c; } });
+      this.lead = Math.max(6, Math.min(15, best));
+      const f = this.hz(this.deg(t, this.lead)), dur = sec * t.leadLen * (.7 + Math.random() * .6);
+      if(t.bell){ this.pluck(f, time, dur * 1.6, 'sine', .07); this.pluck(f * 2, time, dur * .6, 'sine', .018); }
+      else this.tone(f, time, dur, t.wave, .06, .02, dur * .7);
+    }
+    if(t.hat && (s === 2 || s === 6)) this.hatAt(time, .035);
+    this.step++; if(this.step % 8 === 0){ this.bar++; if(this.bar % 4 === 0 && Math.random() < .6) this.progIdx = Math.floor(Math.random() * this.PROGS.length); }
+  },
+  tick(){
+    if(!this.theme) return; const c = this.ctx, t = this.theme, sec = 60 / t.bpm / 2;
+    if(this.nextTime < c.currentTime) this.nextTime = c.currentTime + .05;
+    while(this.nextTime < c.currentTime + 1.2){ this.schedStep(t, this.nextTime); this.nextTime += sec; }
+  },
+  play(key){
+    if(!this.ensure()) return;
+    const t = this.THEMES[key] || this.THEMES.CLIMB, c = this.ctx;
+    this.ctx.resume && this.ctx.resume();
+    clearInterval(this.timer); clearTimeout(this.fading);
+    this.theme = t; this.step = 0; this.bar = 0; this.lead = 7; this.progIdx = Math.floor(Math.random() * 3);
+    this.delay.delayTime.value = 60 / t.bpm * .75; this.wet.gain.value = t.echo;
+    this.master.gain.cancelScheduledValues(c.currentTime); this.master.gain.setValueAtTime(this.master.gain.value, c.currentTime);
+    this.master.gain.linearRampToValueAtTime(.55 * t.vol, c.currentTime + 2);
+    this.nextTime = c.currentTime + .1; this.tick(); this.timer = setInterval(() => this.tick(), 150);
+  },
+  stop(){
+    if(!this.ctx || !this.theme) return; const c = this.ctx;
+    clearInterval(this.timer); this.theme = null;
+    this.master.gain.cancelScheduledValues(c.currentTime); this.master.gain.setValueAtTime(this.master.gain.value, c.currentTime);
+    this.master.gain.linearRampToValueAtTime(0, c.currentTime + .5);
+  }
+};
+
 const BGM = {
-  audioEl:null, playing:false, pendingStart:false,
-  ensureAudio(){ if(!this.audioEl){ this.audioEl = new Audio(ASSETS.sounds.music); this.audioEl.loop = true; this.audioEl.volume = 0.15; } },
-  start(){ if(SFX.muted){ this.pendingStart = true; return; } this.pendingStart = false; if(this.playing) return; this.playing = true; this.ensureAudio(); this.audioEl.play().catch(()=>{}); },
-  stop(){ this.playing = false; this.pendingStart = false; if(this.audioEl) this.audioEl.pause(); },
+  playing:false, pendingStart:false, key:'CLIMB', curKey:null,
+  start(key){ if(key) this.key = key; if(SFX.muted){ this.pendingStart = true; return; } this.pendingStart = false; if(this.playing && this.curKey === this.key) return; this.playing = true; this.curKey = this.key; try{ GenMusic.play(this.key); }catch(e){ console.warn('music failed', e); } },
+  duck(){ try{ const g = GenMusic.master, c = GenMusic.ctx; if(!g || !this.playing) return; g.gain.cancelScheduledValues(c.currentTime); g.gain.setValueAtTime(g.gain.value, c.currentTime); g.gain.linearRampToValueAtTime(0, c.currentTime + 1.5); }catch(e){} },
+  unduck(){ try{ const g = GenMusic.master, c = GenMusic.ctx; if(!g || !this.playing || !GenMusic.theme) return; g.gain.cancelScheduledValues(c.currentTime); g.gain.setValueAtTime(g.gain.value, c.currentTime); g.gain.linearRampToValueAtTime(.55 * GenMusic.theme.vol, c.currentTime + 1); }catch(e){} },
+  stop(){ this.playing = false; this.pendingStart = false; this.curKey = null; try{ GenMusic.stop(); }catch(e){} },
   // Previously: muting while music was already playing called stop(), which cleared
   // pendingStart back to false - so unmuting afterwards had no flag telling it to
   // resume, and the music stayed off until the next full view change. Now mute
@@ -595,7 +1106,7 @@ const engine={
   setupKeyboard(){ document.addEventListener('keydown', (e) => { if(!this.roundActive) return; const key = e.key.toUpperCase(); const tile = this.tiles.find(t => !t.used && t.letter === key); if(tile) this.pickTile(tile.id); if(key === 'BACKSPACE') this.removeSlot(this.answer.lastIndexOf(this.answer.find(a=>a!==null))); if(key === 'ENTER') this.checkAnswer(); }); },
   rand(){ return this.rng ? this.rng() : Math.random(); },
   later(fn, ms){ const tk = this.roundToken; setTimeout(()=>{ if(tk === this.roundToken) fn(); }, ms); },
-  baseLabel(){ if(this.mode === 'DAILY') return 'DAILY CHALLENGE'; if(this.mode === 'CLIMB') return (MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE ') + this.zone + ' \u00b7 ' + ZONES[this.zone-1].name.toUpperCase(); return 'WORD SCRAMBLE'; },
+  baseLabel(){ if(this.mode === 'DAILY') return 'DAILY CHALLENGE'; if(this.mode === 'CLIMB') return (MISSION.stops ? 'STOP ' : 'ZONE ') + this.zone + ' \u00b7 ' + ZONES[this.zone-1].name.toUpperCase(); return 'WORD SCRAMBLE'; },
   hasDoneDaily(){ return localStorage.getItem('scramble_daily_done_' + todayKey()) === '1'; },
   updateDailyBtn(){ const btn = document.getElementById('dailyBtn'); if(!btn) return; if(this.hasDoneDaily()){ btn.disabled = true; btn.innerText = 'DAILY COMPLETED'; } else { btn.disabled = false; btn.innerText = 'DAILY CHALLENGE'; } },
   loadHistory(){ try{ this.history = JSON.parse(localStorage.getItem('scramble_history')||'[]'); }catch(e){ this.history=[]; } },
@@ -603,15 +1114,16 @@ const engine={
   cleanupBoss(){ if(this.bossInterval){ clearInterval(this.bossInterval); this.bossInterval = null; } },
   toggleMute(){ SFX.muted = !SFX.muted; localStorage.setItem('scramble_muted', SFX.muted ? '1':'0'); this.updateMuteBtn(); BGM.onMuteChanged(SFX.muted); },
   updateMuteBtn(){ const btn = document.getElementById('muteBtn'); if(btn) btn.innerText = SFX.muted ? '🔇' : '🔊'; },
-  beginGame(mode){ if(mode === 'DAILY' && this.hasDoneDaily()) return; if(!localStorage.getItem('scramble_seen_help')){ this.pendingGameMode = mode; this.showHelp(); return; } this.launch(mode); },
-  launch(mode){ if(mode === 'DAILY'){ this.mode = 'DAILY'; this.showView('GAME'); } else if(mode === 'ENDLESS'){ this.mode = 'ENDLESS'; this.showView('GAME'); } else { this.selectMission(mode === 'BIGLAP' ? 'BIGLAP' : 'CLIMB'); this.mode = 'CLIMB'; this.showView('MAP'); } },
-  selectMission(id){ setMission(id); this.missionId = MISSION.id; this.climb = {cleared:0, best:{}}; this.loadClimb(); this.selectedZone = this.frontier(); const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; document.getElementById('mapMarker').innerText = MISSION.marker; },
-  showColl(){ document.getElementById('collView').style.display = 'flex'; const grid = document.getElementById('collGrid'); const coll = JSON.parse(localStorage.getItem('scramble_collection') || '[]'); grid.innerHTML = coll.sort().map(w => `<div class="coll-item">${w}</div>`).join(''); },
+  beginGame(mode){ if(MISSIONS[mode] && !missionUnlocked(mode)) return; if(mode === 'DAILY' && this.hasDoneDaily()) return; if(!localStorage.getItem('scramble_seen_help')){ this.pendingGameMode = mode; this.showHelp(); return; } this.launch(mode); },
+  launch(mode){ if(MISSIONS[mode] && !missionUnlocked(mode)) return; if(mode === 'DAILY'){ this.mode = 'DAILY'; this.showView('GAME'); } else if(mode === 'ENDLESS'){ this.mode = 'ENDLESS'; this.showView('GAME'); } else { this.selectMission(MISSIONS[mode] ? mode : 'CLIMB'); this.mode = 'CLIMB'; this.showView('MAP'); } },
+  selectMission(id){ setMission(id); this.missionId = MISSION.id; this.climb = {cleared:0, best:{}, stars:{}}; this.loadClimb(); this.selectedZone = this.frontier(); const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; document.getElementById('mapMarker').innerText = MISSION.marker; this.applyMapView(); },
+  applyMapView(){ const v = MISSION.view, st = document.getElementById('mapStage'), img = document.getElementById('mapImg'), sc = document.getElementById('mapScroll'); if(v){ st.style.width = 'min(' + (v.zoom * 100) + 'vw,' + (v.zoom * 520) + 'px)'; st.style.aspectRatio = MAP_W + '/' + v.cropH; st.style.overflow = 'hidden'; img.style.height = (MAP_H / v.cropH * 100) + '%'; img.style.top = (-v.cropY / v.cropH * 100) + '%'; img.style.bottom = 'auto'; sc.style.overflowX = 'auto'; } else { st.style.width = ''; st.style.aspectRatio = ''; st.style.overflow = ''; img.style.height = ''; img.style.top = ''; img.style.bottom = ''; sc.style.overflowX = ''; } },
+  showColl(){ document.getElementById('collView').style.display = 'flex'; this.renderBadges(); const grid = document.getElementById('collGrid'); const coll = JSON.parse(localStorage.getItem('scramble_collection') || '[]'); grid.innerHTML = coll.sort().map(w => `<div class="coll-item">${w}</div>`).join(''); },
   showHelp(){ this.helpPausedGame = document.body.classList.contains('game-active') && this.roundActive; if(this.helpPausedGame) this.stopTimer(); document.getElementById('helpOverlay').style.display = 'flex'; },
   hideHelp(){ document.getElementById('helpOverlay').style.display = 'none'; localStorage.setItem('scramble_seen_help', '1'); if(this.pendingGameMode){ const m = this.pendingGameMode; this.pendingGameMode = null; this.launch(m); return; } if(this.helpPausedGame){ this.helpPausedGame = false; this.startTimer(); } },
   dailyBestKey(){ return 'scramble_daily_' + todayKey(); },
-  showView(view){ this.roundToken++; this.cleanupBoss(); SFX.stopTick(); ['bossOverlay','lifeLostOverlay','gameOverOverlay'].forEach(id => { document.getElementById(id).style.display = 'none'; }); document.body.classList.remove('game-active','critical'); document.getElementById('landingView').style.display = view==='LANDING' ? 'flex':'none'; document.getElementById('hofView').style.display = view==='HOF' ? 'flex':'none'; document.getElementById('mapView').style.display = view==='MAP' ? 'flex':'none'; document.getElementById('collView').style.display = view==='COLL' ? 'flex':'none'; if(view==='GAME'){ document.body.classList.add('game-active'); document.querySelector('.container').style.backgroundImage = (this.mode === 'CLIMB' && MISSION.bg) ? `url('${MISSION.bg(this.zone)}')` : ''; const badge = document.getElementById('stopBadge'); if(this.mode === 'CLIMB' && MISSION.badge){ badge.src = MISSION.badge(this.zone); badge.style.display = 'block'; } else { badge.style.display = 'none'; badge.removeAttribute('src'); } this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.resetSession(); this.nextRound(); this.startTimer(); BGM.start(); } else if(view==='HOF'){ this.renderHof(); BGM.stop(); } else if(view==='MAP'){ this.stopTimer(); this.mode = 'CLIMB'; BGM.stop(); this.openMapUI(); } else { this.stopTimer(); if(view==='LANDING'){ this.updateDailyBtn(); this.updateClimbNote(); updateStreakDisplay(); } this.mode = 'CLIMB'; BGM.stop(); } },
-  resetSession(){ this.cleanupBoss(); const climb = this.mode === 'CLIMB'; this.score=0; this.streak=0; this.bestStreak=0; this.round = climb ? zoneFirstRound(this.zone) : 1; this.roundTime = climb ? zoneRoundTime(this.zone) : CONFIG.baseRoundTime; this.lives = climb ? CONFIG.zoneStartLives : 0; this.rng = this.mode === 'DAILY' ? mulberry32(parseInt(todayKey())) : null; this.lastWord = null; if(climb){ const shuffled = Object.values(ZONE_WORDS[this.zone].words).flat(); for(let i = shuffled.length - 1; i > 0; i--){ const j = Math.floor(this.rand() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } this.zoneWordQueue = shuffled.slice(0, zoneRegularRounds(this.zone)); } document.getElementById('roundLabel').innerText = this.baseLabel(); document.getElementById('livesStat').style.display = (climb && CONFIG.zoneStartLives === 0 && !CONFIG.zoneBonusLifeRound) ? 'none' : ''; this.updateStats(); },
+  showView(view){ if(view === 'HOF') HofFx.start(); else HofFx.stop(); this.roundToken++; this.cleanupBoss(); SFX.stopTick(); ['bossOverlay','lifeLostOverlay','gameOverOverlay','starOverlay'].forEach(id => { document.getElementById(id).style.display = 'none'; }); document.body.classList.remove('game-active','critical'); document.getElementById('landingView').style.display = view==='LANDING' ? 'flex':'none'; document.getElementById('missionsView').style.display = view==='MISSIONS' ? 'flex':'none'; if(view==='MISSIONS') refreshMissionButtons(); document.getElementById('hofView').style.display = view==='HOF' ? 'flex':'none'; document.getElementById('mapView').style.display = view==='MAP' ? 'flex':'none'; document.getElementById('collView').style.display = view==='COLL' ? 'flex':'none'; if(view==='GAME'){ document.body.classList.add('game-active'); { const _c = document.querySelector('.container'); const _scenic = (this.mode === 'DAILY' || this.mode === 'ENDLESS' || (this.mode === 'CLIMB' && (MISSION.id === 'WORLD' || MISSION.id === 'CLIMB' || MISSION.id === 'BIGLAP' || MISSION.id === 'PAYIT' || MISSION.id === 'INNER'))); if(_scenic){ _c.classList.remove('fitbg'); _c.style.backgroundImage=''; if(this.mode === 'CLIMB'){ const _u = MISSION.bg(this.zone); _c.style.setProperty('--bgp', `url('${_u}')`); _c.style.setProperty('--bgw', `url('${_u.replace('.jpg','-wide.jpg')}')`); } else { this.applyModeBg(true); } } else { const _has = (this.mode === 'CLIMB' && MISSION.bg); _c.style.backgroundImage = _has ? `url('${MISSION.bg(this.zone)}')` : ''; _c.classList.toggle('fitbg', !!_has); if(_has) _c.style.setProperty('--bgp', `url('${MISSION.bg(this.zone)}')`); } } document.querySelector('.container').classList.toggle('scenic', this.mode === 'DAILY' || this.mode === 'ENDLESS' || (this.mode === 'CLIMB' && (MISSION.id === 'WORLD' || MISSION.id === 'CLIMB' || MISSION.id === 'BIGLAP' || MISSION.id === 'PAYIT' || MISSION.id === 'INNER'))); const badge = document.getElementById('stopBadge'); if(this.mode === 'CLIMB' && MISSION.badge){ badge.src = MISSION.badge(this.zone); badge.style.display = 'block'; } else { badge.style.display = 'none'; badge.removeAttribute('src'); } this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.resetSession(); this.nextRound(); this.startTimer(); BGM.start(this.mode === 'CLIMB' ? MISSION.id : this.mode); } else if(view==='HOF'){ this.renderHof(); BGM.stop(); } else if(view==='MAP'){ this.stopTimer(); this.mode = 'CLIMB'; BGM.stop(); this.openMapUI(); } else { this.stopTimer(); if(view==='LANDING'||view==='MISSIONS'){ if(view==='LANDING') this.updateDailyBtn(); this.updateClimbNote(); updateStreakDisplay(); } this.mode = 'CLIMB'; BGM.stop(); } },
+  resetSession(){ this.cleanupBoss(); this.usedEndless = new Set(); this.dailyResults = []; this.stopSum = 0; this.stopWords = 0; const climb = this.mode === 'CLIMB'; this.score=0; this.streak=0; this.bestStreak=0; this.round = climb ? zoneFirstRound(this.zone) : 1; this.roundTime = climb ? zoneRoundTime(this.zone) : CONFIG.baseRoundTime; this.lives = climb ? CONFIG.zoneStartLives : 0; this.bonusActive = false; if(climb && getBonusLives() > 0){ this.lives += 1; this.bonusActive = true; } this.rng = this.mode === 'DAILY' ? mulberry32(parseInt(todayKey())) : null; this.lastWord = null; if(climb){ const shuffled = Object.values(ZONE_WORDS[this.zone].words).flat(); for(let i = shuffled.length - 1; i > 0; i--){ const j = Math.floor(this.rand() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } this.zoneWordQueue = shuffled.slice(0, zoneRegularRounds(this.zone)); } document.getElementById('roundLabel').innerText = this.baseLabel(); document.getElementById('livesStat').style.display = (climb && CONFIG.zoneStartLives === 0 && !CONFIG.zoneBonusLifeRound) ? 'none' : ''; this.updateStats(); },
   endSession(){ this.stopTimer(); this.cleanupBoss(); if(this.score > 0){ this.history.push({score:this.score, bestStreak:this.bestStreak, date:Date.now(), zone:(this.mode==='CLIMB' ? this.zone : 0), mission:(this.mode==='CLIMB' ? MISSION.id : null), daily:(this.mode==='DAILY')}); this.history.sort((a,b)=>b.score-a.score); this.history = this.history.slice(0,10); this.saveHistory(); } if(this.mode === 'DAILY'){ localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); } },
   exitGame(){ if(this.mode === 'CLIMB'){ this.stopTimer(); this.showView('MAP'); return; } this.endSession(); this.showView('LANDING'); },
   renderHof(){ this.setHofTab(this.hofTab || 'MINE'); },
@@ -620,31 +1132,107 @@ const engine={
     document.getElementById('hofTabMine').classList.toggle('active', tab === 'MINE');
     document.getElementById('hofTabEndless').classList.toggle('active', tab === 'ENDLESS');
     document.getElementById('hofTabDaily').classList.toggle('active', tab === 'DAILY');
+    document.getElementById('hofTabMissions').classList.toggle('active', tab === 'MISSIONS');
+    const pick = document.getElementById('hofMissionPick'); pick.style.display = tab === 'MISSIONS' ? 'flex' : 'none';
+    if(tab === 'MISSIONS'){ this.hofMission = this.hofMission || 'CLIMB'; pick.innerHTML = MISSION_ORDER.map(id => `<button class="hof-tab${id === this.hofMission ? ' active' : ''}" onpointerdown="engine.pickHofMission('${id}')">${MISSIONS[id].shortName.toUpperCase()}</button>`).join(''); }
     const list = document.getElementById('hofList');
     if(tab === 'MINE'){ this.renderLocalHof(list); return; }
-    const mode = tab === 'ENDLESS' ? 'endless' : 'daily';
+    const mode = tab === 'ENDLESS' ? 'endless' : tab === 'MISSIONS' ? 'mission-' + this.hofMission.toLowerCase() : 'daily';
     list.innerHTML = '<p class="empty-note">Loading global scores…</p>';
     fetchLeaderboard(mode, 20).then(data => this.renderGlobalHof(list, data.entries || [])).catch(() => {
       list.innerHTML = '<p class="empty-note">Couldn\'t reach the global leaderboard — check your connection and try again.</p>';
     });
   },
+  missionTotal(id){ try{ const c = JSON.parse(localStorage.getItem(MISSIONS[id].storageKey) || 'null'); const b = (c && c.best) || {}; return Object.keys(b).reduce((t,k) => t + (Number(b[k]) || 0), 0); }catch(e){ return 0; } },
+  refreshMissionLb(){ const b = document.getElementById('mpLb'); if(b) b.style.display = (this.climb && this.climb.cleared >= ZONES.length) ? 'inline-block' : 'none'; },
+  openMissionLb(){ const total = this.missionTotal(MISSION.id); this.lbmId = MISSION.id; this.lbmTotal = total; this.lbmSending = false; document.getElementById('lbmTitle').innerHTML = MISSION.shortName.toUpperCase() + ' <span class="gold-text">COMPLETE</span>'; document.getElementById('lbmTotal').innerText = total; { const st = this.climb.stars || {}; document.getElementById('lbmStars').innerText = Object.keys(st).reduce((t, k) => t + (st[k] || 0), 0) + '/' + (ZONES.length * 3); } document.getElementById('lbmName').value = localStorage.getItem('scramble_player_name') || ''; document.getElementById('lbmStatus').innerText = ''; const b = document.getElementById('lbmBtn'); b.disabled = false; b.innerText = 'SUBMIT'; document.getElementById('lbMissionOverlay').style.display = 'flex'; },
+  closeMissionLb(){ document.getElementById('lbMissionOverlay').style.display = 'none'; },
+  submitMissionScore(){ if(this.lbmSending) return; const name = document.getElementById('lbmName').value.trim().slice(0, 14) || 'Player'; if(!nameAllowed(name)){ document.getElementById('lbmStatus').innerText = 'Please choose a different name.'; return; } localStorage.setItem('scramble_player_name', name); const st = document.getElementById('lbmStatus'), b = document.getElementById('lbmBtn'); this.lbmSending = true; b.disabled = true; st.innerText = 'Submitting…'; postLeaderboardScore('mission-' + this.lbmId.toLowerCase(), name, this.lbmTotal).then(d => { st.innerText = d.rank ? `You're ranked #${d.rank} globally!` : 'Submitted!'; b.innerText = 'SUBMITTED'; }).catch(() => { st.innerText = "Couldn't reach the leaderboard — try again."; b.disabled = false; this.lbmSending = false; }); },
+  async openBackup(){ document.getElementById('bkIn').value = ''; document.getElementById('bkStatus').innerText = ''; this.bkPending = null; document.getElementById('bkRestore').innerText = 'RESTORE'; document.getElementById('bkOut').value = 'Making your code...'; document.getElementById('backupOverlay').style.display = 'flex'; try{ document.getElementById('bkOut').value = await Backup.encode(); }catch(e){ document.getElementById('bkOut').value = 'Sorry, could not make a code in this browser.'; } },
+  closeBackup(){ document.getElementById('backupOverlay').style.display = 'none'; },
+  copyBackup(){ const box = document.getElementById('bkOut'), btn = document.getElementById('bkCopy'); box.focus(); box.select(); const done = ok => { btn.innerText = ok ? 'COPIED!' : 'PRESS CTRL+C'; setTimeout(() => { btn.innerText = 'COPY CODE'; }, 2000); }; try{ navigator.clipboard.writeText(box.value).then(() => done(true), () => done(document.execCommand && document.execCommand('copy'))); }catch(e){ try{ done(document.execCommand('copy')); }catch(e2){ done(false); } } },
+  async restoreBackup(){
+    const st = document.getElementById('bkStatus'), btn = document.getElementById('bkRestore'), code = document.getElementById('bkIn').value;
+    try{
+      const data = await Backup.decode(code);
+      if(!Object.keys(data).length) throw new Error('That code is empty.');
+      if(this.bkPending !== code.trim()){ this.bkPending = code.trim(); btn.innerText = 'TAP AGAIN TO REPLACE'; st.innerText = 'Found: ' + Backup.summary(data) + '. This will replace the progress on this device.'; return; }
+      const old = []; for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); if(/^scramble_/.test(k)) old.push(k); }
+      old.forEach(k => localStorage.removeItem(k)); Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
+      st.innerText = 'Restored! Reloading...'; setTimeout(() => location.reload(), 700);
+    }catch(e){ this.bkPending = null; btn.innerText = 'RESTORE'; const known = ['That does not look','The code looks damaged','This browser cannot','That code is empty']; st.innerText = (e && e.message && known.some(k => e.message.indexOf(k) === 0)) ? e.message : 'That code did not work - check you copied all of it.'; }
+  },
+  progressText(){ const st = this.climb.stars || {}, tot = Object.keys(st).reduce((t, k) => t + (st[k] || 0), 0); return this.climb.cleared + '/' + ZONES.length + ' \u00b7 \u2605 ' + tot + '/' + (ZONES.length * 3); },
+  renderBadges(){ const earned = loadBadges().sort((a, b) => a - b), row = document.getElementById('badgeRow'); const streak = parseInt(localStorage.getItem('scramble_streak') || '0'), nxt = nextMilestone(Math.max(streak, earned.length ? earned[earned.length - 1] : 0)); row.innerHTML = earned.map(n => { const b = badgeInfo(n); return '<span class="badge-chip">' + b.icon + ' ' + b.name + ' \u00b7 ' + n + 'd</span>'; }).join('') + '<span class="badge-chip locked">\u{1F512} ' + nxt + '-day streak</span>'; },
+  showStars(){
+    const L = this.lastStop, ov = document.getElementById('starOverlay');
+    document.getElementById('stTitle').innerHTML = (MISSION.stops ? 'STOP' : 'ZONE') + ' <span class="gold-text">CLEARED</span>';
+    document.getElementById('stName').innerText = ZONES[L.z - 1].name;
+    document.getElementById('stRow').innerHTML = [1,2,3].map(i => '<span class="st' + (i <= L.stars ? ' on' : '') + '" style="animation-delay:' + (0.35 + i * 0.35) + 's">\u2605</span>').join('');
+    document.getElementById('stMsg').innerText = L.stars === 3 ? 'BLAZING FAST!' : (L.stars === 2 ? 'NICE WORK!' : 'CLEARED!');
+    document.getElementById('stScore').innerText = L.score + ' PTS' + (L.newBest && L.stars > 1 ? ' \u00b7 NEW BEST STARS!' : '');
+    document.getElementById('stHint').innerText = L.stars === 3 ? 'Top marks for speed!' : (L.stars === 2 ? '\u2605\u2605\u2605: finish with half the time left on average.' : '\u2605\u2605: finish with a third of the time left on average.');
+    ov.style.display = 'flex'; SFX.lifeGained();
+  },
+  starsContinue(){ document.getElementById('starOverlay').style.display = 'none'; this.showView('MAP'); },
+  shareStop(){ const L = this.lastStop, z = ZONES[L.z - 1]; this.doShare('Scramble Pro - ' + MISSION.shortName + ': ' + z.name + ' ' + '\u2B50'.repeat(L.stars) + '\nScore ' + L.score + '\nCan you beat me? ' + this.gameUrl(), document.getElementById('stShare')); },
+  showStreakReward(fresh){ const el = document.getElementById('goReward'); if(!fresh || !fresh.length){ el.style.display = 'none'; return; } const top = fresh[fresh.length - 1], b = badgeInfo(top); el.innerHTML = b.icon + ' ' + top + '-DAY STREAK!<br>New badge: <b>' + b.name + '</b> \u00b7 \u2764\uFE0F +' + fresh.length + ' bonus ' + (fresh.length === 1 ? 'life' : 'lives') + '<br><small style="opacity:.8;font-size:10px">Used automatically in your next mission stop.</small>'; el.style.display = 'block'; },
+  pickHofMission(id){ this.hofMission = id; this.setHofTab('MISSIONS'); },
   renderLocalHof(list){
     if(!this.history.length){ list.innerHTML = '<p class="empty-note">No runs yet — play a game to set your first score!</p>'; return; }
     list.innerHTML = this.history.map((h,i)=>`<div class="hof-item rank-${i+1}"><div class="rank">#${i+1}</div><div class="label">${h.zone ? this.historyLabel(h) : (h.daily ? 'Daily Challenge' : 'Classic run')}<small>Best streak: ${h.bestStreak}</small></div><div class="score">${h.score} PTS</div></div>`).join('');
   },
-  stopWord(){ return MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE '; },
-  historyLabel(h){ const m = MISSIONS[h.mission] || MISSIONS.CLIMB; const zn = m.zones[h.zone-1]; if(!zn) return m.shortName; return (m.id === 'BIGLAP' ? 'Big Lap · ' : 'Zone ' + h.zone + ' · ') + zn.name; },
+  stopWord(){ return MISSION.stops ? 'STOP ' : 'ZONE '; },
+  historyLabel(h){ const m = MISSIONS[h.mission] || MISSIONS.CLIMB; const zn = m.zones[h.zone-1]; if(!zn) return m.shortName; return (m.stops ? m.shortName + ' · ' : 'Zone ' + h.zone + ' · ') + zn.name; },
   renderGlobalHof(list, entries){
     if(!entries.length){ list.innerHTML = '<p class="empty-note">No global scores yet — be the first to set one!</p>'; return; }
     const myName = (localStorage.getItem('scramble_player_name') || '').trim();
     list.innerHTML = entries.map((e,i)=>{
       const mine = myName && e.name === myName;
-      return `<div class="hof-item rank-${i+1}${mine ? ' is-you' : ''}"><div class="rank">#${i+1}</div><div class="label">${e.name}${mine ? '<span class="you">YOU</span>' : ''}</div><div class="score">${e.score} PTS</div></div>`;
+      return `<div class="hof-item rank-${i+1}${mine ? ' is-you' : ''}"><div class="rank">#${i+1}</div><div class="label">${escapeHtml(e.name)}${mine ? '<span class="you">YOU</span>' : ''}</div><div class="score">${e.score} PTS</div></div>`;
     }).join('');
+  },
+  applyModeBg(force){
+    const pool = MODE_BG_POOL, n = pool.length, c = document.querySelector('.container');
+    let stage, start;
+    if(this.mode === 'DAILY'){ stage = Math.floor((this.round - 1) / 5); start = parseInt(todayKey()) % n; }
+    else { stage = Math.floor((this.round - 1) / 10); if(force || this.endlessBgStart == null) this.endlessBgStart = Math.floor(Math.random() * n); start = this.endlessBgStart; }
+    const name = pool[(start + stage * 7) % n];
+    if(this.curModeBg === name && !force) return;
+    const had = this.curModeBg; this.curModeBg = name;
+    const apply = () => { c.style.setProperty('--bgp', `url('bg/${name}.jpg')`); c.style.setProperty('--bgw', `url('bg/${name}-wide.jpg')`); };
+    if(force || !had){ apply(); return; }
+    c.classList.remove('bgswap'); void c.offsetWidth; c.classList.add('bgswap'); setTimeout(apply, 350); setTimeout(() => c.classList.remove('bgswap'), 900);
+  },
+  doShare(text, btn){
+    const label = btn.dataset.label || (btn.dataset.label = btn.innerText), done = msg => { btn.innerText = msg; setTimeout(() => { btn.innerText = label; }, 2200); };
+    const copy = () => { try{ navigator.clipboard.writeText(text).then(() => done('COPIED!'), () => done('COPY FAILED')); }catch(e){ done('COPY FAILED'); } };
+    if(navigator.share){ navigator.share({ text }).catch(e => { if(e && e.name !== 'AbortError') copy(); }); } else copy();
+  },
+  gameUrl(){ return location.origin + location.pathname.replace(/index\.html$/, ''); },
+  resultGrid(){ const res = (this.dailyResults || []).slice(0, 20), rows = []; for(let i = 0; i < res.length; i += 5) rows.push(res.slice(i, i + 5).map(r => r === 'G' ? '\u{1F7E9}' : '\u{1F7E5}').join('')); return rows.join('\n'); },
+  shareResult(){
+    const btn = document.getElementById('goShare'), url = this.gameUrl();
+    let text;
+    if(this.mode === 'DAILY'){
+      const t = new Date(), dayNo = Math.floor((Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()) - Date.UTC(2026, 9, 1)) / 86400000) + 1;
+      text = `Scramble Pro - Daily Challenge #${dayNo}\n${this.resultGrid()}\nScore ${this.score} \u00B7 Best streak ${this.bestStreak}\nCan you beat me? ${url}`;
+    } else if(this.mode === 'ENDLESS'){
+      text = `Scramble Pro - Endless Mode\nI got through ${Math.max(0, this.round - 1)} words \u00B7 Score ${this.score} \u00B7 Best streak ${this.bestStreak}\nCan you beat me? ${url}`;
+    } else {
+      const z = ZONES[this.zone - 1];
+      text = `Scramble Pro - ${MISSION.shortName}: ${z ? z.name : 'Stop ' + this.zone}\n${this.resultGrid()}\nScore ${this.score} \u00B7 Best streak ${this.bestStreak}\nCan you beat me? ${url}`;
+    }
+    this.doShare(text, btn);
+  },
+  shareMission(){
+    const m = MISSIONS[this.lbmId];
+    this.doShare(`Scramble Pro - ${m.shortName} COMPLETE! \u{1F3C6}\nTotal score ${this.lbmTotal}\nCan you beat me? ${this.gameUrl()}`, document.getElementById('lbmShare'));
   },
   prepLeaderboardEntry(mode, score){
     const box = document.getElementById('goLeaderboard');
     const eligible = mode === 'ENDLESS' || mode === 'DAILY';
+    const sh = document.getElementById('goShare'); if(sh){ sh.style.display = 'inline-block'; sh.innerText = '\u{1F4E4} SHARE RESULT'; delete sh.dataset.label; }
     box.classList.toggle('visible', eligible);
     if(!eligible) return;
     this.lbMode = mode === 'ENDLESS' ? 'endless' : 'daily';
@@ -662,6 +1250,7 @@ const engine={
     const status = document.getElementById('lbStatus');
     const btn = document.getElementById('lbSubmitBtn');
     const name = input.value.trim().slice(0, 14) || 'Player';
+    if(!nameAllowed(name)){ status.innerText = 'Please choose a different name.'; return; }
     localStorage.setItem('scramble_player_name', name);
     this.lbSubmitting = true;
     btn.disabled = true;
@@ -675,20 +1264,20 @@ const engine={
       this.lbSubmitting = false;
     });
   },
-  nextRound(){ if(this.mode === 'DAILY' && this.round > CONFIG.dailyRounds){ this.dailyComplete(); return; } this.roundActive = false; document.body.classList.remove('critical'); document.getElementById('hintBox').classList.remove('visible'); const isBoss = this.mode === 'CLIMB' ? this.round === zoneBossRound(this.zone) : (this.round % 10 === 0) && (this.round > 1); document.getElementById('roundLabel').innerText = isBoss ? 'BOSS ROUND' : this.baseLabel(); this.bossLevel = !isBoss ? 0 : this.mode === 'CLIMB' ? (((this.zone - 1) % 10) + 1) : (((Math.floor(this.round / 10) - 1) % 10) + 1); const setupAndStart = () => { this.cleanupBoss(); this.startTime = Date.now(); this.timeLeft = this.roundTime; if(this.mode === 'CLIMB' && !isBoss){ const idx = this.round - zoneFirstRound(this.zone); this.currentWord = this.zoneWordQueue[idx]; } else { const pool = this.mode === 'CLIMB' ? ZONE_WORDS[this.zone].boss : WORDS.filter(w => wordLengthsForRound(this.round, this.mode).includes(w.length)); const avoidRepeat = pool.length > 1 ? pool.filter(w => w !== this.lastWord) : pool; this.currentWord = avoidRepeat[Math.floor(this.rand()*avoidRepeat.length)]; } this.lastWord = this.currentWord; this.answer = new Array(this.currentWord.length).fill(null); let letters = this.currentWord.split(''), scrambled = letters.slice().sort(()=>this.rand()-0.5); if(scrambled.join('')===this.currentWord) scrambled.reverse(); this.tiles = scrambled.map((l,i)=>({ letter:l, id:i, used:false, driftDx: this.bossLevel===5 ? (4 + this.rand()*10) : 0, driftDy: this.bossLevel===5 ? (4 + this.rand()*10) : 0 })); this.renderTiles(); this.renderAnswer(); this.updateUI(); document.getElementById('roundNum').innerText = this.mode==='DAILY' ? `${this.round}/${CONFIG.dailyRounds}` : (this.mode==='CLIMB' ? `${this.round - zoneFirstRound(this.zone) + 1}/${zoneTotalRounds(this.zone)}` : this.round); if(this.timeLeft <= CONFIG.hintAt){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } this.roundActive = true; if(this.bossLevel === 1) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; document.querySelectorAll('.boss-encrypt').forEach(el => { const realChar = el.getAttribute('data-char'); const symbols = ['@','#','$','&','%','*','?']; el.innerText = Math.random() < 0.3 ? realChar : symbols[Math.floor(Math.random() * symbols.length)]; }); }, 150); } else if (this.bossLevel === 4 || this.bossLevel === 10) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; this.shuffleTiles(); }, 3500); } }; if (isBoss) { const bossOverlay = document.getElementById('bossOverlay'); bossOverlay.style.display = 'flex'; this.later(() => { bossOverlay.style.display = 'none'; setupAndStart(); }, 1500); } else { setupAndStart(); } },
+  nextRound(){ if(this.mode === 'DAILY' && this.round > CONFIG.dailyRounds){ this.dailyComplete(); return; } if(this.mode === 'DAILY' || this.mode === 'ENDLESS') this.applyModeBg(); this.roundActive = false; document.body.classList.remove('critical'); document.getElementById('hintBox').classList.remove('visible'); const isBoss = this.mode === 'CLIMB' ? this.round === zoneBossRound(this.zone) : (this.round % 10 === 0) && (this.round > 1); document.getElementById('roundLabel').innerText = isBoss ? 'BOSS ROUND' : this.baseLabel(); this.bossLevel = !isBoss ? 0 : this.mode === 'CLIMB' ? (((this.zone - 1) % 10) + 1) : (((Math.floor(this.round / 10) - 1) % 10) + 1); const setupAndStart = () => { this.cleanupBoss(); this.startTime = Date.now(); this.timeLeft = this.roundTime; if(this.mode === 'CLIMB' && !isBoss){ const idx = this.round - zoneFirstRound(this.zone); this.currentWord = this.zoneWordQueue[idx]; } else { const pool = this.mode === 'CLIMB' ? ZONE_WORDS[this.zone].boss : (this.mode === 'ENDLESS' ? endlessPool(this) : WORDS.filter(w => wordLengthsForRound(this.round, this.mode).includes(w.length))); const avoidRepeat = pool.length > 1 ? pool.filter(w => w !== this.lastWord) : pool; this.currentWord = avoidRepeat[Math.floor(this.rand()*avoidRepeat.length)]; } this.lastWord = this.currentWord; if(this.mode === 'ENDLESS'){ (this.usedEndless || (this.usedEndless = new Set())).add(this.currentWord); } this.answer = new Array(this.currentWord.length).fill(null); let letters = this.currentWord.split(''), scrambled = letters.slice().sort(()=>this.rand()-0.5); if(scrambled.join('')===this.currentWord) scrambled.reverse(); this.tiles = scrambled.map((l,i)=>({ letter:l, id:i, used:false, driftDx: this.bossLevel===5 ? (4 + this.rand()*10) : 0, driftDy: this.bossLevel===5 ? (4 + this.rand()*10) : 0 })); this.renderTiles(); this.renderAnswer(); this.updateUI(); document.getElementById('roundNum').innerText = this.mode==='DAILY' ? `${this.round}/${CONFIG.dailyRounds}` : (this.mode==='CLIMB' ? `${this.round - zoneFirstRound(this.zone) + 1}/${zoneTotalRounds(this.zone)}` : this.round); if(this.timeLeft <= CONFIG.hintAt){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } this.roundActive = true; if(this.bossLevel === 1) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; document.querySelectorAll('.boss-encrypt').forEach(el => { const realChar = el.getAttribute('data-char'); const symbols = ['@','#','$','&','%','*','?']; el.innerText = Math.random() < 0.3 ? realChar : symbols[Math.floor(Math.random() * symbols.length)]; }); }, 150); } else if (this.bossLevel === 4 || this.bossLevel === 10) { this.bossInterval = setInterval(() => { if(!this.roundActive) return; this.shuffleTiles(); }, 3500); } }; if (isBoss) { const bossOverlay = document.getElementById('bossOverlay'); bossOverlay.style.display = 'flex'; this.later(() => { bossOverlay.style.display = 'none'; setupAndStart(); }, 1500); } else { setupAndStart(); } },
   renderTiles(){ const row = document.getElementById('tileRow'); if(row.children.length !== this.tiles.length) row.innerHTML = this.tiles.map((t, i) => `<button class="tile" id="t-${i}"></button>`).join(''); this.tiles.forEach((t, i) => { const el = document.getElementById(`t-${i}`); el.onpointerdown = () => this.pickTile(t.id); el.className = `tile ${t.used?'used':''} ${this.bossLevel===2?'boss2-spin':''} ${this.bossLevel===3||this.bossLevel===10?'boss3-mirror':''} ${this.bossLevel===5?'boss5-drift':''} ${this.bossLevel===6?'boss6-glitch':''} ${this.bossLevel===7?'boss7-blackout':''} ${this.bossLevel===9?(i%2===0?'boss9-cw':'boss9-ccw'):''}`; el.style.cssText = this.bossLevel===5 ? `--dx:${t.driftDx}px;--dy:${t.driftDy}px;` : ''; el.innerHTML = this.bossLevel === 1 ? `<span class="boss-encrypt" data-char="${t.letter}">${t.letter}</span>` : t.letter; }); },
   renderAnswer(cls){ const row = document.getElementById('answerRow'); row.className = 'answer-row' + (cls?(' '+cls):''); if(row.children.length !== this.answer.length) row.innerHTML = this.answer.map((_, i) => `<div class="slot" id="s-${i}" onpointerdown="engine.removeSlot(${i})"></div>`).join(''); this.answer.forEach((a, i) => { const el = document.getElementById(`s-${i}`); el.className = `slot ${a!==null?'filled':''}`; el.innerText = a!==null ? a.letter : ''; }); },
   shuffleTiles(){ const arr = this.tiles.slice(); for(let i = arr.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } this.tiles = arr; this.renderTiles(); },
   pickTile(id){ if(!this.roundActive) return; const tile = this.tiles.find(t=>t.id===id && !t.used); if(!tile) return; const slot = this.answer.findIndex(a=>a===null); if(slot===-1) return; tile.used = true; this.answer[slot] = tile; this.renderTiles(); this.renderAnswer(); if(this.answer.every(a=>a!==null)) this.checkAnswer(); },
   removeSlot(i){ if(!this.roundActive) return; const tile = this.answer[i]; if(!tile) return; tile.used = false; this.answer[i] = null; this.renderTiles(); this.renderAnswer(); },
   clearAnswer(){ if(!this.roundActive) return; this.answer.forEach(a=>{ if(a) a.used=false; }); this.answer = this.answer.map(()=>null); this.renderTiles(); this.renderAnswer(); },
-  checkAnswer(){ const built = this.answer.map(a=>a.letter).join(''); if(built === this.currentWord){ this.roundActive = false; this.cleanupBoss(); SFX.stopTick(); this.renderAnswer('correct'); SFX.correct(); triggerBurst(document.getElementById('answerRow')); addToCollection(this.currentWord); this.combo++; if(this.combo > 1) { const b = document.createElement('div'); b.className = 'combo-badge'; b.innerText = 'COMBO x' + this.combo; document.querySelector('.container').appendChild(b); setTimeout(()=>b.remove(), 1000); } let points = this.timeLeft + (this.combo * 5); this.streak++; if(this.streak > this.bestStreak) this.bestStreak = this.streak; if(this.streak >= 3) points += Math.floor(this.streak/3)*5; this.score += points; this.updateStats(); const zoneEnd = this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone); this.later(()=>{ if(zoneEnd) this.zoneCleared(); else this.advanceRound(); }, 900); } else { this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.renderAnswer('wrong'); SFX.wrong(); setTimeout(()=>{ this.clearAnswer(); }, 500); } },
+  checkAnswer(){ const built = this.answer.map(a=>a.letter).join(''); if(built === this.currentWord){ this.roundActive = false; this.dailyResults.push('G'); this.cleanupBoss(); SFX.stopTick(); this.renderAnswer('correct'); SFX.correct(); triggerBurst(document.getElementById('answerRow')); addToCollection(this.currentWord); this.combo++; if(this.combo > 1) { const b = document.createElement('div'); b.className = 'combo-badge'; b.innerText = 'COMBO x' + this.combo; document.querySelector('.container').appendChild(b); setTimeout(()=>b.remove(), 1000); } if(this.mode === 'CLIMB'){ this.stopSum += this.timeLeft / this.roundTime; this.stopWords++; } let points = this.timeLeft + (this.combo * 5); this.streak++; if(this.streak > this.bestStreak) this.bestStreak = this.streak; if(this.streak >= 3) points += Math.floor(this.streak/3)*5; this.score += points; this.updateStats(); const zoneEnd = this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone); this.later(()=>{ if(zoneEnd) this.zoneCleared(); else this.advanceRound(); }, 900); } else { this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.renderAnswer('wrong'); SFX.wrong(); setTimeout(()=>{ this.clearAnswer(); }, 500); } },
   advanceRound(){ if(this.mode === 'CLIMB'){ const inZone = this.round - zoneFirstRound(this.zone) + 1; if(CONFIG.zoneBonusLifeRound && inZone === CONFIG.zoneBonusLifeRound){ this.lives++; SFX.lifeGained(); this.updateStats(); } } else if(this.round % 10 === 0){ this.lives++; SFX.lifeGained(); this.updateStats(); if(this.roundTime > CONFIG.minRoundTime){ this.roundTime = Math.max(CONFIG.minRoundTime, this.roundTime - 2); } } this.round++; this.nextRound(); },
-  onTimeout(){ this.roundActive = false; this.cleanupBoss(); SFX.stopTick(); this.streak = 0; this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.updateStats(); document.getElementById('answerRow').innerHTML = `<div style="font-family:'Orbitron';color:var(--red);font-size:18px;">TIME'S UP — IT WAS ${this.currentWord}</div>`; if(this.lives > 0){ this.lives--; SFX.lifeLost(); this.updateStats(); this.later(()=>{ const overlay = document.getElementById('lifeLostOverlay'); overlay.style.display = 'flex'; this.later(()=>{ overlay.style.display = 'none'; if(this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone)) this.nextRound(); else this.advanceRound(); }, 1000); }, 600); } else { SFX.gameOver(); this.later(()=>{ this.gameOver(); }, 800); } },
-  gameOver(){ this.stopTimer(); this.cleanupBoss(); if(this.mode === 'DAILY'){ localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); } document.getElementById('goTitle').innerHTML = this.mode==='DAILY' ? 'DAILY <span class="gold-text">OVER</span>' : this.mode==='CLIMB' ? 'ZONE <span class="gold-text">FAILED</span>' : 'GAME <span class="gold-text">OVER</span>'; document.getElementById('goWordLine').style.display = 'block'; document.getElementById('goWord').innerText = this.currentWord; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = this.mode==='CLIMB' ? (this.round - zoneFirstRound(this.zone)) : Math.max(0, this.round - 1); this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
-  dailyComplete(){ this.stopTimer(); SFX.lifeGained(); localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); updateStreakDate(); document.getElementById('goTitle').innerHTML = 'DAILY <span class="gold-text">COMPLETE</span>'; document.getElementById('goWordLine').style.display = 'none'; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = CONFIG.dailyRounds; this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
-  loadClimb(){ try{ const c = JSON.parse(localStorage.getItem(MISSION.storageKey) || 'null'); if(c && typeof c.cleared === 'number'){ this.climb = { cleared: Math.min(ZONES.length, Math.max(0, Math.floor(c.cleared))), best: c.best || {} }; } }catch(e){} }, saveClimb(){ localStorage.setItem(MISSION.storageKey, JSON.stringify(this.climb)); }, frontier(){ return Math.min(ZONES.length, this.climb.cleared + 1); }, updateClimbNote(){ const el = document.getElementById('climbNote'); if(!el) return; const parts = Object.values(MISSIONS).map(m => { let c = 0; try{ const d = JSON.parse(localStorage.getItem(m.storageKey) || 'null'); if(d && typeof d.cleared === 'number') c = d.cleared; }catch(e){} if(c >= m.zones.length) return m.doneNote; return c > 0 ? m.shortName + ': ' + c + ' of ' + m.zones.length + (m.id === 'BIGLAP' ? ' stops' : ' zones') + ' cleared' : ''; }).filter(Boolean); el.innerText = parts.join('  \u00b7  '); }, zonePos(z){ const zn = ZONES[z-1]; return { x: zn.x / MAP_W, y: zn.y / MAP_H }; }, placeMarker(x, y, hop){ const m = document.getElementById('mapMarker'); m.style.left = (x*100) + '%'; m.style.top = (y*100) + '%'; m.style.transform = 'translate(-50%, calc(-88% - ' + (hop||0) + 'px))'; }, scrollToZone(z, smooth){ const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const y = this.zonePos(z).y * st.clientHeight; sc.scrollTo({ top: Math.max(0, y - sc.clientHeight * 0.42), behavior: smooth ? 'smooth' : 'auto' }); }, setFog(z, animate){ const fog = document.getElementById('mapFog'); const h = (!MISSION.fog || z > ZONES.length) ? 0 : Math.max(0, this.zonePos(z).y * 100 - 5); if(!animate){ fog.style.transition = 'none'; } fog.style.height = h + '%'; if(!animate){ void fog.offsetHeight; fog.style.transition = ''; } }, renderNodes(cl){ document.getElementById('mapNodes').innerHTML = ZONES.map(zn => { const st = zn.n <= cl ? 'cleared' : (zn.n === cl + 1 ? 'open' : 'locked'); const sel = zn.n === this.selectedZone ? ' selected' : ''; return '<div class="map-node ' + st + sel + '" data-z="' + zn.n + '" style="left:' + (zn.x/MAP_W*100).toFixed(3) + '%;top:' + (zn.y/MAP_H*100).toFixed(3) + '%;width:' + MISSION.nodeSize + '%" onpointerdown="engine.selectZone(' + zn.n + ')">' + (st === 'cleared' ? '\u2713' : zn.n) + '</div>'; }).join(''); }, showBanner(text, ms, warn){ const b = document.getElementById('mapBanner'); b.innerText = text; b.classList.toggle('warn', !!warn); b.style.animationDuration = (ms || 1600) + 'ms'; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }, updatePanel(busy){ const n = this.selectedZone, zn = ZONES[n-1]; const lens = Object.keys(ZONE_WORDS[n].words).map(Number).sort((x,y) => x - y); const lenText = lens.length === 1 ? lens[0] + '-letter words' : lens[0] + '\u2013' + lens[lens.length-1] + '-letter words'; const best = this.climb.best[n]; document.getElementById('mpZone').innerText = MISSION.id === 'BIGLAP' ? ('STOP ' + n + ' OF ' + ZONES.length + ' \u00b7 ' + zn.place.toUpperCase()) : ('ZONE ' + n + ' OF ' + ZONES.length); document.getElementById('mpName').innerText = zn.name; document.getElementById('mpMeta').innerText = lenText + ' \u00b7 ' + zoneRoundTime(n) + 's per word \u00b7 boss on round ' + zoneTotalRounds(n) + (best ? ' \u00b7 Best ' + best : ''); const btn = document.getElementById('mpStart'); btn.disabled = !!busy; btn.innerText = busy ? 'CLIMBING\u2026' : (n <= this.climb.cleared ? 'REPLAY ZONE' : 'START'); }, selectZone(n){ if(this.travelBusy) return; if(n > this.climb.cleared + 1){ this.showBanner('LOCKED \u2013 CLEAR ' + (MISSION.id === 'BIGLAP' ? 'STOP ' : 'ZONE ') + this.frontier() + ' FIRST', 1400, true); return; } this.selectedZone = n; this.renderNodes(this.climb.cleared); this.updatePanel(false); }, startSelectedZone(){ if(this.travelBusy) return; this.zone = this.selectedZone; this.mode = 'CLIMB'; this.showView('GAME'); }, openMapUI(){ const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; const mk = document.getElementById('mapMarker'); mk.innerText = MISSION.marker; mk.style.width = MISSION.markerSize + '%'; mk.style.fontSize = 'min(' + (MISSION.markerSize * 0.45) + 'vw, ' + (MISSION.markerSize * 2.5) + 'px)'; const pt = this.pendingTravel; this.pendingTravel = null; const token = ++this.mapToken; const cl = this.climb.cleared, front = this.frontier(); this.travelBusy = false; document.getElementById('mapProgress').innerText = cl + '/' + ZONES.length; document.getElementById('mapBanner').classList.remove('show'); if(pt && !pt.replay){ this.travelBusy = true; this.selectedZone = pt.from; this.renderNodes(pt.from - 1); this.setFog(pt.from, false); const p = this.zonePos(pt.from); this.placeMarker(p.x, p.y, 0); this.updatePanel(true); this.scrollToZone(pt.from, false); this.runTravel(pt, token); return; } this.selectedZone = pt ? pt.from : front; this.renderNodes(cl); this.setFog(cl >= ZONES.length ? ZONES.length + 1 : front, false); const p = this.zonePos(front); this.placeMarker(p.x, p.y, 0); this.updatePanel(false); this.scrollToZone(front, false); if(pt && pt.replay) this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1600); }, async runTravel(pt, token){ const sleep = ms => new Promise(r => setTimeout(r, ms)); const alive = () => token === this.mapToken; await sleep(600); if(!alive()) return; this.renderNodes(this.climb.cleared); SFX.lifeGained(); if(pt.final){ this.showBanner(MISSION.finalBanner, 3400); this.setFog(ZONES.length + 1, true); this.travelBusy = false; this.updatePanel(false); return; } this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1500); await sleep(1500); if(!alive()) return; this.setFog(pt.to, true); await this.animateMarker(pt.from, pt.to, 2400, token); if(!alive()) return; this.selectedZone = pt.to; this.renderNodes(this.climb.cleared); this.travelBusy = false; this.updatePanel(false); this.showBanner(this.stopWord() + pt.to + ' \u00b7 ' + ZONES[pt.to-1].name.toUpperCase(), 1800); }, animateMarker(from, to, ms, token){ return new Promise(resolve => { const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const a = this.zonePos(from), b = this.zonePos(to), t0 = performance.now(); const step = (now) => { if(token !== this.mapToken){ resolve(); return; } const t = Math.min(1, (now - t0) / ms); const e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; const x = a.x + (b.x - a.x) * e, y = a.y + (b.y - a.y) * e; const hop = Math.abs(Math.sin(t * Math.PI * 9)) * st.clientWidth * 0.016; this.placeMarker(x, y, hop); sc.scrollTop = Math.max(0, y * st.clientHeight - sc.clientHeight * 0.42); if(t < 1) requestAnimationFrame(step); else resolve(); }; requestAnimationFrame(step); }); }, zoneCleared(){ this.stopTimer(); this.cleanupBoss(); SFX.stopTick(); const z = this.zone; const first = z > this.climb.cleared; if(this.score > (this.climb.best[z] || 0)) this.climb.best[z] = this.score; if(first) this.climb.cleared = z; this.saveClimb(); this.endSession(); this.pendingTravel = !first ? { from:z, to:z, replay:true } : (z >= ZONES.length ? { from:z, to:z, final:true } : { from:z, to:z + 1 }); this.showView('MAP'); }, setGameOverButtons(){ const p = document.getElementById('goPrimary'), s = document.getElementById('goSecondary'); if(this.mode === 'DAILY'){ p.innerText = 'THE CLIMB'; p.onclick = () => this.toMap(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else if(this.mode === 'ENDLESS'){ p.innerText = 'PLAY AGAIN'; p.onclick = () => this.retryZone(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else { p.innerText = 'RETRY ZONE'; p.onclick = () => this.retryZone(); s.innerText = 'MAP'; s.onclick = () => this.toMap(); } }, toMap(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('MAP'); }, retryZone(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('GAME'); }, backToMenuFromGameOver(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('LANDING'); }, updateStats(){ document.getElementById('scoreNum').innerText = this.score; document.getElementById('streakNum').innerText = this.streak; document.getElementById('livesNum').innerText = this.lives; },
-  startTimer(){ if(this.timerInterval) return; this.startTime = Date.now(); this.timerInterval = setInterval(()=>{ if(this.roundActive){ const elapsed = Math.floor((Date.now() - this.startTime) / 1000); this.timeLeft = Math.max(0, this.roundTime - elapsed); this.updateUI(); if(this.timeLeft <= CONFIG.hintAt && !document.getElementById('hintBox').classList.contains('visible')){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } if(this.timeLeft === 5) document.body.classList.add('critical'); if(this.timeLeft <= 5 && this.timeLeft > 0) SFX.tick(); if(this.timeLeft <= 0) this.onTimeout(); } }, 100); },
+  onTimeout(){ this.roundActive = false; this.dailyResults.push('R'); this.cleanupBoss(); SFX.stopTick(); this.streak = 0; this.combo = 0; document.getElementById('comboDisplay').innerText = ''; this.updateStats(); document.getElementById('answerRow').innerHTML = `<div style="font-family:'Orbitron';color:var(--red);font-size:18px;">TIME'S UP — IT WAS ${this.currentWord}</div>`; if(this.lives > 0){ this.lives--; if(this.bonusActive){ setBonusLives(getBonusLives() - 1); this.bonusActive = false; } SFX.lifeLost(); this.updateStats(); this.later(()=>{ const overlay = document.getElementById('lifeLostOverlay'); overlay.style.display = 'flex'; this.later(()=>{ overlay.style.display = 'none'; if(this.mode === 'CLIMB' && this.round === zoneBossRound(this.zone)) this.nextRound(); else this.advanceRound(); }, 1000); }, 600); } else { SFX.gameOver(); this.later(()=>{ this.gameOver(); }, 800); } },
+  gameOver(){ this.stopTimer(); this.cleanupBoss(); document.getElementById('goReward').style.display = 'none'; if(this.mode === 'DAILY'){ localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); this.showStreakReward(updateStreakDate()); } document.getElementById('goTitle').innerHTML = this.mode==='DAILY' ? 'DAILY <span class="gold-text">OVER</span>' : this.mode==='CLIMB' ? 'ZONE <span class="gold-text">FAILED</span>' : 'GAME <span class="gold-text">OVER</span>'; document.getElementById('goWordLine').style.display = 'block'; document.getElementById('goWord').innerText = this.currentWord; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = this.mode==='CLIMB' ? (this.round - zoneFirstRound(this.zone)) : Math.max(0, this.round - 1); this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
+  dailyComplete(){ this.stopTimer(); SFX.lifeGained(); localStorage.setItem('scramble_daily_done_' + todayKey(), '1'); this.updateDailyBtn(); document.getElementById('goReward').style.display = 'none'; this.showStreakReward(updateStreakDate()); document.getElementById('goTitle').innerHTML = 'DAILY <span class="gold-text">COMPLETE</span>'; document.getElementById('goWordLine').style.display = 'none'; document.getElementById('goScore').innerText = this.score; document.getElementById('goStreak').innerText = this.bestStreak; document.getElementById('goRound').innerText = CONFIG.dailyRounds; this.setGameOverButtons(); this.prepLeaderboardEntry(this.mode, this.score); document.getElementById('gameOverOverlay').style.display = 'flex'; this.endSession(); },
+  loadClimb(){ try{ const c = JSON.parse(localStorage.getItem(MISSION.storageKey) || 'null'); if(c && typeof c.cleared === 'number'){ this.climb = { cleared: Math.min(ZONES.length, Math.max(0, Math.floor(c.cleared))), best: c.best || {}, stars: c.stars || {} }; } }catch(e){} }, saveClimb(){ localStorage.setItem(MISSION.storageKey, JSON.stringify(this.climb)); }, frontier(){ return Math.min(ZONES.length, this.climb.cleared + 1); }, updateClimbNote(){ const el = document.getElementById('climbNote'); if(!el) return; const parts = Object.values(MISSIONS).map(m => { let c = 0; try{ const d = JSON.parse(localStorage.getItem(m.storageKey) || 'null'); if(d && typeof d.cleared === 'number') c = d.cleared; }catch(e){} if(c >= m.zones.length) return m.doneNote; return c > 0 ? m.shortName + ': ' + c + ' of ' + m.zones.length + (m.stops ? ' stops' : ' zones') + ' cleared' : ''; }).filter(Boolean); el.innerText = parts.join('  \u00b7  '); }, zonePos(z){ const zn = ZONES[z-1], v = MISSION.view; return { x: zn.x / MAP_W, y: v ? (zn.y - v.cropY) / v.cropH : zn.y / MAP_H }; }, placeMarker(x, y, hop){ const m = document.getElementById('mapMarker'); m.style.left = (x*100) + '%'; m.style.top = (y*100) + '%'; m.style.transform = 'translate(-50%, calc(-88% - ' + (hop||0) + 'px))'; }, scrollToZone(z, smooth){ const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const y = this.zonePos(z).y * st.clientHeight; const x = this.zonePos(z).x * st.clientWidth; sc.scrollTo({ top: Math.max(0, y - sc.clientHeight * 0.42), left: Math.max(0, x - sc.clientWidth / 2), behavior: smooth ? 'smooth' : 'auto' }); }, setFog(z, animate){ const fog = document.getElementById('mapFog'); const h = (!MISSION.fog || z > ZONES.length) ? 0 : Math.max(0, this.zonePos(z).y * 100 - 5); if(!animate){ fog.style.transition = 'none'; } fog.style.height = h + '%'; if(!animate){ void fog.offsetHeight; fog.style.transition = ''; } }, renderNodes(cl){ document.getElementById('mapNodes').innerHTML = ZONES.map(zn => { const st = zn.n <= cl ? 'cleared' : (zn.n === cl + 1 ? 'open' : 'locked'); const sel = zn.n === this.selectedZone ? ' selected' : ''; return '<div class="map-node ' + st + sel + '" data-z="' + zn.n + '" style="left:' + (zn.x/MAP_W*100).toFixed(3) + '%;top:' + (this.zonePos(zn.n).y*100).toFixed(3) + '%;width:' + MISSION.nodeSize + '%" onpointerdown="engine.selectZone(' + zn.n + ')">' + (st === 'cleared' ? '\u2713' : zn.n) + (st === 'cleared' && (this.climb.stars || {})[zn.n] ? '<span class="nstars">' + '\u2605'.repeat(this.climb.stars[zn.n]) + '</span>' : '') + '</div>'; }).join(''); }, showBanner(text, ms, warn){ const b = document.getElementById('mapBanner'); b.innerText = text; b.classList.toggle('warn', !!warn); b.style.animationDuration = (ms || 1600) + 'ms'; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }, updatePanel(busy){ const n = this.selectedZone, zn = ZONES[n-1]; const lens = Object.keys(ZONE_WORDS[n].words).map(Number).sort((x,y) => x - y); const lenText = lens.length === 1 ? lens[0] + '-letter words' : lens[0] + '\u2013' + lens[lens.length-1] + '-letter words'; const best = this.climb.best[n]; document.getElementById('mpZone').innerText = MISSION.stops ? ('STOP ' + n + ' OF ' + ZONES.length + ' \u00b7 ' + zn.place.toUpperCase()) : ('ZONE ' + n + ' OF ' + ZONES.length); document.getElementById('mpName').innerText = zn.name; document.getElementById('mpMeta').innerText = lenText + ' \u00b7 ' + zoneRoundTime(n) + 's per word \u00b7 boss on round ' + zoneTotalRounds(n) + (best ? ' \u00b7 Best ' + best + ((this.climb.stars || {})[n] ? ' ' + '\u2605'.repeat(this.climb.stars[n]) + '\u2606'.repeat(3 - this.climb.stars[n]) : '') : '') + (getBonusLives() > 0 && n > this.climb.cleared - 1 ? ' \u00b7 \u2764\uFE0F +' + getBonusLives() + ' bonus ' + (getBonusLives() === 1 ? 'life' : 'lives') : ''); const btn = document.getElementById('mpStart'); btn.disabled = !!busy; btn.innerText = busy ? 'CLIMBING\u2026' : (n <= this.climb.cleared ? 'REPLAY ZONE' : 'START'); }, selectZone(n){ if(this.travelBusy) return; if(n > this.climb.cleared + 1){ this.showBanner('LOCKED \u2013 CLEAR ' + (MISSION.stops ? 'STOP ' : 'ZONE ') + this.frontier() + ' FIRST', 1400, true); return; } this.selectedZone = n; this.renderNodes(this.climb.cleared); this.updatePanel(false); }, startSelectedZone(){ if(this.travelBusy) return; this.zone = this.selectedZone; this.mode = 'CLIMB'; this.showView('GAME'); }, openMapUI(){ const img = document.getElementById('mapImg'); if(img.getAttribute('src') !== MISSION.map) img.src = MISSION.map; document.getElementById('mapTitle').innerHTML = MISSION.titleHtml; const mk = document.getElementById('mapMarker'); mk.innerText = MISSION.marker; mk.style.width = MISSION.markerSize + '%'; mk.style.fontSize = 'min(' + (MISSION.markerSize * 0.45) + 'vw, ' + (MISSION.markerSize * 2.5) + 'px)'; const pt = this.pendingTravel; this.pendingTravel = null; const token = ++this.mapToken; const cl = this.climb.cleared, front = this.frontier(); this.travelBusy = false; document.getElementById('mapProgress').innerText = this.progressText(); document.getElementById('mapBanner').classList.remove('show'); if(pt && !pt.replay){ this.travelBusy = true; this.selectedZone = pt.from; this.renderNodes(pt.from - 1); this.setFog(pt.from, false); const p = this.zonePos(pt.from); this.placeMarker(p.x, p.y, 0); this.updatePanel(true); this.scrollToZone(pt.from, false); this.runTravel(pt, token); return; } this.selectedZone = pt ? pt.from : front; this.renderNodes(cl); this.setFog(cl >= ZONES.length ? ZONES.length + 1 : front, false); const p = this.zonePos(front); this.placeMarker(p.x, p.y, 0); this.updatePanel(false); this.scrollToZone(front, false); if(pt && pt.replay) this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1600); }, async runTravel(pt, token){ const sleep = ms => new Promise(r => setTimeout(r, ms)); const alive = () => token === this.mapToken; await sleep(600); if(!alive()) return; this.renderNodes(this.climb.cleared); SFX.lifeGained(); if(pt.final){ this.showBanner(MISSION.finalBanner, 3400); this.setFog(ZONES.length + 1, true); this.travelBusy = false; this.updatePanel(false); return; } this.showBanner(this.stopWord() + pt.from + ' CLEARED', 1500); await sleep(1500); if(!alive()) return; this.setFog(pt.to, true); await this.animateMarker(pt.from, pt.to, 2400, token); if(!alive()) return; this.selectedZone = pt.to; this.renderNodes(this.climb.cleared); this.travelBusy = false; this.updatePanel(false); this.showBanner(this.stopWord() + pt.to + ' \u00b7 ' + ZONES[pt.to-1].name.toUpperCase(), 1800); }, animateMarker(from, to, ms, token){ return new Promise(resolve => { const sc = document.getElementById('mapScroll'), st = document.getElementById('mapStage'); const a = this.zonePos(from), b = this.zonePos(to), t0 = performance.now(); const step = (now) => { if(token !== this.mapToken){ resolve(); return; } const t = Math.min(1, (now - t0) / ms); const e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; const x = a.x + (b.x - a.x) * e, y = a.y + (b.y - a.y) * e; const hop = Math.abs(Math.sin(t * Math.PI * 9)) * st.clientWidth * 0.016; this.placeMarker(x, y, hop); sc.scrollTop = Math.max(0, y * st.clientHeight - sc.clientHeight * 0.42); sc.scrollLeft = Math.max(0, x * st.clientWidth - sc.clientWidth / 2); if(t < 1) requestAnimationFrame(step); else resolve(); }; requestAnimationFrame(step); }); }, zoneCleared(){ this.stopTimer(); this.cleanupBoss(); SFX.stopTick(); const z = this.zone; const first = z > this.climb.cleared; if(this.score > (this.climb.best[z] || 0)) this.climb.best[z] = this.score; if(first) this.climb.cleared = z; const avg = this.stopWords ? this.stopSum / this.stopWords : 0, stars = avg >= 0.5 ? 3 : (avg >= 0.33 ? 2 : 1); this.climb.stars = this.climb.stars || {}; const prevStars = this.climb.stars[z] || 0; if(stars > prevStars) this.climb.stars[z] = stars; this.lastStop = { z, stars, score:this.score, avg, newBest: stars > prevStars }; this.saveClimb(); this.endSession(); this.pendingTravel = !first ? { from:z, to:z, replay:true } : (z >= ZONES.length ? { from:z, to:z, final:true } : { from:z, to:z + 1 }); this.showStars(); }, setGameOverButtons(){ const p = document.getElementById('goPrimary'), s = document.getElementById('goSecondary'); if(this.mode === 'DAILY'){ p.innerText = 'RAGS TO RICHES'; p.onclick = () => this.toMap(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else if(this.mode === 'ENDLESS'){ p.innerText = 'PLAY AGAIN'; p.onclick = () => this.retryZone(); s.innerText = 'MENU'; s.onclick = () => this.backToMenuFromGameOver(); } else { p.innerText = 'RETRY ZONE'; p.onclick = () => this.retryZone(); s.innerText = 'MAP'; s.onclick = () => this.toMap(); } }, toMap(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('MAP'); }, retryZone(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('GAME'); }, backToMenuFromGameOver(){ document.getElementById('gameOverOverlay').style.display = 'none'; this.showView('LANDING'); }, updateStats(){ document.getElementById('scoreNum').innerText = this.score; document.getElementById('streakNum').innerText = this.streak; document.getElementById('livesNum').innerText = this.lives; },
+  startTimer(){ if(this.timerInterval) return; this.startTime = Date.now(); this.timerInterval = setInterval(()=>{ if(this.roundActive){ const elapsed = Math.floor((Date.now() - this.startTime) / 1000); this.timeLeft = Math.max(0, this.roundTime - elapsed); this.updateUI(); if(this.timeLeft <= CONFIG.hintAt && !document.getElementById('hintBox').classList.contains('visible')){ const hint = document.getElementById('hintBox'); hint.innerText = `HINT: STARTS WITH "${this.currentWord[0]}"`; hint.classList.add('visible'); } if(this.timeLeft === 5) document.body.classList.add('critical'); if(this.timeLeft > 0) SFX.tickUpdate(this.roundTime * 1000 - (Date.now() - this.startTime)); if(this.timeLeft <= 0) this.onTimeout(); } }, 100); },
   stopTimer(){ clearInterval(this.timerInterval); this.timerInterval = null; },
   updateUI(){ document.getElementById('timerLabel').innerText = this.timeLeft + "s"; document.getElementById('progress').style.width = (this.timeLeft/this.roundTime*100) + "%"; },
   recoverFromBackground(){
@@ -751,6 +1340,7 @@ document.addEventListener('visibilitychange', () => {
 })();
 
 engine.init();
+(function(){ const up = engine.updatePanel; engine.updatePanel = function(){ const r = up.apply(this, arguments); this.refreshMissionLb(); return r; }; })();
 </script>
 </body>
 </html>

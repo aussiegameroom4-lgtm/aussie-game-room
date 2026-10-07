@@ -1,0 +1,9 @@
+{
+  "name": "aussie-game-room",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Aussie Game Room - hub site and games",
+  "dependencies": {
+    "@netlify/blobs": "*"
+  }
+}

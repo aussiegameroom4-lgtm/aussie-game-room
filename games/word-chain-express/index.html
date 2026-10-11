@@ -491,7 +491,11 @@
         #game-container.denser .arrow::before, #game-container.denser .arrow::after { width: 11px; height: 8px; border-width: 2.5px; }
         .help-chip { color: #1c1206 !important; border: 1px solid rgba(0,0,0,0.45) !important;
             background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(0,0,0,0.2)), var(--primary-glow) !important; }
-        .bank-btn:hover:not(:active) { border-color: var(--primary-glow); color: var(--primary-glow); box-shadow: 0 0 10px rgba(var(--glow-rgb), 0.2); }
+        /* Hover glow only for a real mouse. On phones a tap leaves a "hover" stuck on whatever word ends up under your finger */
+        @media (hover: hover) and (pointer: fine) {
+            .bank-btn:hover:not(:active) { border-color: var(--primary-glow); color: var(--primary-glow); box-shadow: 0 0 10px rgba(var(--glow-rgb), 0.2); }
+        }
+        .bank-btn { -webkit-tap-highlight-color: transparent; }
 
         .boss-blur-active {
             filter: blur(8px) brightness(0.4); pointer-events: none;

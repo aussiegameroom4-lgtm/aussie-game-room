@@ -6,310 +6,577 @@
 <title>Aussie Game Room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#f7e8c4;
-  --walnut:#2b1b12;
-  --teal:#0e5c5c;
+  --bg:#070a14;
+  --bg2:#0d1222;
+  --ink:#f6f1e4;
+  --muted:#a9afc4;
+  --line:rgba(255,255,255,0.09);
+  --gold:#ffd24a;
+  --gold-deep:#e8a33d;
+  --teal:#2fd3c3;
   --coral:#ff5a5f;
-  --mustard:#e8a33d;
-  --paper:#fffaf0;
-  --sp-bg:#0d0f16;
   --sp-gold:#ffd700;
-  --sp-gold-glow:rgba(255,215,0,0.6);
+  --sp-glow:rgba(255,215,0,0.55);
   --sp-accent:#b38728;
   --sp-red:#ff4444;
+  --wce-gold:#d4a24c;
 }
 *{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
   margin:0;
   min-height:100vh;
-  background-color:var(--cream);
-  background-image:
-    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.35) 0, transparent 45%),
-    repeating-linear-gradient(0deg, rgba(43,27,18,0.035) 0px, rgba(43,27,18,0.035) 1px, transparent 1px, transparent 26px),
-    repeating-linear-gradient(90deg, rgba(43,27,18,0.03) 0px, rgba(43,27,18,0.03) 1px, transparent 1px, transparent 26px);
-  color:var(--walnut);
+  background:var(--bg);
+  color:var(--ink);
   font-family:'Nunito',sans-serif;
+  overflow-x:hidden;
 }
 
-header{text-align:center;padding:56px 20px 36px;}
-.sign{
-  display:inline-flex;
-  align-items:center;
-  gap:14px;
-  background:var(--teal);
-  color:var(--paper);
-  padding:18px 34px;
-  border-radius:10px;
-  transform:rotate(-1.4deg);
-  box-shadow:0 10px 0 rgba(43,27,18,0.18), 0 10px 24px rgba(43,27,18,0.25);
-  position:relative;
+/* ---------- background: glows + drifting letters ---------- */
+.glow{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(600px 420px at 12% 8%, rgba(47,211,195,0.16), transparent 70%),
+    radial-gradient(700px 500px at 88% 18%, rgba(255,210,74,0.13), transparent 70%),
+    radial-gradient(800px 600px at 50% 105%, rgba(255,90,95,0.12), transparent 70%);
 }
-.sign::before, .sign::after{
-  content:"";
-  position:absolute;
-  width:14px;height:14px;border-radius:50%;
-  background:var(--mustard);
-  box-shadow:inset 0 2px 3px rgba(0,0,0,0.3);
+#letters{position:fixed; inset:0; z-index:0; pointer-events:none;}
+.page{position:relative; z-index:1;}
+
+/* ---------- top bar ---------- */
+.topbar{
+  max-width:1120px; margin:0 auto; padding:20px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
-.sign::before{ top:8px; left:10px; }
-.sign::after{ top:8px; right:10px; }
-.sign-title{
+.logo{display:flex; align-items:center; gap:10px; font-family:'Lilita One',cursive; font-size:20px; letter-spacing:0.5px; color:var(--ink); text-decoration:none;}
+.logo-mark{
+  width:38px; height:38px; border-radius:11px;
+  background:linear-gradient(140deg,var(--gold),var(--coral));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 18px rgba(255,210,74,0.35);
+}
+.nav-pill{
+  font-weight:800; font-size:13px; color:var(--ink); text-decoration:none;
+  padding:9px 16px; border-radius:30px; border:1px solid var(--line);
+  background:rgba(255,255,255,0.04);
+  transition:background .2s, border-color .2s;
+}
+.nav-pill:hover{background:rgba(255,255,255,0.09); border-color:rgba(255,210,74,0.4);}
+
+/* ---------- hero ---------- */
+.hero{max-width:1120px; margin:0 auto; padding:56px 24px 40px; text-align:center;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--teal); padding:7px 16px; border-radius:30px;
+  border:1px solid rgba(47,211,195,0.35); background:rgba(47,211,195,0.07);
+}
+.title{
   font-family:'Lilita One',cursive;
-  font-size:clamp(28px,6vw,52px);
-  line-height:1;
-  letter-spacing:0.5px;
+  font-size:clamp(46px,11vw,112px);
+  line-height:0.95;
+  margin:22px 0 0;
+  letter-spacing:1px;
 }
-.sign-title .small{display:block;font-size:0.36em;letter-spacing:3px;color:var(--mustard);margin-bottom:4px;}
+.title .word{display:inline-block; white-space:nowrap;}
+.title .ch{
+  display:inline-block; min-width:0.25em;
+  background:linear-gradient(180deg,#fffaf0 15%,var(--gold) 60%,var(--gold-deep));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 22px rgba(255,210,74,0.35));
+  transition:transform .25s;
+}
+.title .ch.spin{transform:translateY(-6px) scale(1.06); opacity:0.75;}
+.title .line2 .ch{
+  background:linear-gradient(180deg,#ffffff 10%,#9ff3ea 55%,var(--teal));
+  -webkit-background-clip:text; background-clip:text;
+  filter:drop-shadow(0 4px 22px rgba(47,211,195,0.35));
+}
 .hero-sub{
-  margin:20px 0 0;
-  font-family:'Nunito',sans-serif;
-  font-weight:700;
-  color:var(--walnut);
-  opacity:0.65;
-  font-size:15px;
+  margin:22px auto 0; max-width:520px;
+  font-size:17px; font-weight:700; color:var(--muted); line-height:1.5;
 }
-
-main{max-width:1040px;margin:0 auto;padding:10px 24px 80px;}
-.section-title{
-  font-family:'Lilita One',cursive;
-  font-size:26px;
-  color:var(--teal);
-  margin:46px 4px 22px;
-  transform:rotate(-0.6deg);
-}
-.section-title.first{margin-top:10px;}
-
-/* main cabinet card */
-.cabinet{
-  position:relative;
-  max-width:540px;
-  background:var(--paper);
-  border:3px solid var(--walnut);
-  border-radius:16px 16px 10px 10px;
-  padding:28px 28px 26px;
-  transform:rotate(-0.8deg);
-  box-shadow:0 14px 0 -6px rgba(43,27,18,0.12), 0 18px 30px rgba(43,27,18,0.22);
-}
-.tape{
-  position:absolute;
-  width:70px;height:26px;
-  background:rgba(232,163,61,0.75);
-  border:1px solid rgba(43,27,18,0.15);
-}
-.tape.left{ top:-12px; left:28px; transform:rotate(-8deg); }
-.tape.right{ top:-12px; right:28px; transform:rotate(7deg); }
-
-.cabinet-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
-.cabinet-icon{
-  width:56px;height:56px;border-radius:50%;
-  background:var(--teal);
-  display:flex;align-items:center;justify-content:center;
-  flex:none;
-  box-shadow:inset 0 -4px 0 rgba(0,0,0,0.15);
-}
-.tag{
-  font-family:'Nunito',sans-serif;
-  font-weight:800;
-  font-size:11px;
-  color:var(--paper);
-  background:var(--coral);
-  padding:5px 12px;
-  border-radius:20px;
-  white-space:nowrap;
-}
-.cabinet h3{
-  font-family:'Lilita One',cursive;
-  font-size:30px;
-  margin:16px 0 8px;
-  color:var(--walnut);
-}
-.cabinet p{
-  font-size:15px;
-  line-height:1.5;
-  margin:0 0 20px;
-  color:var(--walnut);
-  opacity:0.8;
-  max-width:70ch;
-}
-.play-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  text-decoration:none;
-  font-family:'Lilita One',cursive;
-  font-size:18px;
-  color:var(--paper);
-  background:var(--coral);
-  padding:12px 26px;
-  border-radius:40px;
-  box-shadow:0 5px 0 #c73b40;
+.hero-cta{
+  display:inline-flex; align-items:center; gap:10px; margin-top:30px;
+  font-family:'Lilita One',cursive; font-size:19px; letter-spacing:0.5px;
+  color:#1a1206; text-decoration:none;
+  background:linear-gradient(180deg,#ffe48a,var(--gold));
+  padding:15px 32px; border-radius:50px;
+  box-shadow:0 6px 0 var(--gold-deep), 0 0 30px rgba(255,210,74,0.35);
   transition:transform .12s, box-shadow .12s;
 }
-.play-btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #c73b40;}
-.play-btn svg{width:16px;height:16px;}
+.hero-cta:hover{transform:translateY(3px); box-shadow:0 3px 0 var(--gold-deep), 0 0 38px rgba(255,210,74,0.5);}
+.hero-cta svg{width:18px; height:18px; animation:bob 1.6s ease-in-out infinite;}
+@keyframes bob{50%{transform:translateY(3px);}}
 
-/* ----- Scramble Pro card: matches the game's own landing screen ----- */
-.cabinet.scramble-theme{
+/* ---------- daily strip ---------- */
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+.daily{
+  margin:34px auto 0;
+  display:flex; align-items:center; gap:14px 20px; flex-wrap:wrap;
+  padding:16px 20px; border-radius:18px;
+  background:linear-gradient(90deg,rgba(255,90,95,0.12),rgba(255,210,74,0.08));
+  border:1px solid rgba(255,210,74,0.22);
+}
+.daily-label{display:flex; align-items:center; gap:10px; font-weight:900; font-size:15px;}
+.live-dot{
+  width:10px; height:10px; border-radius:50%; background:var(--coral); flex:none;
+  box-shadow:0 0 0 0 rgba(255,90,95,0.7); animation:pulse 1.8s infinite;
+}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,90,95,0);}100%{box-shadow:0 0 0 0 rgba(255,90,95,0);}}
+.daily-date{font-weight:700; color:var(--muted); font-size:14px;}
+.daily-links{display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;}
+.daily-chip{
+  font-weight:800; font-size:13px; text-decoration:none; color:var(--ink);
+  padding:8px 14px; border-radius:30px; background:rgba(255,255,255,0.07);
+  border:1px solid var(--line); transition:background .2s, transform .2s;
+}
+.daily-chip:hover{background:rgba(255,255,255,0.14); transform:translateY(-2px);}
+
+/* ---------- section headings ---------- */
+.section-head{display:flex; align-items:baseline; gap:14px; margin:70px 0 24px;}
+.section-head h2{font-family:'Lilita One',cursive; font-size:clamp(28px,4.6vw,38px); margin:0; letter-spacing:0.5px;}
+.section-head .count{font-weight:800; font-size:13px; color:var(--muted); letter-spacing:1px; text-transform:uppercase;}
+.section-head .rule{flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent);}
+
+/* ---------- game cards ---------- */
+.games{display:grid; grid-template-columns:1fr; gap:26px; perspective:1200px;}
+@media (min-width:820px){ .games{grid-template-columns:1fr 1fr;} }
+
+.game{
+  position:relative; overflow:hidden;
+  min-height:500px; border-radius:24px;
+  display:flex; flex-direction:column;
+  padding:26px;
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  will-change:transform;
+}
+.game::before{ /* shine sweep */
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,0.13) 50%,transparent 65%);
+  transform:translateX(-120%); transition:transform .9s;
+}
+.game:hover::before{transform:translateX(120%);}
+.game > *{position:relative; z-index:3;}
+.game-top{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+.game-num{font-weight:900; font-size:12px; letter-spacing:2px; opacity:0.7;}
+.tag{font-weight:900; font-size:11px; letter-spacing:1px; text-transform:uppercase; padding:6px 13px; border-radius:20px;}
+.game-body{margin-top:auto;}
+.game h3{margin:0 0 12px;}
+.game p{font-size:15px; line-height:1.55; margin:0 0 22px; max-width:56ch;}
+.play-btn{
+  display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+  font-size:17px; padding:13px 28px; border-radius:40px;
+  transition:transform .12s, box-shadow .12s;
+}
+.play-btn:hover{transform:translateY(2px);}
+.play-btn svg{width:15px; height:15px;}
+.play-btn::after{content:""; position:absolute; inset:0; z-index:1;} /* whole card clickable */
+.game .play-btn{position:static;}
+.game .play-btn > *{position:relative; z-index:4;}
+
+/* Scramble card */
+.game.scramble{
   background:
-    linear-gradient(rgba(13,15,22,0.45), rgba(13,15,22,0.8)),
-    url('games/scramble-pro/landing-bg.jpg') center/cover no-repeat;
-  border:2px solid rgba(255,215,0,0.35);
-  box-shadow:0 14px 0 -6px rgba(0,0,0,0.4), 0 18px 34px rgba(0,0,0,0.5), 0 0 34px rgba(255,215,0,0.14);
+    linear-gradient(180deg,rgba(13,15,22,0.35) 0%,rgba(13,15,22,0.92) 72%),
+    url('games/scramble-pro/landing-bg.jpg') center/cover no-repeat,
+    radial-gradient(circle at 70% 20%,#3a2c05,#0d0f16 70%);
+  border:1px solid rgba(255,215,0,0.32);
+  box-shadow:0 24px 50px rgba(0,0,0,0.55), 0 0 40px rgba(255,215,0,0.10);
 }
-.cabinet.scramble-theme .cabinet-top{ justify-content:flex-end; }
-.cabinet.scramble-theme .tape{
-  background:rgba(255,215,0,0.22);
-  border-color:rgba(255,215,0,0.3);
-}
-.cabinet.scramble-theme .tag{
-  background:var(--sp-red);
-  color:#fff;
-  box-shadow:0 0 10px rgba(255,68,68,0.5);
-}
-.cabinet.scramble-theme h3.scramble-hero{
-  font-family:'Orbitron',sans-serif;
-  font-weight:900;
-  font-size:clamp(32px,7vw,46px);
-  line-height:0.95;
-  letter-spacing:-0.5px;
-  color:#fff;
-  margin:14px 0 14px;
-  text-align:left;
-}
-.scramble-gold{
+.game.scramble:hover{box-shadow:0 34px 60px rgba(0,0,0,0.6), 0 0 60px rgba(255,215,0,0.28);}
+.game.scramble .game-num{color:var(--sp-gold);}
+.game.scramble .tag{background:var(--sp-red); color:#fff; box-shadow:0 0 12px rgba(255,68,68,0.6);}
+.game.scramble h3{font-family:'Orbitron',sans-serif; font-weight:900; font-size:clamp(30px,5vw,42px); line-height:0.95; color:#fff;}
+.sp-gold{
   background:linear-gradient(to bottom,#fff,var(--sp-gold));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 18px var(--sp-gold-glow));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 16px var(--sp-glow));
 }
-.cabinet.scramble-theme p{
-  color:#e4e5ea;
-  opacity:0.9;
+.game.scramble p{color:#e4e5ea;}
+.game.scramble .play-btn{
+  font-family:'Orbitron',sans-serif; font-weight:700; background:var(--sp-gold); color:#000;
+  box-shadow:0 0 22px var(--sp-glow), 0 5px 0 var(--sp-accent);
 }
-.cabinet.scramble-theme .play-btn{
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;
-  background:var(--sp-gold);
-  color:#000;
-  box-shadow:0 0 22px var(--sp-gold-glow), 0 5px 0 var(--sp-accent);
-}
-.cabinet.scramble-theme .play-btn:hover{
-  box-shadow:0 0 28px var(--sp-gold-glow), 0 3px 0 var(--sp-accent);
-}
-.cabinet.scramble-theme .play-btn svg path{ fill:#000; }
+.game.scramble .play-btn:hover{box-shadow:0 0 30px var(--sp-glow), 0 3px 0 var(--sp-accent);}
 
-/* coming soon strip */
-.pin-strip{
-  display:flex;
-  flex-wrap:wrap;
-  gap:18px 22px;
+.tiles{display:flex; gap:7px; flex-wrap:wrap; margin:36px 0 26px;}
+.tile{
+  width:42px; height:48px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:21px; color:#1a1300;
+  background:linear-gradient(180deg,#fff3b0,var(--sp-gold));
+  box-shadow:0 4px 0 var(--sp-accent), 0 0 14px rgba(255,215,0,0.25);
+  transition:transform .3s cubic-bezier(.3,1.6,.5,1), background .3s;
 }
-.pin{
-  width:150px;
-  background:var(--paper);
-  border:2px solid var(--walnut);
-  border-radius:8px;
-  padding:14px 12px 12px;
-  text-align:center;
-  position:relative;
+.tile.flip{transform:rotateX(90deg);}
+.tiles.solved .tile{background:linear-gradient(180deg,#e9fff3,#5ef0a5); box-shadow:0 4px 0 #1f9a5c, 0 0 18px rgba(94,240,165,0.45);}
+
+/* Word Chain Express card */
+.game.wce{
+  background:
+    linear-gradient(180deg,rgba(4,7,22,0.30) 0%,rgba(4,7,22,0.92) 72%),
+    url('games/word-chain-express/bg/endless.jpg') 35% 50%/cover no-repeat,
+    radial-gradient(circle at 30% 20%,#2a1d3d,#040716 70%);
+  border:1px solid rgba(212,162,76,0.45);
+  box-shadow:0 24px 50px rgba(0,0,0,0.55), 0 0 40px rgba(212,162,76,0.12);
 }
-.pin:nth-child(odd){transform:rotate(-2.2deg);}
-.pin:nth-child(even){transform:rotate(2deg);}
-.pin::before{
-  content:"";
-  position:absolute;
-  top:-7px; left:50%; transform:translateX(-50%);
-  width:14px;height:14px;border-radius:50%;
-  background:var(--coral);
-  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+.game.wce:hover{box-shadow:0 34px 60px rgba(0,0,0,0.6), 0 0 60px rgba(212,162,76,0.32);}
+.game.wce .game-num{color:var(--wce-gold);}
+.game.wce .tag{background:var(--wce-gold); color:#1c1206; box-shadow:0 0 12px rgba(212,162,76,0.6);}
+.game.wce h3{font-family:'Cinzel',serif; font-weight:900; font-size:clamp(28px,4.6vw,38px); line-height:1.02; letter-spacing:2px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,0.8);}
+.wce-gold{
+  background:linear-gradient(to bottom,#fff6dc,#f2c463);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 14px rgba(212,162,76,0.55));
 }
-.pin-icon{
-  width:34px;height:34px;border-radius:50%;
-  margin:0 auto 10px;
-  background:var(--cream);
-  border:2px solid var(--walnut);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;
+.game.wce p{color:#e7e3d8;}
+.game.wce .play-btn{
+  font-family:'Cinzel',serif; font-weight:900; letter-spacing:1px;
+  background:linear-gradient(180deg,#f3d58f,var(--wce-gold)); color:#1c1206;
+  box-shadow:0 0 22px rgba(212,162,76,0.5), 0 5px 0 #8a6420;
 }
-.pin h4{
-  font-family:'Lilita One',cursive;
-  font-size:14px;
-  margin:0 0 6px;
-  color:var(--walnut);
-  line-height:1.2;
+.game.wce .play-btn:hover{box-shadow:0 0 30px rgba(212,162,76,0.6), 0 3px 0 #8a6420;}
+
+.chain{display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:36px 0 26px;}
+.car{
+  font-family:'Cinzel',serif; font-weight:900; font-size:14px; letter-spacing:1.5px;
+  padding:9px 12px; border-radius:8px; color:#f3e6c4;
+  background:rgba(20,14,6,0.7); border:1px solid rgba(212,162,76,0.45);
+  animation:carLight 4.8s infinite;
 }
-.pin span{
-  font-family:'Nunito',sans-serif;
-  font-weight:700;
-  font-size:10px;
-  color:var(--teal);
-  letter-spacing:0.5px;
+.link{width:18px; height:3px; border-radius:2px; background:rgba(212,162,76,0.45); animation:linkLight 4.8s infinite;}
+.car:nth-child(1){animation-delay:0s;}
+.link:nth-child(2){animation-delay:.5s;}
+.car:nth-child(3){animation-delay:.9s;}
+.link:nth-child(4){animation-delay:1.4s;}
+.car:nth-child(5){animation-delay:1.8s;}
+.link:nth-child(6){animation-delay:2.3s;}
+.car:nth-child(7){animation-delay:2.7s;}
+@keyframes carLight{
+  0%,100%{background:rgba(20,14,6,0.7); color:#f3e6c4; box-shadow:none;}
+  8%,40%{background:linear-gradient(180deg,#f3d58f,var(--wce-gold)); color:#1c1206; box-shadow:0 0 18px rgba(212,162,76,0.6);}
+  55%{background:rgba(20,14,6,0.7); color:#f3e6c4; box-shadow:none;}
+}
+@keyframes linkLight{
+  0%,100%{background:rgba(212,162,76,0.45);}
+  8%,40%{background:#f3d58f; box-shadow:0 0 10px #f3d58f;}
+  55%{background:rgba(212,162,76,0.45); box-shadow:none;}
 }
 
-footer{text-align:center;padding:40px 20px;font-size:13px;color:var(--walnut);opacity:0.5;font-weight:700;}
+/* ---------- coming soon ---------- */
+.soon{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+@media (min-width:820px){ .soon{grid-template-columns:repeat(4,1fr);} }
+.mystery{
+  position:relative; overflow:hidden;
+  border-radius:20px; padding:22px 18px 20px; min-height:220px;
+  background:linear-gradient(180deg,var(--bg2),#080b16);
+  border:1px solid var(--line);
+  display:flex; flex-direction:column; align-items:flex-start;
+  transition:transform .3s, border-color .3s;
+}
+.mystery::after{
+  content:""; position:absolute; width:180px; height:180px; border-radius:50%;
+  top:-50px; right:-60px; filter:blur(30px); opacity:0.35; transition:opacity .3s;
+  background:var(--hue);
+}
+.mystery:hover{transform:translateY(-6px); border-color:color-mix(in srgb,var(--hue) 55%,transparent);}
+.mystery:hover::after{opacity:0.65;}
+.mystery:hover .silhouette{opacity:0.9; filter:blur(0);}
+.lock{
+  display:inline-flex; align-items:center; gap:6px; position:relative; z-index:1;
+  font-weight:900; font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--muted); padding:5px 10px; border-radius:20px; border:1px solid var(--line);
+  background:rgba(255,255,255,0.04);
+}
+.lock svg{width:11px; height:11px;}
+.silhouette{
+  position:relative; z-index:1; width:72px; height:72px; margin:22px 0 auto;
+  opacity:0.45; filter:blur(1.5px); transition:opacity .35s, filter .35s;
+  color:var(--hue);
+}
+.mystery h4{position:relative; z-index:1; font-family:'Lilita One',cursive; font-size:20px; margin:18px 0 4px; letter-spacing:0.3px;}
+.mystery span{position:relative; z-index:1; font-weight:700; font-size:13px; color:var(--muted);}
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:80px; padding:34px 24px 44px; text-align:center;
+  border-top:1px solid var(--line);
+  color:var(--muted); font-weight:700; font-size:13px;
+}
+footer .heart{color:var(--coral);}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);}
+.reveal.in{opacity:1; transform:none;}
+
+@media (max-width:520px){
+  .hero{padding-top:34px;}
+  .game{min-height:460px; padding:22px;}
+  .tiles{gap:5px;}
+  .tile{width:30px; height:38px; font-size:16px; border-radius:7px;}
+  .daily-links{margin-left:0;}
+  .nav-pill{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important;}
+  .reveal{opacity:1; transform:none;}
+}
+
+/* ---------- shorter top section, so the games show on the first screen ---------- */
+.topbar{padding:14px 24px;}
+.hero{padding:18px 24px 6px;}
+.title{font-size:clamp(44px,9vw,64px); margin-top:14px;}
+.hero-sub{margin-top:12px; font-size:16px;}
+.hero-cta{margin-top:18px; padding:12px 26px; font-size:17px;}
+.daily{margin-top:20px; padding:12px 18px;}
+#games.section-head{margin-top:30px; margin-bottom:18px;}
+@media (min-width:820px){
+  .title br{display:none;}            /* AUSSIE GAME ROOM on one line */
+  .title .line2{margin-left:0.25em;}
+  .hero-cta{display:none;}            /* the games are already on screen */
+  .game{min-height:440px;}
+}
+@media (min-width:820px){
+  .hero-sub{max-width:680px;}         /* one line on laptops */
+  #games.section-head{margin-top:24px; margin-bottom:14px;}
+  .game{min-height:400px; padding:22px 26px;}
+  .tiles, .chain{margin:22px 0 16px;}
+  .game p{margin-bottom:16px;}
+}
+@media (min-width:820px){
+  .topbar{padding:10px 24px;}
+  .hero-sub{max-width:none; font-size:15px;}
+  .daily{margin-top:14px; padding:10px 18px;}
+  #games.section-head{margin-top:18px; margin-bottom:12px;}
+  #games.section-head h2{font-size:28px;}
+  .game{min-height:380px;}
+}
 </style>
 </head>
 <body>
+<div class="glow"></div>
+<canvas id="letters"></canvas>
 
-<header>
-  <div class="sign">
-    <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
-      <rect x="10" y="22" width="44" height="24" rx="12" fill="none" stroke="#f7e8c4" stroke-width="3"/>
-      <line x1="24" y1="30" x2="24" y2="38" stroke="#f7e8c4" stroke-width="3" stroke-linecap="round"/>
-      <line x1="20" y1="34" x2="28" y2="34" stroke="#f7e8c4" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="40" cy="31" r="2.6" fill="#f7e8c4"/>
-      <circle cx="46" cy="37" r="2.6" fill="#f7e8c4"/>
-    </svg>
-    <div class="sign-title"><span class="small">Welcome to the</span>Aussie Game Room</div>
-  </div>
-  <p class="hero-sub">Pull up a chair — new games added as they're built</p>
-</header>
-
-<main>
-  <div class="section-title first">Play now</div>
-  <div class="cabinet scramble-theme">
-    <div class="tape left"></div>
-    <div class="tape right"></div>
-    <div class="cabinet-top">
-      <span class="tag">Live now</span>
-    </div>
-    <h3 class="scramble-hero">WORD<br><span class="scramble-gold">SCRAMBLE</span></h3>
-    <p>Tap the scrambled letters to spell the word before time runs out. Lives, boss rounds, a daily challenge, and five missions to play through: Rags to Riches, a 15-stop Road Trip around Australia's Big Things, a 16-stop World Tour, Pay It Forward, a 16-stop journey of kindness, and The Inner Journey, a 15-stop climb to inner calm.</p>
-    <a class="play-btn" href="games/scramble-pro/index.html">
-      Play now
-      <svg viewBox="0 0 24 24" fill="none"><path d="M6 4l12 8-12 8V4z" fill="#fffaf0"/></svg>
+<div class="page">
+  <div class="topbar">
+    <a class="logo" href="#">
+      <span class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
+          <rect x="8" y="20" width="48" height="26" rx="13" stroke="#1a1206" stroke-width="5"/>
+          <line x1="23" y1="28" x2="23" y2="38" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
+          <line x1="18" y1="33" x2="28" y2="33" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="40" cy="30" r="3.5" fill="#1a1206"/><circle cx="47" cy="37" r="3.5" fill="#1a1206"/>
+        </svg>
+      </span>
+      Aussie Game Room
     </a>
+    <a class="nav-pill" href="#games">All games</a>
   </div>
 
-  <div class="section-title">Coming soon</div>
-  <div class="pin-strip">
-    <div class="pin">
-      <div class="pin-icon">🌱</div>
-      <h4>Blade of Grass</h4>
-      <span>In progress</span>
+  <header class="hero">
+    <span class="eyebrow">Welcome to the</span>
+    <h1 class="title" id="title" aria-label="Aussie Game Room">
+      <span class="line1"></span><br><span class="line2"></span>
+    </h1>
+    <p class="hero-sub">Pull up a chair. Free word games made in Australia, with new games added as they're built.</p>
+    <a class="hero-cta" href="#games">
+      Pick a game
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v14M5 12l7 7 7-7" stroke="#1a1206" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </header>
+
+  <div class="wrap">
+    <div class="daily reveal">
+      <div class="daily-label"><span class="live-dot"></span>Today's challenges are live</div>
+      <span class="daily-date" id="today"></span>
+      <div class="daily-links">
+        <a class="daily-chip" href="games/scramble-pro/index.html">Word Scramble daily →</a>
+        <a class="daily-chip" href="games/word-chain-express/index.html">Word Chain daily →</a>
+      </div>
     </div>
-    <div class="pin">
-      <div class="pin-icon">🎪</div>
-      <h4>Airborne Circus</h4>
-      <span>In progress</span>
+
+    <div class="section-head reveal" id="games">
+      <h2>Play now</h2><span class="count">2 games</span><span class="rule"></span>
     </div>
-    <div class="pin">
-      <div class="pin-icon">🧩</div>
-      <h4>3D Maze</h4>
-      <span>In progress</span>
+
+    <div class="games">
+      <article class="game scramble reveal" data-tilt>
+        <div class="game-top"><span class="game-num">GAME 01</span><span class="tag">Live now</span></div>
+        <div class="tiles" id="tiles" aria-hidden="true"></div>
+        <div class="game-body">
+          <h3>WORD<br><span class="sp-gold">SCRAMBLE</span></h3>
+          <p>Tap the scrambled letters to spell the word before time runs out. Lives, boss rounds, a daily challenge and five missions, including a Road Trip around Australia's Big Things and a 16-stop World Tour.</p>
+          <a class="play-btn" href="games/scramble-pro/index.html"><span>Play now</span>
+            <svg viewBox="0 0 24 24"><path d="M6 4l12 8-12 8V4z" fill="#000"/></svg></a>
+        </div>
+      </article>
+
+      <article class="game wce reveal" data-tilt>
+        <div class="game-top"><span class="game-num">GAME 02</span><span class="tag">New</span></div>
+        <div class="chain" aria-hidden="true">
+          <span class="car">SUN</span><span class="link"></span>
+          <span class="car">LIGHT</span><span class="link"></span>
+          <span class="car">HOUSE</span><span class="link"></span>
+          <span class="car">BOAT</span>
+        </div>
+        <div class="game-body">
+          <h3>WORD CHAIN<br><span class="wce-gold">EXPRESS</span></h3>
+          <p>All aboard the world's most luxurious word train! Link words into chains, ride carriage by carriage and beat the bosses. Five missions, plus Endless, Blitz and a new Daily Challenge every day.</p>
+          <a class="play-btn" href="games/word-chain-express/index.html"><span>Play now</span>
+            <svg viewBox="0 0 24 24"><path d="M6 4l12 8-12 8V4z" fill="#1c1206"/></svg></a>
+        </div>
+      </article>
     </div>
-    <div class="pin">
-      <div class="pin-icon">🎯</div>
-      <h4>Spot It Pro</h4>
-      <span>In progress</span>
+
+    <div class="section-head reveal">
+      <h2>Coming soon</h2><span class="count">4 in the workshop</span><span class="rule"></span>
+    </div>
+
+    <div class="soon">
+      <div class="mystery reveal" style="--hue:#5ee08a">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><path d="M30 60 C 28 40, 22 22, 14 6 C 30 18, 36 38, 36 60 Z"/><path d="M34 60 C 36 46, 42 34, 52 26 C 46 38, 42 48, 40 60 Z" opacity=".7"/></svg>
+        <h4>Blade of Grass</h4><span>Defend the last blade</span>
+      </div>
+      <div class="mystery reveal" style="--hue:#ff7ab6">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><circle cx="14" cy="30" r="8"/><circle cx="32" cy="12" r="8"/><circle cx="50" cy="30" r="8"/><path d="M14 50 Q32 64 50 50" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+        <h4>Airborne Circus</h4><span>Keep it all in the air</span>
+      </div>
+      <div class="mystery reveal" style="--hue:#7aa8ff">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h52v52H22"/><path d="M6 6v42h30V20H20v14h8"/><path d="M48 18v30"/></svg>
+        <h4>3D Maze</h4><span>Find your way out</span>
+      </div>
+      <div class="mystery reveal" style="--hue:#ffb347">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
+        <h4>Spot It Pro</h4><span>Fast eyes win</span>
+      </div>
     </div>
   </div>
-</main>
 
-<footer>Made in Australia &middot; Aussie Game Room</footer>
+  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room</footer>
+</div>
 
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function rand(s){ return s[Math.floor(Math.random()*s.length)]; }
+
+  /* today's date */
+  try{
+    document.getElementById('today').textContent =
+      new Date().toLocaleDateString('en-AU',{weekday:'long', day:'numeric', month:'long'});
+  }catch(e){}
+
+  /* title: letters unscramble into place */
+  function buildLine(el, text, startDelay){
+    text.split(' ').forEach(function(w, wi){
+      var word = document.createElement('span'); word.className = 'word';
+      w.split('').forEach(function(c, i){
+        var s = document.createElement('span'); s.className = 'ch';
+        s.textContent = reduce ? c : rand(ABC);
+        word.appendChild(s);
+        if(!reduce){
+          s.classList.add('spin');
+          var settle = startDelay + (wi*5 + i) * 90 + 300;
+          var iv = setInterval(function(){ s.textContent = rand(ABC); }, 60);
+          setTimeout(function(){ clearInterval(iv); s.textContent = c; s.classList.remove('spin'); }, settle);
+        }
+      });
+      el.appendChild(word);
+      if(wi < text.split(' ').length-1) el.appendChild(document.createTextNode(' '));
+    });
+  }
+  buildLine(document.querySelector('#title .line1'), 'AUSSIE', 0);
+  buildLine(document.querySelector('#title .line2'), 'GAME ROOM', 500);
+
+  /* scramble card tiles: shuffle, then solve, on a loop */
+  var target = 'SCRAMBLE'.split('');
+  var tilesEl = document.getElementById('tiles');
+  var tiles = target.map(function(){ var t=document.createElement('span'); t.className='tile'; tilesEl.appendChild(t); return t; });
+  function shuffled(){
+    var a = target.slice();
+    do{ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } }
+    while(a.join('')===target.join(''));
+    return a;
+  }
+  function show(letters, solved){
+    tiles.forEach(function(t, i){
+      setTimeout(function(){
+        t.classList.add('flip');
+        setTimeout(function(){ t.textContent = letters[i]; t.classList.remove('flip'); }, 150);
+      }, reduce ? 0 : i*70);
+    });
+    setTimeout(function(){ tilesEl.classList.toggle('solved', solved); }, reduce ? 0 : letters.length*70 + 160);
+  }
+  show(shuffled(), false);
+  if(!reduce){
+    var solved = false;
+    setInterval(function(){ solved = !solved; show(solved ? target : shuffled(), solved); }, 2600);
+  }
+
+  /* reveal on scroll */
+  var items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    items.forEach(function(el, i){ el.style.transitionDelay = (i%4)*80 + 'ms'; io.observe(el); });
+  } else { items.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* gentle 3D tilt on game cards (mouse only) */
+  if(!reduce && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left)/r.width - 0.5, y = (e.clientY - r.top)/r.height - 0.5;
+        card.style.transform = 'translateY(-8px) rotateX(' + (-y*6) + 'deg) rotateY(' + (x*7) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+    });
+  }
+
+  /* drifting background letters */
+  var cv = document.getElementById('letters'), ctx = cv.getContext('2d');
+  var W, H, dpr, drops = [];
+  var colors = ['255,210,74','47,211,195','255,90,95','255,255,255'];
+  function size(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function make(anyY){
+    return { x:Math.random()*W, y:anyY ? Math.random()*H : H+40,
+      s:14+Math.random()*30, v:0.15+Math.random()*0.45, r:Math.random()*6.28,
+      vr:(Math.random()-0.5)*0.01, a:0.05+Math.random()*0.12, c:rand(colors), ch:rand(ABC) };
+  }
+  size();
+  var n = W < 600 ? 22 : 42;
+  for(var i=0;i<n;i++) drops.push(make(true));
+  window.addEventListener('resize', size);
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    drops.forEach(function(d, i){
+      if(!reduce){ d.y -= d.v; d.r += d.vr; }
+      if(d.y < -50) drops[i] = d = make(false);
+      ctx.save(); ctx.translate(d.x, d.y); ctx.rotate(d.r);
+      ctx.font = '900 ' + d.s + 'px "Lilita One", sans-serif';
+      ctx.fillStyle = 'rgba(' + d.c + ',' + d.a + ')';
+      ctx.fillText(d.ch, 0, 0); ctx.restore();
+    });
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
 </body>
 </html>

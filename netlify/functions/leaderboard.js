@@ -1,4 +1,4 @@
-// Global leaderboard API for Scramble Pro.
+// Global leaderboard API for Scramble Pro and Word Chain Express.
 // GET  /api/leaderboard?mode=endless|daily|mission-climb|mission-biglap|mission-world|mission-payit|mission-inner&limit=20 -> top scores
 // POST /api/leaderboard?mode=...  { name, score } -> submit a score
 // Names are checked against a bad-word filter (400 if rejected).
@@ -22,9 +22,10 @@ function nameAllowed(raw){
   let collapsed = norm.replace(/[^a-z]/g, '').replace(/(.)\1{2,}/g, '$1');
   safe.forEach(w => { collapsed = collapsed.split(w).join(''); });
   if(NF_STRONG.some(w => collapsed.includes(w))) return false;
-  const tokens = norm.split(/[^a-z]+/).filter(Boolean).map(t => t.replace(/(.)\1+/g, '$1'));
+  const tokens = norm.split(/[^a-z]+/).filter(Boolean);
   const weak = NF_TOKENS.map(t => t.replace(/(.)\1+/g, '$1'));
-  return !tokens.some(t => weak.includes(t));
+  // a bad word as typed, or a stretched-out bad word ("booob"), but not a real name that only looks like one once squashed ("Bob")
+  return !tokens.some(t => NF_TOKENS.includes(t) || (t !== t.replace(/(.)\1+/g, '$1') && weak.includes(t.replace(/(.)\1+/g, '$1'))));
 }
 
 const MODES = new Set([
@@ -35,7 +36,14 @@ const MODES = new Set([
   "mission-world",
   "mission-payit",
   "mission-inner",
+  // Word Chain Express
+  "wcr-endless",
+  "wcr-blitz",
+  "wcr-daily",
+  "wcr-campaign",
 ]);
+// Boards that keep ONE entry per player name (their best)
+const BEST_PER_NAME = (mode) => mode.startsWith("mission-") || mode === "wcr-campaign";
 const MAX_ENTRIES = 100;
 const MAX_NAME_LEN = 14;
 const MAX_SCORE = 1_000_000;
@@ -69,10 +77,18 @@ export default async (req) => {
 
   const store = getStore("scramble-leaderboards");
 
+  // Word Chain Express keeps a separate Daily board for each day (?day=2026-10-12)
+  let key = mode;
+  if (mode === "wcr-daily") {
+    const day = url.searchParams.get("day") || "";
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return json({ error: "invalid day" }, 400);
+    key = `${mode}-${day}`;
+  }
+
   if (req.method === "GET") {
     const limitParam = parseInt(url.searchParams.get("limit") || "20", 10);
     const limit = Math.min(Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 20, MAX_ENTRIES);
-    const list = (await store.get(mode, { type: "json" })) || [];
+    const list = (await store.get(key, { type: "json" })) || [];
     return json({ mode, entries: list.slice(0, limit) });
   }
 
@@ -84,7 +100,9 @@ export default async (req) => {
       return json({ error: "invalid JSON body" }, 400);
     }
 
-    let { name, score } = payload || {};
+    let { name, score, cls } = payload || {};
+    // Word Chain Express sends the player's Passenger Class badge (e.g. "first")
+    cls = typeof cls === "string" && /^[a-z-]{1,20}$/.test(cls) ? cls : undefined;
     name = (typeof name === "string" ? name : "").trim().slice(0, MAX_NAME_LEN);
     if (!name) name = "Player";
     if (!nameAllowed(name)) {
@@ -96,9 +114,10 @@ export default async (req) => {
       return json({ error: "invalid score" }, 400);
     }
 
-    let list = (await store.get(mode, { type: "json" })) || [];
+    let list = (await store.get(key, { type: "json" })) || [];
     const entry = { name, score, date: Date.now() };
-    if (mode.startsWith("mission-")) {
+    if (cls) entry.cls = cls;
+    if (BEST_PER_NAME(mode)) {
       // One entry per name: keep the best total only.
       const existing = list.find((e) => e.name.toLowerCase() === name.toLowerCase());
       if (existing) {
@@ -114,9 +133,9 @@ export default async (req) => {
     }
     list.sort((a, b) => b.score - a.score);
     const trimmed = list.slice(0, MAX_ENTRIES);
-    await store.setJSON(mode, trimmed);
+    await store.setJSON(key, trimmed);
 
-    const rankIndex = trimmed.findIndex((e) => e.name.toLowerCase() === name.toLowerCase() && (mode.startsWith("mission-") || e.score === score) && e.date);
+    const rankIndex = trimmed.findIndex((e) => e.name.toLowerCase() === name.toLowerCase() && (BEST_PER_NAME(mode) || e.score === score) && e.date);
     const rank = rankIndex === -1 ? null : rankIndex + 1;
 
     return json({ mode, rank, madeTop: rank !== null, entries: trimmed.slice(0, 20) });

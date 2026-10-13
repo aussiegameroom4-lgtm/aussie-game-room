@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aussie Game Room</title>
+<title>Aussie Game Room | Free Online Word Games Made in Australia</title>
+<meta name="description" content="Play free word games online at Aussie Game Room. Word Scramble and Word Chain Express, with new daily challenges every day. Made in Australia.">
+<link rel="canonical" href="https://aussiegameroom.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aussie Game Room">
+<meta property="og:title" content="Aussie Game Room | Free Online Word Games">
+<meta property="og:description" content="Free word games made in Australia, with new daily challenges every day.">
+<meta property="og:url" content="https://aussiegameroom.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
@@ -356,6 +363,89 @@ footer .heart{color:var(--coral);}
   #games.section-head h2{font-size:28px;}
   .game{min-height:380px;}
 }
+
+/* ---------- free badge ---------- */
+.free-badge{display:inline-block; margin-bottom:10px; padding:7px 14px; border-radius:30px;
+  font-weight:900; font-size:12px; letter-spacing:1.5px; color:#1a1206;
+  background:linear-gradient(180deg,#ffe48a,var(--gold)); box-shadow:0 0 18px rgba(255,210,74,0.4);}
+.hero .eyebrow{display:none;}
+
+/* ---------- daily champions ---------- */
+.champs{margin:18px auto 0; padding:14px; border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,210,74,0.16),rgba(255,90,95,0.10));
+  border:1px solid rgba(255,210,74,0.45); box-shadow:0 0 30px rgba(255,210,74,0.12);
+  display:grid; gap:10px;}
+.champs-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px;}
+.champs-head b{font-family:'Lilita One',cursive; font-weight:400; letter-spacing:0.5px; font-size:20px;}
+.champs-head .daily-date{margin-left:auto;}
+.champ{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+  padding:10px 12px; border-radius:14px; text-decoration:none; color:var(--ink);
+  background:rgba(7,10,20,0.55); border:1px solid var(--line); transition:transform .15s, border-color .15s;}
+.champ:hover{transform:translateY(-2px); border-color:rgba(255,210,74,0.5);}
+.champ-game{font-weight:900; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); width:96px;}
+.champ-who{display:flex; flex-direction:column; min-width:0;}
+.champ-name{font-family:'Lilita One',cursive; font-size:20px; color:var(--gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.champ-name::before{content:"👑 ";}
+.champ-name.empty{color:var(--ink); font-family:'Nunito',sans-serif; font-weight:800; font-size:14px;}
+.champ-name.empty::before{content:"";}
+.champ-score{font-weight:800; font-size:12px; color:var(--muted);}
+.champ-btn{font-family:'Lilita One',cursive; font-size:15px; color:#1a1206; white-space:nowrap;
+  background:linear-gradient(180deg,#ffe48a,var(--gold)); padding:9px 14px; border-radius:30px;
+  box-shadow:0 4px 0 var(--gold-deep); animation:champPulse 2.2s ease-in-out infinite;}
+@keyframes champPulse{50%{box-shadow:0 4px 0 var(--gold-deep), 0 0 18px rgba(255,210,74,0.6);}}
+@media (min-width:820px){ .champs{grid-template-columns:1fr 1fr;} .champs-head{grid-column:1/-1;} }
+
+/* ---------- phones: games side by side, less scrolling ---------- */
+@media (max-width:520px){
+  .topbar{padding:10px 16px;}
+  .hero{padding:8px 16px 0;}
+  .title{font-size:38px; margin-top:4px;}
+  .hero-sub{font-size:14px; margin-top:8px;}
+  .hero-cta{display:none;}
+  .wrap{padding:0 12px;}
+  .champs{padding:10px; gap:8px; margin-top:12px;}
+  .champs-head b{font-size:17px;}
+  .champs-head .daily-date{display:none;}
+  .champ{grid-template-columns:1fr auto; gap:8px; padding:8px 10px;}
+  .champ-game{grid-column:1/-1; width:auto; font-size:10px;}
+  .champ-name{font-size:17px;}
+  .champ-btn{font-size:13px; padding:7px 11px;}
+  #games.section-head{margin:16px 0 10px;}
+  #games.section-head h2{font-size:22px;}
+  .games{grid-template-columns:1fr 1fr; gap:10px;}
+  .game{min-height:0; padding:12px; border-radius:16px;}
+  .game p{display:none;}
+  .game-top .game-num{font-size:9px; letter-spacing:1px;}
+  .tag{font-size:8px; padding:4px 7px;}
+  .tiles{gap:2px; margin:16px 0 12px;}
+  .tile{width:15px; height:20px; font-size:10px; border-radius:3px; box-shadow:0 2px 0 var(--sp-accent);}
+  .chain{gap:3px; margin:16px 0 12px;}
+  .car{font-size:9px; padding:4px 5px; letter-spacing:0.5px;}
+  .link{width:6px;}
+  .game.scramble h3{font-size:20px;}
+  .game.wce h3{font-size:17px; letter-spacing:1px;}
+  .play-btn{font-size:13px; padding:9px 14px; gap:6px;}
+  .play-btn svg{width:11px; height:11px;}
+  .section-head{margin:30px 0 14px;}
+  .mystery{min-height:150px; padding:14px 12px;}
+  .silhouette{width:48px; height:48px; margin-top:12px;}
+}
+
+/* ---------- coming soon: tap for details ---------- */
+.mystery{cursor:pointer;}
+.mystery .more{position:relative; z-index:1; display:block; margin-top:8px; font-style:normal; font-weight:900; font-size:12px; color:var(--hue);}
+.soon-pop{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:20px;
+  background:rgba(4,6,14,0.78); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);}
+.soon-pop[hidden]{display:none;}
+.soon-card{width:100%; max-width:400px; padding:24px 22px 20px; border-radius:22px; text-align:left;
+  background:linear-gradient(180deg,var(--bg2),#080b16); border:1px solid color-mix(in srgb,var(--hue,#ffd24a) 60%,transparent);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6), 0 0 40px color-mix(in srgb,var(--hue,#ffd24a) 25%,transparent);
+  animation:soonIn .25s cubic-bezier(.2,1.3,.4,1);}
+@keyframes soonIn{from{transform:scale(.85); opacity:0;}}
+.soon-card h3{font-family:'Lilita One',cursive; font-weight:400; font-size:30px; margin:14px 0 8px; color:var(--hue,#ffd24a);}
+.soon-card p{margin:0 0 20px; font-size:16px; line-height:1.55; color:var(--ink);}
+.soon-close{width:100%; padding:13px; border:none; border-radius:40px; cursor:pointer;
+  font-family:'Lilita One',cursive; font-size:18px; color:#1a1206; background:var(--hue,#ffd24a);}
 </style>
 </head>
 <body>
@@ -379,6 +469,7 @@ footer .heart{color:var(--coral);}
   </div>
 
   <header class="hero">
+    <span class="free-badge">100% FREE · NO SIGN-UP · NO DOWNLOADS</span>
     <span class="eyebrow">Welcome to the</span>
     <h1 class="title" id="title" aria-label="Aussie Game Room">
       <span class="line1"></span><br><span class="line2"></span>
@@ -391,14 +482,19 @@ footer .heart{color:var(--coral);}
   </header>
 
   <div class="wrap">
-    <div class="daily reveal">
-      <div class="daily-label"><span class="live-dot"></span>Today's challenges are live</div>
-      <span class="daily-date" id="today"></span>
-      <div class="daily-links">
-        <a class="daily-chip" href="games/scramble-pro/index.html">Word Scramble daily →</a>
-        <a class="daily-chip" href="games/word-chain-express/index.html">Word Chain daily →</a>
-      </div>
-    </div>
+    <section class="champs reveal" aria-label="Daily champions">
+      <div class="champs-head"><span class="live-dot"></span><b>🏆 Today's Champions</b><span class="daily-date" id="today"></span></div>
+      <a class="champ" href="/games/scramble-pro/">
+        <span class="champ-game">Word Scramble</span>
+        <span class="champ-who"><span class="champ-name" id="champ-sp">Loading...</span><span class="champ-score" id="champ-sp-score"></span></span>
+        <span class="champ-btn" id="champ-sp-btn">Beat them →</span>
+      </a>
+      <a class="champ" href="/games/word-chain-express/">
+        <span class="champ-game">Word Chain</span>
+        <span class="champ-who"><span class="champ-name" id="champ-wc">Loading...</span><span class="champ-score" id="champ-wc-score"></span></span>
+        <span class="champ-btn" id="champ-wc-btn">Beat them →</span>
+      </a>
+    </section>
 
     <div class="section-head reveal" id="games">
       <h2>Play now</h2><span class="count">2 games</span><span class="rule"></span>
@@ -411,7 +507,7 @@ footer .heart{color:var(--coral);}
         <div class="game-body">
           <h3>WORD<br><span class="sp-gold">SCRAMBLE</span></h3>
           <p>Tap the scrambled letters to spell the word before time runs out. Lives, boss rounds, a daily challenge and five missions, including a Road Trip around Australia's Big Things and a 16-stop World Tour.</p>
-          <a class="play-btn" href="games/scramble-pro/index.html"><span>Play now</span>
+          <a class="play-btn" href="/games/scramble-pro/"><span>Play now</span>
             <svg viewBox="0 0 24 24"><path d="M6 4l12 8-12 8V4z" fill="#000"/></svg></a>
         </div>
       </article>
@@ -427,7 +523,7 @@ footer .heart{color:var(--coral);}
         <div class="game-body">
           <h3>WORD CHAIN<br><span class="wce-gold">EXPRESS</span></h3>
           <p>All aboard the world's most luxurious word train! Link words into chains, ride carriage by carriage and beat the bosses. Five missions, plus Endless, Blitz and a new Daily Challenge every day.</p>
-          <a class="play-btn" href="games/word-chain-express/index.html"><span>Play now</span>
+          <a class="play-btn" href="/games/word-chain-express/"><span>Play now</span>
             <svg viewBox="0 0 24 24"><path d="M6 4l12 8-12 8V4z" fill="#1c1206"/></svg></a>
         </div>
       </article>
@@ -438,26 +534,35 @@ footer .heart{color:var(--coral);}
     </div>
 
     <div class="soon">
-      <div class="mystery reveal" style="--hue:#5ee08a">
+      <div class="mystery reveal" style="--hue:#5ee08a" role="button" tabindex="0" data-game="grass" aria-label="Blade of Grass: tap for details">
         <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
         <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><path d="M30 60 C 28 40, 22 22, 14 6 C 30 18, 36 38, 36 60 Z"/><path d="M34 60 C 36 46, 42 34, 52 26 C 46 38, 42 48, 40 60 Z" opacity=".7"/></svg>
-        <h4>Blade of Grass</h4><span>Defend the last blade</span>
+        <h4>Blade of Grass</h4><span>Defend the last blade</span><em class="more">Tap for details ›</em>
       </div>
-      <div class="mystery reveal" style="--hue:#ff7ab6">
+      <div class="mystery reveal" style="--hue:#ff7ab6" role="button" tabindex="0" data-game="circus" aria-label="Airborne Circus: tap for details">
         <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
         <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><circle cx="14" cy="30" r="8"/><circle cx="32" cy="12" r="8"/><circle cx="50" cy="30" r="8"/><path d="M14 50 Q32 64 50 50" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
-        <h4>Airborne Circus</h4><span>Keep it all in the air</span>
+        <h4>Airborne Circus</h4><span>Keep it all in the air</span><em class="more">Tap for details ›</em>
       </div>
-      <div class="mystery reveal" style="--hue:#7aa8ff">
+      <div class="mystery reveal" style="--hue:#7aa8ff" role="button" tabindex="0" data-game="maze" aria-label="3D Maze: tap for details">
         <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
         <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h52v52H22"/><path d="M6 6v42h30V20H20v14h8"/><path d="M48 18v30"/></svg>
-        <h4>3D Maze</h4><span>Find your way out</span>
+        <h4>3D Maze</h4><span>Find your way out</span><em class="more">Tap for details ›</em>
       </div>
-      <div class="mystery reveal" style="--hue:#ffb347">
+      <div class="mystery reveal" style="--hue:#ffb347" role="button" tabindex="0" data-game="spot" aria-label="Spot It Pro: tap for details">
         <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
         <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
-        <h4>Spot It Pro</h4><span>Fast eyes win</span>
+        <h4>Spot It Pro</h4><span>Fast eyes win</span><em class="more">Tap for details ›</em>
       </div>
+    </div>
+  </div>
+
+  <div class="soon-pop" id="soonPop" hidden>
+    <div class="soon-card" role="dialog" aria-modal="true" aria-labelledby="soonTitle">
+      <span class="lock">Coming soon</span>
+      <h3 id="soonTitle"></h3>
+      <p id="soonText"></p>
+      <button class="soon-close" id="soonClose" type="button">Got it</button>
     </div>
   </div>
 
@@ -475,6 +580,50 @@ footer .heart{color:var(--coral);}
     document.getElementById('today').textContent =
       new Date().toLocaleDateString('en-AU',{weekday:'long', day:'numeric', month:'long'});
   }catch(e){}
+
+  /* daily champions: today's #1 on each game's Daily leaderboard */
+  function d2(n){ return (n<10?'0':'')+n; }
+  var now = new Date(), day = now.getFullYear()+'-'+d2(now.getMonth()+1)+'-'+d2(now.getDate());
+  function showChamp(id, url){
+    var nameEl = document.getElementById('champ-'+id), scoreEl = document.getElementById('champ-'+id+'-score'), btn = document.getElementById('champ-'+id+'-btn');
+    function empty(){ nameEl.textContent = 'No champ yet. Claim the crown!'; nameEl.className = 'champ-name empty'; scoreEl.textContent = ''; btn.textContent = 'Play now →'; }
+    var ctrl = window.AbortController ? new AbortController() : null;
+    if(ctrl) setTimeout(function(){ ctrl.abort(); }, 6000);
+    fetch(url, ctrl ? {signal:ctrl.signal} : {}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+      var top = d && d.entries && d.entries[0];
+      if(!top){ empty(); return; }
+      nameEl.textContent = String(top.name || 'Player');   /* textContent keeps names safe */
+      scoreEl.textContent = Number(top.score || 0).toLocaleString() + ' pts';
+    }).catch(empty);
+  }
+  showChamp('sp', '/api/leaderboard?mode=daily&limit=1');
+  showChamp('wc', '/api/leaderboard?mode=wcr-daily&day=' + day + '&limit=1');
+
+  /* coming soon: tap a card to read about the game */
+  var SOON = {
+    grass: ["Blade of Grass", "Your backyard is bare dirt, except for one brave little blade of grass. Sit back on the porch, grab the garden hose and blast away hungry birds, flying newspapers and a very curious deer. But careful: spray it too much and you'll drown it! How long can you keep it alive?"],
+    circus: ["Airborne Circus", "Roll up, roll up! Flick balloons, buckets and even a horse to keep them all in the air. Birds land on them, a cheeky clown fills your buckets with water, and everything keeps getting heavier. Drop one and the show is over!"],
+    maze: ["3D Maze", "A treasure hunt that turns into a nightmare. Race through dark 3D mazes, follow whispered clues and find the hidden exit before the hunters catch you. Every level gets bigger, darker and scarier."],
+    spot: ["Spot It Pro", "Two cards, one match. Spot the symbol they share before the clock runs out. Every 10th round is a boss round, and the timer keeps getting shorter. Fast eyes win!"]
+  };
+  var pop = document.getElementById('soonPop'), lastCard = null;
+  function openSoon(card){
+    var g = SOON[card.getAttribute('data-game')]; if(!g) return;
+    lastCard = card;
+    pop.style.setProperty('--hue', card.style.getPropertyValue('--hue'));
+    document.getElementById('soonTitle').textContent = g[0];
+    document.getElementById('soonText').textContent = g[1];
+    pop.hidden = false;
+    document.getElementById('soonClose').focus();
+  }
+  function closeSoon(){ pop.hidden = true; if(lastCard) lastCard.focus(); }
+  document.querySelectorAll('.mystery[data-game]').forEach(function(card){
+    card.addEventListener('click', function(){ openSoon(card); });
+    card.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openSoon(card); } });
+  });
+  document.getElementById('soonClose').addEventListener('click', closeSoon);
+  pop.addEventListener('click', function(e){ if(e.target === pop) closeSoon(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !pop.hidden) closeSoon(); });
 
   /* title: letters unscramble into place */
   function buildLine(el, text, startDelay){

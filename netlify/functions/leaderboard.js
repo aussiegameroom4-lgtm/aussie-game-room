@@ -57,6 +57,19 @@ function json(body, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
 }
 
+// Word Scramble's Daily used to have one all-time board ("daily"). Scores from that day (Sydney time) that
+// landed there (before the update, or from someone with an old copy of the game open)
+// are counted on today's board too. Each name keeps only its best score.
+async function withOldDaily(store, list, day) {
+  const old = (await store.get("daily", { type: "json" })) || [];
+  const best = new Map();
+  [...list, ...old.filter((e) => e.date && new Date(e.date).toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" }) === day)].forEach((e) => {
+    const k = String(e.name).toLowerCase();
+    if (!best.has(k) || e.score > best.get(k).score) best.set(k, e);
+  });
+  return [...best.values()].sort((a, b) => b.score - a.score);
+}
+
 export default async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, {
@@ -91,7 +104,8 @@ export default async (req) => {
   if (req.method === "GET") {
     const limitParam = parseInt(url.searchParams.get("limit") || "20", 10);
     const limit = Math.min(Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 20, MAX_ENTRIES);
-    const list = (await store.get(key, { type: "json" })) || [];
+    let list = (await store.get(key, { type: "json" })) || [];
+    if (mode === "daily" && key !== "daily") list = await withOldDaily(store, list, key.slice(6));
     return json({ mode, entries: list.slice(0, limit) });
   }
 
@@ -137,11 +151,13 @@ export default async (req) => {
     list.sort((a, b) => b.score - a.score);
     const trimmed = list.slice(0, MAX_ENTRIES);
     await store.setJSON(key, trimmed);
+    // the rank shown to the player includes today's scores from the old board
+    const ranked = (mode === "daily" && key !== "daily") ? await withOldDaily(store, trimmed, key.slice(6)) : trimmed;
 
-    const rankIndex = trimmed.findIndex((e) => e.name.toLowerCase() === name.toLowerCase() && (BEST_PER_NAME(mode) || e.score === score) && e.date);
+    const rankIndex = ranked.findIndex((e) => e.name.toLowerCase() === name.toLowerCase() && (BEST_PER_NAME(mode) || e.score === score) && e.date);
     const rank = rankIndex === -1 ? null : rankIndex + 1;
 
-    return json({ mode, rank, madeTop: rank !== null, entries: trimmed.slice(0, 20) });
+    return json({ mode, rank, madeTop: rank !== null, entries: ranked.slice(0, 20) });
   }
 
   return json({ error: "method not allowed" }, 405);

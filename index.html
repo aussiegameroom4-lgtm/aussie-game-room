@@ -596,8 +596,7 @@ footer .heart{color:var(--coral);}
       scoreEl.textContent = Number(top.score || 0).toLocaleString() + ' pts';
     }).catch(empty);
   }
-  var u = new Date(), utcDay = u.getUTCFullYear()+'-'+d2(u.getUTCMonth()+1)+'-'+d2(u.getUTCDate()); /* Scramble's daily puzzle runs on UTC days */
-  showChamp('sp', '/api/leaderboard?mode=daily&day=' + utcDay + '&limit=1');
+  showChamp('sp', '/api/leaderboard?mode=daily&day=' + day + '&limit=1');
   showChamp('wc', '/api/leaderboard?mode=wcr-daily&day=' + day + '&limit=1');
 
   /* coming soon: tap a card to read about the game */

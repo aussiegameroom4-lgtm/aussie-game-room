@@ -6537,5 +6537,13 @@ YARD: STICK
             }
         }
     </script>
+<script>
+/* Opened with ?daily (from "Beat them" on the homepage): go straight to today's Daily Challenge */
+(function(){
+  if(!/[?&]daily(=|&|$)/.test(location.search)) return;
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  withHelp(startDailyChallengeMode);
+})();
+</script>
 </body>
 </html>

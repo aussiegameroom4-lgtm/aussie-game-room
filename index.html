@@ -484,12 +484,12 @@ footer .heart{color:var(--coral);}
   <div class="wrap">
     <section class="champs reveal" aria-label="Daily champions">
       <div class="champs-head"><span class="live-dot"></span><b>🏆 Today's Champions</b><span class="daily-date" id="today"></span></div>
-      <a class="champ" href="/games/scramble-pro/">
+      <a class="champ" href="/games/scramble-pro/?daily=1">
         <span class="champ-game">Word Scramble</span>
         <span class="champ-who"><span class="champ-name" id="champ-sp">Loading...</span><span class="champ-score" id="champ-sp-score"></span></span>
         <span class="champ-btn" id="champ-sp-btn">Beat them →</span>
       </a>
-      <a class="champ" href="/games/word-chain-express/">
+      <a class="champ" href="/games/word-chain-express/?daily=1">
         <span class="champ-game">Word Chain</span>
         <span class="champ-who"><span class="champ-name" id="champ-wc">Loading...</span><span class="champ-score" id="champ-wc-score"></span></span>
         <span class="champ-btn" id="champ-wc-btn">Beat them →</span>
@@ -596,7 +596,8 @@ footer .heart{color:var(--coral);}
       scoreEl.textContent = Number(top.score || 0).toLocaleString() + ' pts';
     }).catch(empty);
   }
-  showChamp('sp', '/api/leaderboard?mode=daily&limit=1');
+  var u = new Date(), utcDay = u.getUTCFullYear()+'-'+d2(u.getUTCMonth()+1)+'-'+d2(u.getUTCDate()); /* Scramble's daily puzzle runs on UTC days */
+  showChamp('sp', '/api/leaderboard?mode=daily&day=' + utcDay + '&limit=1');
   showChamp('wc', '/api/leaderboard?mode=wcr-daily&day=' + day + '&limit=1');
 
   /* coming soon: tap a card to read about the game */

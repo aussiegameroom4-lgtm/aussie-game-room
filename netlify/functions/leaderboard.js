@@ -43,7 +43,7 @@ const MODES = new Set([
   "wcr-campaign",
 ]);
 // Boards that keep ONE entry per player name (their best)
-const BEST_PER_NAME = (mode) => mode.startsWith("mission-") || mode === "wcr-campaign";
+const BEST_PER_NAME = (mode) => mode.startsWith("mission-") || mode === "wcr-campaign" || mode === "daily" || mode === "wcr-daily";
 const MAX_ENTRIES = 100;
 const MAX_NAME_LEN = 14;
 const MAX_SCORE = 1_000_000;
@@ -77,12 +77,15 @@ export default async (req) => {
 
   const store = getStore("scramble-leaderboards");
 
-  // Word Chain Express keeps a separate Daily board for each day (?day=2026-10-12)
+  // Daily boards: a separate board for each day (?day=2026-10-12)
   let key = mode;
-  if (mode === "wcr-daily") {
+  if (mode === "wcr-daily" || mode === "daily") {
     const day = url.searchParams.get("day") || "";
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return json({ error: "invalid day" }, 400);
-    key = `${mode}-${day}`;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      // old copies of Word Scramble (still open in someone's browser) don't send a day: keep them on the old board
+      if (mode === "daily" && !day) key = "daily";
+      else return json({ error: "invalid day" }, 400);
+    } else key = `${mode}-${day}`;
   }
 
   if (req.method === "GET") {

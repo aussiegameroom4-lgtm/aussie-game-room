@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found | Aussie Game Room</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a14;--ink:#f6f1e4;--muted:#a9afc4;--gold:#ffd24a;--gold-deep:#e8a33d;--teal:#2fd3c3;--line:rgba(255,255,255,0.09);}
+*{box-sizing:border-box;}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;
+  background:var(--bg);color:var(--ink);font-family:'Nunito',sans-serif;text-align:center;
+  background-image:radial-gradient(600px 420px at 15% 10%,rgba(47,211,195,0.16),transparent 70%),radial-gradient(700px 500px at 85% 90%,rgba(255,210,74,0.13),transparent 70%);}
+main{max-width:460px;}
+.tiles{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
+.tile{width:54px;height:62px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-family:'Lilita One',cursive;font-size:32px;color:#1a1300;background:linear-gradient(180deg,#fff3b0,var(--gold));
+  box-shadow:0 5px 0 var(--gold-deep),0 0 18px rgba(255,210,74,0.3);}
+.tile:nth-child(2){transform:rotate(-8deg) translateY(4px);}
+.tile:nth-child(3){transform:rotate(6deg);}
+h1{font-family:'Lilita One',cursive;font-weight:400;font-size:38px;margin:0 0 10px;letter-spacing:.5px;}
+p{font-weight:700;color:var(--muted);font-size:16px;line-height:1.5;margin:0 0 26px;}
+.btn{display:inline-block;margin:6px;padding:13px 24px;border-radius:40px;text-decoration:none;font-family:'Lilita One',cursive;font-size:17px;}
+.btn.main{color:#1a1206;background:linear-gradient(180deg,#ffe48a,var(--gold));box-shadow:0 5px 0 var(--gold-deep);}
+.btn.alt{color:var(--ink);background:rgba(255,255,255,0.06);border:1px solid var(--line);}
+</style>
+</head>
+<body>
+<main>
+  <div class="tiles" aria-hidden="true"><span class="tile">4</span><span class="tile">0</span><span class="tile">4</span></div>
+  <h1>Oops, this word doesn't exist!</h1>
+  <p>We couldn't find that page. It may have moved, but the games are still right here.</p>
+  <a class="btn main" href="/">All games</a>
+  <a class="btn alt" href="/games/scramble-pro/">Word Scramble</a>
+  <a class="btn alt" href="/games/word-chain-express/">Word Chain Express</a>
+</main>
+</body>
+</html>

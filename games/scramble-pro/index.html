@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Word Scramble Game: Free Daily Unscramble Puzzle | Aussie Game Room</title>
-<meta name="description" content="Play Word Scramble free online. Unscramble the letters before time runs out, beat boss rounds, take the daily challenge and road-trip around Australia's Big Things.">
+<title>Word Scramble: Free Daily Unscramble Game | Aussie Game Room</title>
+<meta name="description" content="Play Word Scramble free online. Unscramble the letters before time runs out, beat boss rounds and take a new daily challenge every day. No sign-up.">
 <link rel="canonical" href="https://aussiegameroom.com/games/scramble-pro/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aussie Game Room">
-<meta property="og:title" content="Word Scramble | Aussie Game Room">
+<meta property="og:title" content="Word Scramble: Free Daily Unscramble Game">
 <meta property="og:description" content="Unscramble the letters before time runs out. Free daily challenge, boss rounds and five missions.">
 <meta property="og:url" content="https://aussiegameroom.com/games/scramble-pro/">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -284,6 +284,22 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 @keyframes burst{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0;}}
 .combo-badge{position:absolute;top:20%;left:50%;transform:translateX(-50%);font-family:'Orbitron';font-size:30px;color:var(--green);pointer-events:none;z-index:999;animation:floatUp 1s ease-out forwards;}
 @keyframes floatUp{0%{opacity:1;transform:translate(-50%,0);}100%{opacity:0;transform:translate(-50%,-100px);}}
+
+/* start screen: stays centred, and scrolls properly when "About" is opened */
+#landingView{justify-content:flex-start;}
+#landingView .hero-title{margin-top:auto;}
+#landingView .backup-link{margin-bottom:auto;}
+.about-game{width:100%;max-width:560px;margin:26px auto 10px;text-align:left;font-family:'Inter',sans-serif;
+  background:rgba(8,10,20,.55);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:0 18px;}
+.about-game summary{cursor:pointer;list-style:none;text-align:center;padding:14px 0;font-family:'Orbitron';font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.7);}
+.about-game summary::-webkit-details-marker{display:none;}
+.about-game summary::after{content:" ▾";}
+.about-game[open] summary::after{content:" ▴";}
+.about-game[open]{padding-bottom:16px;}
+.about-game h2{font-family:'Orbitron';font-size:15px;color:#ffd700;margin:18px 0 8px;letter-spacing:.5px;}
+.about-game p,.about-game li{font-size:14px;line-height:1.6;color:rgba(255,255,255,.85);margin:0 0 8px;}
+.about-game ul{padding-left:20px;margin:0 0 6px;}
+.about-game a{color:#ffd700;}
 </style>
 </head>
 <body>
@@ -309,11 +325,38 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
   <p class="climb-note" id="climbNote"></p>
   <div id="streakDisplay" class="streak-counter"></div>
   <button class="backup-link" onpointerdown="engine.openBackup()">💾 BACK UP / RESTORE PROGRESS</button>
+
+  <details class="about-game">
+    <summary>About Word Scramble &amp; how to play</summary>
+    <h2>Free online word scramble game</h2>
+    <p>Word Scramble is a free word puzzle game you can play in your browser, on your phone or on your computer. Each round you get a jumbled set of letters. Unscramble them to spell the hidden word before the timer runs out. No sign-up and no downloads. Just pull up a chair and play.</p>
+
+    <h2>How to play</h2>
+    <ul>
+      <li><strong>Tap the letters in order</strong> to spell the word. Tap a filled slot to undo it, or use Clear and Shuffle if you get stuck.</li>
+      <li><strong>Be quick.</strong> Faster answers score more points, and back-to-back correct answers build your streak and combo bonus.</li>
+      <li><strong>Watch out for boss rounds.</strong> The last word of every stop is a boss round, where the tiles get messed with.</li>
+      <li><strong>Earn stars.</strong> Clear a stop to earn 1 to 3 stars. The faster you answer, the more stars you get.</li>
+    </ul>
+
+    <h2>Game modes</h2>
+    <ul>
+      <li><strong>Daily Challenge:</strong> everyone gets the same 15 words each day, with one go each. Top the daily leaderboard to become Today's Champion, and play on back-to-back days to build your streak.</li>
+      <li><strong>Missions:</strong> five journeys to climb, from Rags to Riches to a Road Trip around Australia's Big Things, a 16-stop World Tour, Pay It Forward and The Inner Journey.</li>
+      <li><strong>Endless Mode:</strong> keep unscrambling for as long as you can. You earn an extra life every 10 words, but the timer keeps getting shorter.</li>
+    </ul>
+
+    <h2>Questions</h2>
+    <p><strong>Is Word Scramble free?</strong> Yes, it's 100% free to play.</p>
+    <p><strong>Do I need an account?</strong> No. Your progress is saved in your browser. Use Back Up / Restore Progress to keep a safe copy.</p>
+    <p><strong>When does the Daily Challenge change?</strong> A new daily word scramble starts every day at midnight.</p>
+    <p><strong>Who made it?</strong> Word Scramble is made in Australia by <a href="/">Aussie Game Room</a>. Like word games? Try <a href="/games/word-chain-express/">Word Chain Express</a> too.</p>
+  </details>
 </div>
 
 <div id="missionsView" class="landing-view" style="display:none">
   <button onpointerdown="engine.showView('LANDING')" class="back-btn site-back">&larr; BACK</button>
-  <h1 class="hof-title">CHOOSE YOUR <span class="gold-text">MISSION</span></h1>
+  <h2 class="hof-title">CHOOSE YOUR <span class="gold-text">MISSION</span></h2>
   <div class="landing-buttons">
     <button onpointerdown="engine.beginGame('CLIMB')" class="btn-primary mission-btn" id="mbtn_CLIMB" data-name="RAGS TO RICHES">RAGS TO RICHES</button>
     <button onpointerdown="engine.beginGame('BIGLAP')" class="btn-primary mission-btn" id="mbtn_BIGLAP" data-name="ROAD TRIP">ROAD TRIP</button>
@@ -328,7 +371,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
   <div class="hof-beam b1"></div><div class="hof-beam b2"></div><div class="hof-beam b3"></div>
   <canvas id="hofFx" class="hof-fx"></canvas>
   <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
-  <h1 class="hof-title">HIGH <span class="gold-text">SCORES</span></h1>
+  <h2 class="hof-title">HIGH <span class="gold-text">SCORES</span></h2>
   <div class="hof-tabs">
     <button class="hof-tab active" id="hofTabMine" onpointerdown="engine.setHofTab('MINE')">MY BEST</button>
     <button class="hof-tab" id="hofTabEndless" onpointerdown="engine.setHofTab('ENDLESS')">🌏 ENDLESS</button>
@@ -342,7 +385,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 <div id="collView" class="coll-view" style="display:none">
   <div class="lava"><i style="--c:#ff4d6d;--s:34vmax;--l:8%;--d:26s;--dl:-4s;--w:7vmax"></i><i style="--c:#ff9e00;--s:26vmax;--l:62%;--d:31s;--dl:-17s;--w:-6vmax"></i><i style="--c:#c026d3;--s:30vmax;--l:34%;--d:36s;--dl:-9s;--w:8vmax"></i><i style="--c:#ffd60a;--s:20vmax;--l:80%;--d:22s;--dl:-12s;--w:-5vmax"></i><i style="--c:#fb5607;--s:28vmax;--l:-6%;--d:29s;--dl:-22s;--w:6vmax"></i><i style="--c:#7c3aed;--s:32vmax;--l:50%;--d:40s;--dl:-30s;--w:-9vmax"></i><i style="--c:#ff5ea8;--s:18vmax;--l:20%;--d:24s;--dl:-15s;--w:5vmax"></i></div>
   <button onpointerdown="engine.showView('LANDING')" class="back-btn">← BACK</button>
-  <h1 class="hof-title">COLLECTION</h1>
+  <h2 class="hof-title">COLLECTION</h2>
   <div class="badge-label">STREAK BADGES</div>
   <div id="badgeRow" class="badge-row"></div>
   <div id="collGrid" class="coll-grid"></div>
@@ -356,7 +399,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
   </div>
   <div class="map-scroll" id="mapScroll">
     <div class="map-stage" id="mapStage">
-      <img id="mapImg" src="rags-to-riches-map.jpg" alt="Mission map" draggable="false">
+      <img id="mapImg" alt="Mission map" draggable="false">
       <div class="map-fog" id="mapFog"></div>
       <div id="mapNodes"></div>
       <div class="map-marker" id="mapMarker">🎩</div>
@@ -502,7 +545,7 @@ body.critical{background-image:radial-gradient(circle at 50% 50%,#4a1a1a 0%,#0d0
 
 <script>
 const ASSETS = { map: 'rags-to-riches-map.jpg', map2: 'big-lap-map.jpg', sounds: { correct: 'sounds/correct.mp3', wrong: 'sounds/wrong.mp3', lifeLost: 'sounds/life-lost.mp3', lifeGained: 'sounds/life-gained.mp3', gameOver: 'sounds/game-over.mp3' } };
-(function preloadAssets() { const allUrls = [ASSETS.map, ASSETS.map2, ...Object.values(ASSETS.sounds)]; let loadedCount = 0; allUrls.forEach(url => { const isAudio = url.endsWith('.mp3'); const el = isAudio ? new Audio(url) : new Image(); el.onload = el.oncanplaythrough = () => { loadedCount++; if(loadedCount === allUrls.length) console.log("Assets loaded"); }; if(!isAudio) el.src = url; }); })();
+(window.requestIdleCallback ? (f => addEventListener("load", () => requestIdleCallback(f, {timeout: 3000}))) : (f => addEventListener("load", () => setTimeout(f, 1500))))(function preloadAssets() { const allUrls = [ASSETS.map, ASSETS.map2, ...Object.values(ASSETS.sounds)]; let loadedCount = 0; allUrls.forEach(url => { const isAudio = url.endsWith('.mp3'); const el = isAudio ? new Audio(url) : new Image(); el.onload = el.oncanplaythrough = () => { loadedCount++; if(loadedCount === allUrls.length) console.log("Assets loaded"); }; if(!isAudio) el.src = url; }); });
 
 function triggerBurst(el) {
   if (navigator.vibrate) navigator.vibrate(50);

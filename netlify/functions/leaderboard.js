@@ -1,8 +1,11 @@
-// Global leaderboard API for Scramble Pro and Word Chain Express.
-// GET  /api/leaderboard?mode=endless|daily|mission-climb|mission-biglap|mission-world|mission-payit|mission-inner&limit=20 -> top scores
-// POST /api/leaderboard?mode=...  { name, score } -> submit a score
+// Global leaderboard API for Scramble Pro, Word Chain Express and Stack Attack (Numbers + Words).
+// GET  /api/leaderboard?mode=<board>&limit=20 -> top scores
+// POST /api/leaderboard?mode=<board>  { name, score } -> submit a score
+// Daily boards also need &day=YYYY-MM-DD (a separate board for each day).
 // Names are checked against a bad-word filter (400 if rejected).
-// Mission boards keep ONE entry per player name (their best total).
+// EVERY board keeps ONE entry per player name (their best score). Names match
+// whatever the capitals or spaces ("Nofks", "nofks", " NOFKS ") so nobody can take
+// more than one spot. Old duplicate entries are merged away automatically.
 //
 // Scores are stored in Netlify Blobs, so no external database or account is
 // needed beyond the Netlify site itself. Netlify provides the store
@@ -41,9 +44,32 @@ const MODES = new Set([
   "wcr-blitz",
   "wcr-daily",
   "wcr-campaign",
+  // Stack Attack: Numbers
+  "sa-num-missions",
+  "sa-num-endless",
+  "sa-num-daily",
+  // Stack Attack: Words
+  "sa-words-missions",
+  "sa-words-endless",
+  "sa-words-daily",
 ]);
-// Boards that keep ONE entry per player name (their best)
-const BEST_PER_NAME = (mode) => mode.startsWith("mission-") || mode === "wcr-campaign" || mode === "daily" || mode === "wcr-daily";
+// Boards with a separate board for each day (?day=YYYY-MM-DD)
+const DAILY_MODES = new Set(["daily", "wcr-daily", "sa-num-daily", "sa-words-daily"]);
+
+// The same name whatever the capitals or spaces: "Nofks", "nofks", " NOFKS " all match
+const nameKey = (n) => String(n || "").trim().toLowerCase().replace(/\s+/g, " ");
+
+// One entry per name: keep each player's best score (the earlier one wins a tie), highest first
+function bestPerName(list) {
+  const best = new Map();
+  list.forEach((e) => {
+    if (!e || typeof e.score !== "number") return;
+    const k = nameKey(e.name);
+    const cur = best.get(k);
+    if (!cur || e.score > cur.score || (e.score === cur.score && (e.date || 0) < (cur.date || 0))) best.set(k, e);
+  });
+  return [...best.values()].sort((a, b) => b.score - a.score || (a.date || 0) - (b.date || 0));
+}
 const MAX_ENTRIES = 100;
 const MAX_NAME_LEN = 14;
 const MAX_SCORE = 1_000_000;
@@ -62,12 +88,7 @@ function json(body, status = 200) {
 // are counted on today's board too. Each name keeps only its best score.
 async function withOldDaily(store, list, day) {
   const old = (await store.get("daily", { type: "json" })) || [];
-  const best = new Map();
-  [...list, ...old.filter((e) => e.date && new Date(e.date).toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" }) === day)].forEach((e) => {
-    const k = String(e.name).toLowerCase();
-    if (!best.has(k) || e.score > best.get(k).score) best.set(k, e);
-  });
-  return [...best.values()].sort((a, b) => b.score - a.score);
+  return bestPerName([...list, ...old.filter((e) => e.date && new Date(e.date).toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" }) === day)]);
 }
 
 export default async (req) => {
@@ -92,7 +113,7 @@ export default async (req) => {
 
   // Daily boards: a separate board for each day (?day=2026-10-12)
   let key = mode;
-  if (mode === "wcr-daily" || mode === "daily") {
+  if (DAILY_MODES.has(mode)) {
     const day = url.searchParams.get("day") || "";
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
       // old copies of Word Scramble (still open in someone's browser) don't send a day: keep them on the old board
@@ -104,7 +125,7 @@ export default async (req) => {
   if (req.method === "GET") {
     const limitParam = parseInt(url.searchParams.get("limit") || "20", 10);
     const limit = Math.min(Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 20, MAX_ENTRIES);
-    let list = (await store.get(key, { type: "json" })) || [];
+    let list = bestPerName((await store.get(key, { type: "json" })) || []);
     if (mode === "daily" && key !== "daily") list = await withOldDaily(store, list, key.slice(6));
     return json({ mode, entries: list.slice(0, limit) });
   }
@@ -131,33 +152,25 @@ export default async (req) => {
       return json({ error: "invalid score" }, 400);
     }
 
-    let list = (await store.get(key, { type: "json" })) || [];
+    // Clean out any old duplicates first, then keep this player's best score only
+    let list = bestPerName((await store.get(key, { type: "json" })) || []);
     const entry = { name, score, date: Date.now() };
     if (cls) entry.cls = cls;
-    if (BEST_PER_NAME(mode)) {
-      // One entry per name: keep the best total only.
-      const existing = list.find((e) => e.name.toLowerCase() === name.toLowerCase());
-      if (existing) {
-        if (score > existing.score) {
-          list = list.filter((e) => e !== existing);
-          list.push(entry);
-        }
-      } else {
-        list.push(entry);
-      }
-    } else {
-      list.push(entry);
-    }
-    list.sort((a, b) => b.score - a.score);
+    const existing = list.find((e) => nameKey(e.name) === nameKey(name));
+    if (!existing) list.push(entry);
+    else if (score > existing.score) list = list.filter((e) => e !== existing).concat(entry);
+    list = bestPerName(list);
     const trimmed = list.slice(0, MAX_ENTRIES);
     await store.setJSON(key, trimmed);
     // the rank shown to the player includes today's scores from the old board
     const ranked = (mode === "daily" && key !== "daily") ? await withOldDaily(store, trimmed, key.slice(6)) : trimmed;
 
-    const rankIndex = ranked.findIndex((e) => e.name.toLowerCase() === name.toLowerCase() && (BEST_PER_NAME(mode) || e.score === score) && e.date);
+    const rankIndex = ranked.findIndex((e) => nameKey(e.name) === nameKey(name));
     const rank = rankIndex === -1 ? null : rankIndex + 1;
+    const best = rankIndex === -1 ? score : ranked[rankIndex].score;
 
-    return json({ mode, rank, madeTop: rank !== null, entries: ranked.slice(0, 20) });
+    // newBest: false when this score didn't beat the player's earlier best (their best stays on the board)
+    return json({ mode, rank, madeTop: rank !== null, best, newBest: score >= best, entries: ranked.slice(0, 20) });
   }
 
   return json({ error: "method not allowed" }, 405);

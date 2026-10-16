@@ -681,6 +681,17 @@
         box-shadow: 0 0 14px rgba(255, 51, 153, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
     .block.junk { background: linear-gradient(180deg, #3d1529, #220b17); border-color: var(--pink); }
+    /* Phones: question type on a small top line, the part to read big underneath */
+    @media (max-width: 700px) {
+        .well .block { font-size: clamp(15px, calc(var(--bh, 36px) * 0.38), 21px); }
+        .well .block.active { font-size: clamp(17px, calc(var(--bh, 36px) * 0.46), 25px); }
+        .well .block.one { font-size: clamp(17px, calc(var(--bh, 36px) * 0.46), 24px); }          /* one line (sums): even bigger */
+        .well .block.one.active { font-size: clamp(19px, calc(var(--bh, 36px) * 0.56), 28px); }
+        .block { flex-direction: column; line-height: 1.08; padding: 0 6px; font-size: clamp(13px, calc(var(--bh, 36px) * 0.36), 20px); }
+        .block.active { font-size: clamp(15px, calc(var(--bh, 36px) * 0.44), 24px); }
+        .block .qh { font-size: 0.6em; font-weight: 700; opacity: 0.8; letter-spacing: 0.3px; white-space: nowrap; }
+        .block .qm { font-weight: 900; letter-spacing: 0.5px; white-space: nowrap; }
+    }
     .block.bomb { background: linear-gradient(180deg, #4a2a00, #2a1500); }
     /* Word question types get a coloured stripe */
     .block.k-anagram  { border-left: 5px solid #c77dff; }
@@ -3875,8 +3886,9 @@
         el.addEventListener('animationend', e => {
             if (e.animationName === 'drop' || e.animationName === 'slam') el.classList.add('settled');
         });
-        el.textContent = q.text;
-        return { q, junk, el };
+        const blk = { q, junk, el };
+        labelBlock(blk);
+        return blk;
     }
 
     // Block text, with icons for bombs, timers and ice
@@ -3886,7 +3898,17 @@
         if (b.bomb) pre += '💣' + Math.max(0, Math.ceil(b.bomb)) + '  ';
         if (b.timer) pre += '⏱' + Math.max(0, Math.ceil(b.timer)) + '  ';
         const txt = pre + b.q.text;
-        if (b.el.textContent !== txt) { b.el.textContent = txt; fitText(b.el, 9); }
+        if (b.el.dataset.t === txt) return;
+        b.el.dataset.t = txt;
+        // Two parts: the small question type ("🔀 Unscramble:") and the big part to read ("SECPA").
+        // On phones they sit on two lines so the important part can be much bigger.
+        const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const cut = txt.indexOf(': ');
+        b.el.classList.toggle('one', cut <= 0);
+        b.el.innerHTML = cut > 0
+            ? '<span class="qh">' + esc(txt.slice(0, cut + 1)) + ' </span><span class="qm">' + esc(txt.slice(cut + 2)) + '</span>'
+            : '<span class="qm">' + esc(txt) + '</span>';
+        fitText(b.el, 9);
     }
 
     // Gives a block a new question (used by Deep Freeze and Switcheroo)
@@ -4049,7 +4071,7 @@
         el.style.fontSize = '';
         let size = parseFloat(getComputedStyle(el).fontSize);
         let guard = 30;
-        while (el.scrollWidth > el.clientWidth + 1 && size > min && guard-- > 0) {
+        while ((el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1) && size > min && guard-- > 0) {
             size -= 1;
             el.style.fontSize = size + 'px';
         }

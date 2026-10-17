@@ -681,6 +681,7 @@
         box-shadow: 0 0 14px rgba(255, 51, 153, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
     .block.junk { background: linear-gradient(180deg, #3d1529, #220b17); border-color: var(--pink); }
+    .block .qh { margin-right: 0.35em; }   /* space between "Same as:" and the word on computers */
     /* Phones: question type on a small top line, the part to read big underneath */
     @media (max-width: 700px) {
         .well .block { font-size: clamp(15px, calc(var(--bh, 36px) * 0.38), 21px); }
@@ -689,7 +690,7 @@
         .well .block.one.active { font-size: clamp(19px, calc(var(--bh, 36px) * 0.56), 28px); }
         .block { flex-direction: column; line-height: 1.08; padding: 0 6px; font-size: clamp(13px, calc(var(--bh, 36px) * 0.36), 20px); }
         .block.active { font-size: clamp(15px, calc(var(--bh, 36px) * 0.44), 24px); }
-        .block .qh { font-size: 0.6em; font-weight: 700; opacity: 0.8; letter-spacing: 0.3px; white-space: nowrap; }
+        .block .qh { margin-right: 0; font-size: 0.6em; font-weight: 700; opacity: 0.8; letter-spacing: 0.3px; white-space: nowrap; }
         .block .qm { font-weight: 900; letter-spacing: 0.5px; white-space: nowrap; }
     }
     .block.bomb { background: linear-gradient(180deg, #4a2a00, #2a1500); }
@@ -4240,6 +4241,7 @@
                     (nx ? ' · Beat ' + nx.need + ' in one run for ' + nx.icon + ' ' + nx.name : ' · Top rank!') + '</p>';
             }
             html += lbBoxHtml('endless');
+            html += '<button class="btn" id="runShareBtn">📋 SHARE MY RUN</button>';
             html += '<button class="btn gold" id="againBtn">PLAY ENDLESS AGAIN</button>';
         } else if (matchMode === 'bossrush') {
             const r = bossRushResult, n = bossRush.list.length;
@@ -4248,6 +4250,7 @@
                 : '<p class="sub">' + (r.newBest ? '<b style="color:var(--green)">NEW BEST BOSS RUSH SCORE!</b> · ' : 'Best: ' + profile.bossRush.best.toLocaleString() + ' pts · ') +
                   (profile.bossRush.won ? 'Fastest win: ' + profile.bossRush.time : 'Most bosses beaten: ' + profile.bossRush.most + ' / ' + n) + '</p>';
             if (!profile.bossRush.won && HEROES.length) html += '<p class="sub">📷 Beat all ' + n + ' bosses to unlock your own photo as your hero.</p>';
+            html += '<button class="btn" id="runShareBtn">📋 SHARE MY RUN</button>';
             html += '<button class="btn gold" id="againBtn">👑 TRY BOSS RUSH AGAIN</button>';
         } else if (matchMode === 'daily') {
             const d = dailyResult;
@@ -4283,6 +4286,8 @@
         else if (again) again.onclick = () => startMatch(oppIndex);
         if (matchMode === 'ladder' && won && next) document.getElementById('nextBtn').onclick = () => startMatch(oppIndex + 1);
         if (matchMode === 'daily') { const sb = document.getElementById('shareBtn'); sb.onclick = () => shareDaily(sb); }
+        const rs = document.getElementById('runShareBtn');
+        if (rs) { const t = runShareText(); rs.onclick = () => shareText(t, rs); }
         document.getElementById('menuBtn').onclick = (matchMode === 'ladder' || matchMode === 'bossrush') ? () => { showMenu(); showLadder(); } :
             matchMode === 'endless' ? () => { showMenu(); showRanked(); } : showMenu;
     }
@@ -4292,19 +4297,42 @@
         const d = dailyInfo();
         const r = profile.daily;
         const text =
-            GAME.title + ': ' + GAME.edition + ' · Daily #' + d.num + '\n' +
+            niceName() + ' · Daily #' + d.num + '\n' +
             d.mod.icon + ' ' + d.mod.name + ' vs ' + (r.opp || OPPONENTS[d.oppIdx].name) + '\n' +
             (r.won ? '✅ WON in ' + r.time : '❌ Lost after ' + r.time) + ' · ' + r.score + ' pts\n' +
             '🔥 ' + profile.dailyStreak.count + '-day streak\n' +
-            'aussiegameroom.com';
+            gameLink() + '?daily=1';
+        shareText(text, btn);
+    }
+    function niceName() { return (GAME.title + ': ' + GAME.edition).toLowerCase().replace(/(^|[\s:])\w/g, c => c.toUpperCase()); }   // "Stack Attack: Words"
+    function gameLink() { return (GAME.seo && GAME.seo.url) || 'https://aussiegameroom.com/'; }
+    // Share sheet on phones; copy to clipboard elsewhere (or when sharing isn't allowed, e.g. inside itch.io)
+    async function shareText(text, btn) {
         const done = () => { if (btn) btn.textContent = '✅ COPIED! PASTE IT ANYWHERE'; };
         if (navigator.share) {
-            navigator.share({ text }).catch(() => {});
-        } else if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(done, () => window.prompt('Copy your result:', text));
-        } else {
-            window.prompt('Copy your result:', text);
+            try { await navigator.share({ text }); return; }
+            catch (e) { if (e && e.name === 'AbortError') return; }   // they closed the share sheet
         }
+        try { await navigator.clipboard.writeText(text); done(); return; } catch (e) {}
+        window.prompt('Copy your result:', text);
+    }
+    // Endless and Boss Rush: a short brag about this run
+    function runShareText() {
+        const head = niceName();
+        const score = '⭐ ' + pts.total.toLocaleString() + ' pts';
+        if (matchMode === 'endless') {
+            const n = endless.beaten, r = endlessResult ? endlessResult.rankAfter : rankOf(profile.endlessBest);
+            return head + ' · Endless\n' +
+                '♾️ Beat ' + n + ' opponent' + (n === 1 ? '' : 's') + ' in one run\n' +
+                score + ' · ' + r.icon + ' ' + r.name + '\n' +
+                (puIcons() ? 'Power-ups: ' + puIcons() + '\n' : '') +
+                'Can you beat it? ' + gameLink();
+        }
+        const b = bossRushResult, n = bossRush.list.length;
+        return head + ' · Boss Rush\n' +
+            (b && b.got >= n ? '👑 BEAT ALL ' + n + ' BOSSES in ' + b.time + ', no break!' : '👑 Beat ' + (b ? b.got : 0) + ' of ' + n + ' bosses back to back') + '\n' +
+            score + '\n' +
+            'Think you can do better? ' + gameLink();
     }
 
     function showLoadout() {

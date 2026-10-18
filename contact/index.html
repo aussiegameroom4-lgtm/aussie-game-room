@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact &amp; Feedback | Aussie Game Room</title>
+<meta name="description" content="Send feedback, report a bug, suggest a game idea or ask a question about Aussie Game Room's free word and number games.">
+<link rel="canonical" href="https://aussiegameroom.com/contact/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aussie Game Room">
+<meta property="og:title" content="Contact &amp; Feedback | Aussie Game Room">
+<meta property="og:description" content="Send feedback, report a bug or suggest a game idea.">
+<meta property="og:url" content="https://aussiegameroom.com/contact/">
+<meta name="theme-color" content="#070a14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070a14; --bg2:#0d1222; --ink:#f6f1e4; --muted:#a9afc4; --line:rgba(255,255,255,0.09);
+  --gold:#ffd24a; --gold-deep:#e8a33d; --teal:#2fd3c3; --coral:#ff5a5f;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; min-height:100vh; background:var(--bg); color:var(--ink);
+  font-family:'Nunito',sans-serif; overflow-x:hidden;
+}
+.glow{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(600px 420px at 12% 8%, rgba(47,211,195,0.14), transparent 70%),
+    radial-gradient(700px 500px at 88% 18%, rgba(255,210,74,0.12), transparent 70%),
+    radial-gradient(800px 600px at 50% 105%, rgba(255,90,95,0.10), transparent 70%);
+}
+.page{position:relative; z-index:1;}
+.topbar{max-width:1120px; margin:0 auto; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+.logo{display:flex; align-items:center; gap:10px; font-family:'Lilita One',cursive; font-size:20px; letter-spacing:0.5px; color:var(--ink); text-decoration:none;}
+.logo-mark{width:38px; height:38px; border-radius:11px; background:linear-gradient(140deg,var(--gold),var(--coral)); display:flex; align-items:center; justify-content:center; box-shadow:0 0 18px rgba(255,210,74,0.35);}
+.nav-pill{font-weight:800; font-size:13px; color:var(--ink); text-decoration:none; padding:9px 16px; border-radius:30px; border:1px solid var(--line); background:rgba(255,255,255,0.04);}
+.nav-pill:hover{background:rgba(255,255,255,0.09); border-color:rgba(255,210,74,0.4);}
+
+main{max-width:680px; margin:0 auto; padding:30px 24px 20px;}
+h1{font-family:'Lilita One',cursive; font-weight:400; font-size:clamp(34px,7vw,52px); line-height:1.05; margin:0 0 10px; letter-spacing:0.5px;}
+h1 span{background:linear-gradient(90deg,var(--gold),var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.lead{color:var(--muted); font-size:17px; line-height:1.55; margin:0 0 26px;}
+
+form.card{
+  background:rgba(255,255,255,0.03); border:1px solid var(--line); border-radius:22px;
+  padding:26px; display:grid; gap:18px;
+}
+label{display:grid; gap:7px; font-weight:800; font-size:14px;}
+label small{font-weight:600; color:var(--muted); font-size:13px;}
+input[type=text], input[type=email], select, textarea{
+  font:inherit; font-size:16px; color:var(--ink); background:var(--bg2);
+  border:1px solid rgba(255,255,255,0.14); border-radius:12px; padding:12px 14px; width:100%;
+}
+textarea{min-height:150px; resize:vertical; line-height:1.5;}
+input:focus, select:focus, textarea:focus{outline:2px solid var(--gold); outline-offset:1px; border-color:transparent;}
+select{appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%); background-position:calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size:6px 6px; background-repeat:no-repeat;}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.share{
+  border:1px solid rgba(255,210,74,0.25); border-radius:16px; padding:16px;
+  background:rgba(255,210,74,0.05); display:grid; gap:12px;
+}
+.check{display:flex; gap:12px; align-items:flex-start; font-weight:700; font-size:15px; cursor:pointer;}
+.check input{width:20px; height:20px; margin:2px 0 0; accent-color:var(--gold); flex:none;}
+.check span small{display:block; font-weight:600; color:var(--muted); font-size:13px; margin-top:2px;}
+.showname{display:none;}
+.share.on .showname{display:grid;}
+.hide{position:absolute; left:-9999px;}
+button{
+  font:inherit; font-weight:900; font-size:16px; color:#1a1206; border:0; cursor:pointer;
+  padding:15px 22px; border-radius:30px; background:linear-gradient(140deg,var(--gold),var(--gold-deep));
+  box-shadow:0 6px 18px rgba(255,210,74,0.25);
+}
+button:hover{filter:brightness(1.05);}
+.note{color:var(--muted); font-size:13px; text-align:center; margin:0;}
+footer{margin-top:70px; padding:34px 24px 44px; text-align:center; border-top:1px solid var(--line); color:var(--muted); font-weight:700; font-size:13px;}
+footer a{color:var(--muted);}
+footer .heart{color:var(--coral);}
+@media (max-width:560px){
+  .row2{grid-template-columns:1fr;}
+  form.card{padding:20px;}
+  .topbar{padding:14px 16px;}
+  main{padding:20px 16px;}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="page">
+  <div class="topbar">
+    <a class="logo" href="/">
+      <span class="logo-mark">
+        <svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect x="8" y="20" width="48" height="26" rx="13" stroke="#1a1206" stroke-width="5"/>
+          <line x1="23" y1="28" x2="23" y2="38" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
+          <line x1="18" y1="33" x2="28" y2="33" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="40" cy="30" r="3.5" fill="#1a1206"/><circle cx="47" cy="37" r="3.5" fill="#1a1206"/>
+        </svg>
+      </span>
+      Aussie Game Room
+    </a>
+    <a class="nav-pill" href="/#games">All games</a>
+  </div>
+
+  <main>
+    <h1>Contact &amp; <span>feedback</span></h1>
+    <p class="lead">Found a bug, got an idea for a game, or just want to say what you think? Send me a message. I read every one, and I'll reply if you leave your email.</p>
+
+    <form class="card" name="contact" method="POST" action="/contact/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hide"><label>Don't fill this in: <input name="bot-field"></label></p>
+
+      <label>What's it about?
+        <select name="type" required>
+          <option value="Feedback">Feedback on a game</option>
+          <option value="Bug">Something's not working (bug)</option>
+          <option value="Idea">A game idea or suggestion</option>
+          <option value="Question">A question</option>
+          <option value="Other">Something else</option>
+        </select>
+      </label>
+
+      <label>Which game? <small>(if it's about one)</small>
+        <select name="game">
+          <option value="">Not about a particular game</option>
+          <option>Word Scramble</option>
+          <option>Word Chain Express</option>
+          <option>Stack Attack: Numbers</option>
+          <option>Stack Attack: Words</option>
+        </select>
+      </label>
+
+      <label>Your message
+        <textarea name="message" required maxlength="3000" placeholder="Tell me what you think…"></textarea>
+      </label>
+
+      <div class="row2">
+        <label>Your name <small>(optional)</small>
+          <input type="text" name="name" maxlength="60" autocomplete="name">
+        </label>
+        <label>Your email <small>(optional, only if you'd like a reply)</small>
+          <input type="email" name="email" maxlength="120" autocomplete="email">
+        </label>
+      </div>
+
+      <div class="share" id="share">
+        <label class="check">
+          <input type="checkbox" name="ok-to-share" value="Yes" id="okShare">
+          <span>You can show my comment on the website
+            <small>Only tick this if you're happy for other players to read it. I might shorten it, but I won't change what you said.</small>
+          </span>
+        </label>
+        <label class="showname">Name to show with it <small>(a first name or nickname, or leave blank to show "A player")</small>
+          <input type="text" name="display-name" maxlength="40">
+        </label>
+      </div>
+
+      <button type="submit">Send message</button>
+      <p class="note">Your email is only used to reply to you. It's never shown on the site or shared.</p>
+    </form>
+  </main>
+
+  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room · <a href="/">Back to the games</a></footer>
+</div>
+<script>
+  var ok = document.getElementById('okShare'), box = document.getElementById('share');
+  ok.addEventListener('change', function(){ box.classList.toggle('on', ok.checked); });
+</script>
+</body>
+</html>

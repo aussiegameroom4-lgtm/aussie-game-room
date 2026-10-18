@@ -74,6 +74,10 @@ body{
 }
 .nav-pill:hover{background:rgba(255,255,255,0.09); border-color:rgba(255,210,74,0.4);}
 
+.nav-links{display:flex; align-items:center; gap:8px;}
+.support-pill{border-color:rgba(255,210,74,0.45); color:var(--gold);}
+.support-pill:hover{background:rgba(255,210,74,0.12);}
+
 /* ---------- hero ---------- */
 .hero{max-width:1120px; margin:0 auto; padding:56px 24px 40px; text-align:center;}
 .eyebrow{
@@ -344,6 +348,46 @@ body{
 .mystery h4{position:relative; z-index:1; font-family:'Lilita One',cursive; font-size:20px; margin:18px 0 4px; letter-spacing:0.3px;}
 .mystery span{position:relative; z-index:1; font-weight:700; font-size:13px; color:var(--muted);}
 
+/* ---------- support (Ko-fi) ---------- */
+.support{
+  max-width:1072px; margin:80px auto 0; padding:26px 28px;
+  display:flex; align-items:center; gap:22px;
+  border:1px solid rgba(255,210,74,0.28); border-radius:22px;
+  background:linear-gradient(120deg,rgba(255,210,74,0.08),rgba(255,90,95,0.06));
+}
+.support-cup{font-size:40px; line-height:1; flex:none;}
+.support-text{flex:1; min-width:0;}
+.support h2{margin:0 0 4px; font-family:'Lilita One',cursive; font-weight:400; font-size:24px; letter-spacing:0.4px; color:var(--ink);}
+.support p{margin:0; color:var(--muted); font-size:15px; line-height:1.5;}
+.support-btn{
+  flex:none; font-weight:900; font-size:15px; color:#1a1206; text-decoration:none;
+  padding:13px 22px; border-radius:30px;
+  background:linear-gradient(140deg,var(--gold),var(--gold-deep));
+  box-shadow:0 6px 18px rgba(255,210,74,0.25);
+  transition:transform .15s, box-shadow .15s;
+}
+.support-btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(255,210,74,0.35);}
+.support + footer{margin-top:40px;}
+@media (max-width:700px){
+  .support{flex-direction:column; text-align:center; margin:56px 16px 0; padding:24px 20px;}
+}
+
+/* ---------- players are saying ---------- */
+.players{max-width:1072px; margin:80px auto 0; padding:0 24px; box-sizing:content-box;}
+.players-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
+.players h2{margin:0; font-family:'Lilita One',cursive; font-weight:400; font-size:30px; letter-spacing:0.4px;}
+.players-link{color:var(--gold); font-weight:800; font-size:14px; text-decoration:none;}
+.players-link:hover{text-decoration:underline;}
+.players-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;}
+.quote{margin:0; padding:20px 22px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,0.03);}
+.quote p{margin:0 0 12px; font-size:15px; line-height:1.55;}
+.quote p::before{content:"\201C";} .quote p::after{content:"\201D";}
+.quote footer{margin:0; padding:0; border:0; text-align:left; font-size:13px; font-weight:800; color:var(--muted);}
+.quote footer b{color:var(--gold); font-weight:800;}
+footer .foot-links{display:block; margin-top:8px; font-weight:700;}
+footer .foot-links a{color:var(--muted);}
+footer .foot-links a:hover{color:var(--ink);}
+
 /* ---------- footer ---------- */
 footer{
   margin-top:80px; padding:34px 24px 44px; text-align:center;
@@ -363,6 +407,7 @@ footer .heart{color:var(--coral);}
   .tile{width:30px; height:38px; font-size:16px; border-radius:7px;}
   .daily-links{margin-left:0;}
   .nav-pill{display:none;}
+  .nav-pill.support-pill{display:inline-block;}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important; transition:none !important;}
@@ -580,7 +625,11 @@ footer .heart{color:var(--coral);}
       </span>
       Aussie Game Room
     </a>
-    <a class="nav-pill" href="#games">All games</a>
+    <div class="nav-links">
+      <a class="nav-pill" href="#games">All games</a>
+      <a class="nav-pill" href="/contact/">Feedback</a>
+      <a class="nav-pill support-pill" href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-top">☕ Support</a>
+    </div>
   </div>
 
   <header class="hero">
@@ -713,9 +762,48 @@ footer .heart{color:var(--coral);}
     </div>
   </div>
 
-  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room</footer>
+  <section class="players" id="players" hidden aria-labelledby="playersTitle">
+    <div class="section-head players-head">
+      <h2 id="playersTitle">Players are saying</h2>
+      <a class="players-link" href="/contact/">Leave your own feedback ›</a>
+    </div>
+    <div class="players-list" id="playersList"></div>
+  </section>
+
+  <section class="support reveal" aria-labelledby="supportTitle">
+    <span class="support-cup" aria-hidden="true">☕</span>
+    <div class="support-text">
+      <h2 id="supportTitle">Enjoying the games?</h2>
+      <p>Aussie Game Room is made by one person in Australia, and every game is free to play. If you'd like to help keep the site running and new games coming, you can shout me a coffee.</p>
+    </div>
+    <a class="support-btn" href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-bottom">Buy me a coffee</a>
+  </section>
+
+  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room<span class="foot-links"><a href="/contact/">Contact &amp; feedback</a> · <a href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-footer">Support on Ko-fi</a></span></footer>
 </div>
 
+<script>
+/* ============================================================
+   PLAYER COMMENTS
+   To show a comment on the homepage, copy one line below and fill it in.
+   Only add comments where the player ticked "You can show my comment".
+   Example:
+   { text: "Stack Attack Words is so addictive!", name: "Sam", game: "Stack Attack: Words" },
+   ============================================================ */
+var PLAYER_COMMENTS = [
+
+];
+(function(){
+  if (!PLAYER_COMMENTS.length) return;
+  var list = document.getElementById('playersList');
+  var esc = function(t){ var d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; };
+  list.innerHTML = PLAYER_COMMENTS.map(function(c){
+    return '<blockquote class="quote"><p>' + esc(c.text) + '</p><footer><b>' + esc(c.name || 'A player') + '</b>' +
+      (c.game ? ' · ' + esc(c.game) : '') + '</footer></blockquote>';
+  }).join('');
+  document.getElementById('players').hidden = false;
+})();
+</script>
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

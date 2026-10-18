@@ -783,25 +783,18 @@ footer .heart{color:var(--coral);}
 </div>
 
 <script>
-/* ============================================================
-   PLAYER COMMENTS
-   To show a comment on the homepage, copy one line below and fill it in.
-   Only add comments where the player ticked "You can show my comment".
-   Example:
-   { text: "Stack Attack Words is so addictive!", name: "Sam", game: "Stack Attack: Words" },
-   ============================================================ */
-var PLAYER_COMMENTS = [
-
-];
+/* PLAYER COMMENTS: approved on the private page /admin/comments/ (no push needed) */
 (function(){
-  if (!PLAYER_COMMENTS.length) return;
-  var list = document.getElementById('playersList');
   var esc = function(t){ var d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; };
-  list.innerHTML = PLAYER_COMMENTS.map(function(c){
-    return '<blockquote class="quote"><p>' + esc(c.text) + '</p><footer><b>' + esc(c.name || 'A player') + '</b>' +
-      (c.game ? ' · ' + esc(c.game) : '') + '</footer></blockquote>';
-  }).join('');
-  document.getElementById('players').hidden = false;
+  fetch('/api/comments').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    var list = d && d.comments ? d.comments.slice(0, 6) : [];
+    if (!list.length) return;
+    document.getElementById('playersList').innerHTML = list.map(function(c){
+      return '<blockquote class="quote"><p>' + esc(c.text) + '</p><footer><b>' + esc(c.name || 'A player') + '</b>' +
+        (c.game ? ' · ' + esc(c.game) : '') + '</footer></blockquote>';
+    }).join('');
+    document.getElementById('players').hidden = false;
+  }).catch(function(){});
 })();
 </script>
 <script>

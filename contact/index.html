@@ -167,6 +167,23 @@ footer .heart{color:var(--coral);}
 <script>
   var ok = document.getElementById('okShare'), box = document.getElementById('share');
   ok.addEventListener('change', function(){ box.classList.toggle('on', ok.checked); });
+
+  // Save every message to your inbox (/admin/comments/). Netlify Forms keeps a backup copy.
+  var form = document.querySelector('form[name="contact"]'), sent = false;
+  form.addEventListener('submit', function(e){
+    if (sent || form.elements['bot-field'].value) return;
+    e.preventDefault(); sent = true;
+    var f = form.elements;
+    var body = JSON.stringify({
+      type: f['type'].value, game: f['game'].value, text: f['message'].value,
+      name: f['name'].value, email: f['email'].value,
+      share: ok.checked, displayName: f['display-name'].value
+    });
+    var done = function(){ form.submit(); };
+    var t = setTimeout(done, 2500);
+    fetch('/api/comments', { method:'POST', headers:{'Content-Type':'application/json'}, body: body, keepalive: true })
+      .catch(function(){}).then(function(){ clearTimeout(t); done(); });
+  });
 </script>
 </body>
 </html>

@@ -20,8 +20,8 @@ import { getStore } from "@netlify/blobs";
 import { createHash } from "node:crypto";
 
 const MAX_TEXT = 3000;
-const MAX_INBOX = 500;
-const MAX_SHOWN = 30;
+const MAX_INBOX = 1000;
+const MAX_SHOWN = 500;
 const GAMES = new Set(["", "Word Scramble", "Word Chain Express", "Stack Attack: Numbers", "Stack Attack: Words"]);
 const TYPES = new Set(["Feedback", "Bug", "Idea", "Question", "Other"]);
 

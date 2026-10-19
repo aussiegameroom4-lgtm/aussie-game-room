@@ -373,6 +373,10 @@ body{
 .players h2{margin:0; font-family:'Lilita One',cursive; font-weight:400; font-size:30px; letter-spacing:0.4px;}
 .players-link{color:var(--gold); font-weight:800; font-size:14px; text-decoration:none;}
 .players-link:hover{text-decoration:underline;}
+.all-reviews{display:table; margin:18px auto 0; font-weight:900; font-size:15px; color:#1a1206; text-decoration:none;
+  padding:11px 22px; border-radius:30px; background:linear-gradient(140deg,var(--gold),var(--gold-deep)); box-shadow:0 6px 18px rgba(255,210,74,0.22);}
+.all-reviews[hidden]{display:none;}
+.all-reviews:hover{filter:brightness(1.06);}
 .players-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px;}
 .quote{margin:0; padding:20px 22px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,0.03);}
 .quote p{margin:0 0 12px; font-size:15px; line-height:1.55;}
@@ -811,6 +815,7 @@ footer .heart{color:var(--coral);}
       <a class="players-link" href="/contact/">Leave your own feedback ›</a>
     </div>
     <div class="players-list" id="playersList"></div>
+    <a class="all-reviews" id="allReviews" href="/reviews/" hidden>See all reviews ›</a>
   </section>
 
   <section class="support reveal" aria-labelledby="supportTitle">
@@ -859,8 +864,13 @@ footer .heart{color:var(--coral);}
 (function(){
   var esc = function(t){ var d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; };
   fetch('/api/comments').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-    var list = d && d.comments ? d.comments.slice(0, 6) : [];
+    var all = d && d.comments ? d.comments : [];
+    var list = all.slice(0, 6);
     if (!list.length) return;
+    if (all.length > 6) {
+      var more = document.getElementById('allReviews');
+      more.textContent = 'See all ' + all.length + ' reviews ›'; more.hidden = false;
+    }
     document.getElementById('playersList').innerHTML = list.map(function(c){
       return '<blockquote class="quote"><p>' + esc(c.text) + '</p><footer><b>' + esc(c.name || 'A player') + '</b>' +
         (c.game ? ' · ' + esc(c.game) : '') + '</footer></blockquote>';

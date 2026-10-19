@@ -686,6 +686,7 @@ footer .heart{color:var(--coral);}
     </a>
     <div class="nav-links">
       <a class="nav-pill" href="#games">All games</a>
+      <a class="nav-pill" href="/reviews/">Reviews</a>
       <a class="nav-pill" href="/contact/">Feedback</a>
       <a class="nav-pill support-pill" href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-top">☕ Support</a>
     </div>
@@ -856,7 +857,7 @@ footer .heart{color:var(--coral);}
     </div>
   </div>
 
-  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room<span class="foot-links"><a href="/contact/">Contact &amp; feedback</a> · <a href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-footer">Support on Ko-fi</a></span></footer>
+  <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room<span class="foot-links"><a href="/reviews/">Player reviews</a> · <a href="/contact/">Contact &amp; feedback</a> · <a href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-footer">Support on Ko-fi</a></span></footer>
 </div>
 
 <script>
@@ -867,10 +868,9 @@ footer .heart{color:var(--coral);}
     var all = d && d.comments ? d.comments : [];
     var list = all.slice(0, 6);
     if (!list.length) return;
-    if (all.length > 6) {
-      var more = document.getElementById('allReviews');
-      more.textContent = 'See all ' + all.length + ' reviews ›'; more.hidden = false;
-    }
+    var more = document.getElementById('allReviews');
+    more.textContent = all.length > 6 ? 'See all ' + all.length + ' reviews ›' : 'See all reviews ›';
+    more.hidden = false;
     document.getElementById('playersList').innerHTML = list.map(function(c){
       return '<blockquote class="quote"><p>' + esc(c.text) + '</p><footer><b>' + esc(c.name || 'A player') + '</b>' +
         (c.game ? ' · ' + esc(c.game) : '') + '</footer></blockquote>';

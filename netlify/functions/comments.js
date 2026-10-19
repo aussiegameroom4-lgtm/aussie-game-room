@@ -14,9 +14,10 @@
 // POST /api/comments?action=read&id=...       -> mark as read / unread    (admin key)
 // POST /api/comments?action=delete&id=...     -> delete for good          (admin key)
 //
-// The admin key is the ADMIN_KEY environment variable in Netlify.
+// The admin key is checked against ADMIN_KEY_SHA256 below. No Netlify settings needed.
 
 import { getStore } from "@netlify/blobs";
+import { createHash } from "node:crypto";
 
 const MAX_TEXT = 3000;
 const MAX_INBOX = 500;
@@ -31,10 +32,12 @@ const json = (data, status = 200, extra = {}) =>
   });
 const noStore = { "Cache-Control": "no-store", "Netlify-CDN-Cache-Control": "no-store" };
 
+// Only a scrambled fingerprint of the admin key is stored here, never the key itself.
+const ADMIN_KEY_SHA256 = "2a49f9b119c3d596379aadc2777c74742bc488caeb27c30b3e4edb664f9a9885";
 function isAdmin(req) {
-  const key = process.env.ADMIN_KEY || "";
-  const sent = req.headers.get("x-admin-key") || "";
-  return key.length >= 12 && sent === key;
+  const sent = (req.headers.get("x-admin-key") || "").trim();
+  if (!sent) return false;
+  return createHash("sha256").update(sent).digest("hex") === ADMIN_KEY_SHA256;
 }
 const clean = (s, max) => String(s || "").replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, " ").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, max);
 const oneLine = (s, max) => clean(s, max).replace(/\s+/g, " ");

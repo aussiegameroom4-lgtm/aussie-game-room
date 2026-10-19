@@ -60,12 +60,7 @@ body{
   display:flex; align-items:center; justify-content:space-between; gap:12px;
 }
 .logo{display:flex; align-items:center; gap:10px; font-family:'Lilita One',cursive; font-size:20px; letter-spacing:0.5px; color:var(--ink); text-decoration:none;}
-.logo-mark{
-  width:38px; height:38px; border-radius:11px;
-  background:linear-gradient(140deg,var(--gold),var(--coral));
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 0 18px rgba(255,210,74,0.35);
-}
+.logo-mark{width:38px; height:38px; border-radius:10px; display:block; object-fit:cover; border:1px solid rgba(255,210,74,0.55); box-shadow:0 0 16px rgba(255,210,74,0.35);}
 .nav-pill{
   font-weight:800; font-size:13px; color:var(--ink); text-decoration:none;
   padding:9px 16px; border-radius:30px; border:1px solid var(--line);
@@ -450,30 +445,95 @@ footer .heart{color:var(--coral);}
   background:linear-gradient(180deg,#ffe48a,var(--gold)); box-shadow:0 0 18px rgba(255,210,74,0.4);}
 .hero .eyebrow{display:none;}
 
-/* ---------- daily champions ---------- */
-.champs{margin:18px auto 0; padding:14px; border-radius:20px;
-  background:linear-gradient(135deg,rgba(255,210,74,0.16),rgba(255,90,95,0.10));
-  border:1px solid rgba(255,210,74,0.45); box-shadow:0 0 30px rgba(255,210,74,0.12);
-  display:grid; gap:10px;}
-.champs-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px;}
-.champs-head b{font-family:'Lilita One',cursive; font-weight:400; letter-spacing:0.5px; font-size:20px;}
-.champs-head .daily-date{margin-left:auto;}
-.champ{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
-  padding:10px 12px; border-radius:14px; text-decoration:none; color:var(--ink);
-  background:rgba(7,10,20,0.55); border:1px solid var(--line); transition:transform .15s, border-color .15s;}
-.champ:hover{transform:translateY(-2px); border-color:rgba(255,210,74,0.5);}
-.champ-game{font-weight:900; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); width:96px;}
+/* ---------- daily champions (VIP lounge: velvet, gold trim, diamonds) ---------- */
+@property --champ-spin{syntax:'<angle>'; inherits:false; initial-value:0deg;}
+.champs{
+  --spin:0deg;
+  position:relative; overflow:hidden; margin:18px auto 0; padding:20px 18px 18px; border-radius:22px;
+  display:grid; gap:10px; isolation:isolate;
+  background:
+    radial-gradient(90% 120% at 50% -10%, rgba(160,90,255,0.35), transparent 60%),
+    radial-gradient(60% 80% at 100% 100%, rgba(47,211,195,0.16), transparent 70%),
+    linear-gradient(160deg,#1c1033 0%,#0e0a1c 55%,#160b26 100%) padding-box,
+    conic-gradient(from var(--champ-spin),#ffd24a,#fff6d0,#b48cff,#2fd3c3,#ffd24a,#fff6d0,#ff7ab6,#ffd24a) border-box;
+  border:2px solid transparent;
+  box-shadow:0 12px 44px rgba(120,60,220,0.30), 0 0 60px rgba(255,210,74,0.12);
+  animation:champSpin 6s linear infinite;
+}
+@keyframes champSpin{to{--champ-spin:360deg;}}
+/* light sweep */
+.champs::before{
+  content:""; position:absolute; inset:-40% -10%; z-index:-1; pointer-events:none;
+  background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,0.08) 49%,rgba(255,255,255,0.16) 50%,rgba(255,255,255,0.08) 51%,transparent 58%);
+  transform:translateX(-60%); animation:champShine 6s ease-in-out infinite;
+}
+@keyframes champShine{0%,50%{transform:translateX(-60%);} 80%,100%{transform:translateX(60%);}}
+
+/* twinkling diamonds */
+.sparkles{position:absolute; inset:0; z-index:-1; pointer-events:none;}
+.sparkles i{
+  position:absolute; left:var(--x); top:var(--y); width:var(--s,10px); height:var(--s,10px);
+  background:var(--k,#fff); opacity:0;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  filter:drop-shadow(0 0 6px var(--k,#fff));
+  animation:twinkle var(--d,2.6s) ease-in-out var(--w,0s) infinite;
+}
+@keyframes twinkle{0%,100%{opacity:0; transform:scale(.3) rotate(0deg);} 50%{opacity:1; transform:scale(1) rotate(45deg);}}
+
+.champs-head{display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; text-align:center; padding:0 0 6px;}
+.champs-title{
+  font-family:'Lilita One',cursive; font-weight:400; font-size:28px; letter-spacing:2px; text-transform:uppercase;
+  background:linear-gradient(90deg,#ffd24a 0%,#fff8dc 20%,#ffd24a 40%,#ffb3e0 55%,#ffd24a 70%,#fff8dc 85%,#ffd24a 100%);
+  background-size:250% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(255,200,80,0.35));
+  animation:titleShine 4s linear infinite;
+}
+@keyframes titleShine{to{background-position:-250% 0;}}
+.champs-crown{display:inline-block; font-size:26px; filter:drop-shadow(0 0 10px rgba(255,200,80,0.7)); animation:crownBob 2.4s ease-in-out infinite;}
+.champs-crown.r{animation-delay:-1.2s;}
+@keyframes crownBob{0%,100%{transform:translateY(0) rotate(-8deg);} 50%{transform:translateY(-5px) rotate(8deg);}}
+.champs-rule{flex:1; max-width:120px; height:2px; border-radius:2px; background:linear-gradient(90deg,transparent,#b48cff,#ffd24a,transparent);}
+.champs-rule.r{background:linear-gradient(90deg,transparent,#ffd24a,#b48cff,transparent);}
+.champs-head .daily-date{flex-basis:100%; font-size:12px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:#c7b5ef;}
+.champs-head .live-dot{display:none;}
+
+/* each game keeps its own colour, so it isn't all gold */
+.champ{
+  --c:#ffd24a;
+  position:relative; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+  padding:12px 14px 12px 18px; border-radius:14px; text-decoration:none; color:var(--ink);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--c) 18%,transparent),rgba(12,8,24,0.78) 45%);
+  border:1px solid color-mix(in srgb,var(--c) 35%,transparent);
+  transition:transform .15s, border-color .15s, box-shadow .15s;
+}
+.champ::before{content:""; position:absolute; left:0; top:8px; bottom:8px; width:4px; border-radius:4px;
+  background:var(--c); box-shadow:0 0 12px var(--c);}
+.champ:hover{transform:translateY(-2px) scale(1.01); border-color:var(--c); box-shadow:0 8px 26px color-mix(in srgb,var(--c) 35%,transparent);}
+.champ-game{font-weight:900; font-size:12px; letter-spacing:1.2px; text-transform:uppercase; color:var(--c); width:96px;}
 .champ-who{display:flex; flex-direction:column; min-width:0;}
-.champ-name{font-family:'Lilita One',cursive; font-size:20px; color:var(--gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.champ-name::before{content:"👑 ";}
-.champ-name.empty{color:var(--ink); font-family:'Nunito',sans-serif; font-weight:800; font-size:14px;}
+.champ-name{
+  font-family:'Lilita One',cursive; font-size:21px; letter-spacing:0.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  background:linear-gradient(90deg,#ffd24a 0%,#ffd24a 40%,#ffffff 50%,#ffd24a 60%,#ffd24a 100%); background-size:300% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 10px rgba(255,200,80,0.35));
+  animation:nameGlint 3.5s ease-in-out infinite;
+}
+@keyframes nameGlint{0%,60%{background-position:100% 0;} 100%{background-position:-50% 0;}}
+.champ-name::before{content:"👑 "; -webkit-text-fill-color:initial; color:initial;}
+.champ-name.empty{background:none; color:#ece4ff; -webkit-text-fill-color:#ece4ff; filter:none; animation:none;
+  font-family:'Nunito',sans-serif; font-weight:800; font-size:14px; letter-spacing:0;}
 .champ-name.empty::before{content:"";}
-.champ-score{font-weight:800; font-size:12px; color:var(--muted);}
+.champ-score{font-weight:800; font-size:12px; color:#bfb2df; letter-spacing:0.5px;}
 .champ-btn{font-family:'Lilita One',cursive; font-size:15px; color:#1a1206; white-space:nowrap;
-  background:linear-gradient(180deg,#ffe48a,var(--gold)); padding:9px 14px; border-radius:30px;
-  box-shadow:0 4px 0 var(--gold-deep); animation:champPulse 2.2s ease-in-out infinite;}
-@keyframes champPulse{50%{box-shadow:0 4px 0 var(--gold-deep), 0 0 18px rgba(255,210,74,0.6);}}
-@media (min-width:820px){ .champs{grid-template-columns:1fr 1fr;} .champs-head{grid-column:1/-1;} }
+  background:linear-gradient(180deg,#fff0b0,#ffd24a 50%,#e0a332); padding:9px 15px; border-radius:30px;
+  box-shadow:0 4px 0 #9a6b1e, inset 0 1px 0 rgba(255,255,255,0.7); animation:champPulse 2.2s ease-in-out infinite;}
+@keyframes champPulse{50%{box-shadow:0 4px 0 #9a6b1e, inset 0 1px 0 rgba(255,255,255,0.7), 0 0 20px rgba(255,210,74,0.65);}}
+@media (min-width:820px){ .champs{grid-template-columns:1fr 1fr; padding:24px 22px 22px;} .champs-head{grid-column:1/-1;} }
+@media (prefers-reduced-motion:reduce){
+  .champs,.champs::before,.sparkles i,.champs-title,.champs-crown,.champ-name{animation:none !important;}
+  .sparkles i{opacity:.7;}
+}
 
 /* ---------- phones: games side by side, less scrolling ---------- */
 @media (max-width:520px){
@@ -484,7 +544,9 @@ footer .heart{color:var(--coral);}
   .hero-cta{display:none;}
   .wrap{padding:0 12px;}
   .champs{padding:10px; gap:8px; margin-top:12px;}
-  .champs-head b{font-size:17px;}
+  .champs-title{font-size:19px; letter-spacing:1.5px;}
+  .champs-crown{font-size:18px;}
+  .champs-rule{max-width:40px;}
   .champs-head .daily-date{display:none;}
   .champ{grid-template-columns:1fr auto; gap:8px; padding:8px 10px;}
   .champ-game{grid-column:1/-1; width:auto; font-size:10px;}
@@ -615,14 +677,7 @@ footer .heart{color:var(--coral);}
 <div class="page">
   <div class="topbar">
     <a class="logo" href="#">
-      <span class="logo-mark">
-        <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
-          <rect x="8" y="20" width="48" height="26" rx="13" stroke="#1a1206" stroke-width="5"/>
-          <line x1="23" y1="28" x2="23" y2="38" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
-          <line x1="18" y1="33" x2="28" y2="33" stroke="#1a1206" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="40" cy="30" r="3.5" fill="#1a1206"/><circle cx="47" cy="37" r="3.5" fill="#1a1206"/>
-        </svg>
-      </span>
+      <img class="logo-mark" src="/apple-touch-icon.png" alt="" width="38" height="38">
       Aussie Game Room
     </a>
     <div class="nav-links">
@@ -647,23 +702,37 @@ footer .heart{color:var(--coral);}
 
   <div class="wrap">
     <section class="champs reveal" aria-label="Daily champions">
-      <div class="champs-head"><span class="live-dot"></span><b>🏆 Today's Champions</b><span class="daily-date" id="today"></span></div>
-      <a class="champ" href="/games/scramble-pro/?daily=1">
+      <div class="sparkles" aria-hidden="true">
+        <i style="--x:4%;--y:12%;--s:19px;--d:2.4s;--w:-.3s"></i>
+        <i style="--x:18%;--y:4%;--s:13px;--k:#ffd24a;--d:3s;--w:-1.1s"></i>
+        <i style="--x:31%;--y:16%;--s:10px;--k:#b48cff;--d:2.2s;--w:-.7s"></i>
+        <i style="--x:69%;--y:6%;--s:14px;--k:#2fd3c3;--d:2.8s;--w:-1.6s"></i>
+        <i style="--x:83%;--y:14%;--s:19px;--d:2.5s;--w:-.2s"></i>
+        <i style="--x:95%;--y:5%;--s:11px;--k:#ffd24a;--d:3.2s;--w:-2s"></i>
+        <i style="--x:2%;--y:58%;--s:13px;--k:#ff7ab6;--d:2.9s;--w:-1.4s"></i>
+        <i style="--x:97%;--y:52%;--s:16px;--k:#b48cff;--d:2.3s;--w:-.9s"></i>
+        <i style="--x:48%;--y:96%;--s:14px;--k:#ffd24a;--d:2.7s;--w:-1.8s"></i>
+        <i style="--x:12%;--y:93%;--s:11px;--d:3.1s;--w:-.5s"></i>
+        <i style="--x:88%;--y:94%;--s:13px;--k:#2fd3c3;--d:2.6s;--w:-2.2s"></i>
+        <i style="--x:58%;--y:2%;--s:10px;--d:2.1s;--w:-1.3s"></i>
+      </div>
+      <div class="champs-head"><span class="champs-rule"></span><span class="champs-crown" aria-hidden="true">👑</span><b class="champs-title">Today's Champions</b><span class="champs-crown r" aria-hidden="true">👑</span><span class="champs-rule r"></span><span class="daily-date" id="today"></span></div>
+      <a class="champ" href="/games/scramble-pro/?daily=1" style="--c:#5ef0a8">
         <span class="champ-game">Word Scramble</span>
         <span class="champ-who"><span class="champ-name" id="champ-sp">Loading...</span><span class="champ-score" id="champ-sp-score"></span></span>
         <span class="champ-btn" id="champ-sp-btn">Beat them →</span>
       </a>
-      <a class="champ" href="/games/word-chain-express/?daily=1">
+      <a class="champ" href="/games/word-chain-express/?daily=1" style="--c:#ff8a5c">
         <span class="champ-game">Word Chain</span>
         <span class="champ-who"><span class="champ-name" id="champ-wc">Loading...</span><span class="champ-score" id="champ-wc-score"></span></span>
         <span class="champ-btn" id="champ-wc-btn">Beat them →</span>
       </a>
-      <a class="champ" href="/games/stack-attack-numbers/?daily=1">
+      <a class="champ" href="/games/stack-attack-numbers/?daily=1" style="--c:#2fe6ff">
         <span class="champ-game">Stack Attack Numbers</span>
         <span class="champ-who"><span class="champ-name" id="champ-san">Loading...</span><span class="champ-score" id="champ-san-score"></span></span>
         <span class="champ-btn" id="champ-san-btn">Beat them →</span>
       </a>
-      <a class="champ" href="/games/stack-attack-words/?daily=1">
+      <a class="champ" href="/games/stack-attack-words/?daily=1" style="--c:#c084ff">
         <span class="champ-game">Stack Attack Words</span>
         <span class="champ-who"><span class="champ-name" id="champ-saw">Loading...</span><span class="champ-score" id="champ-saw-score"></span></span>
         <span class="champ-btn" id="champ-saw-btn">Beat them →</span>
@@ -725,32 +794,6 @@ footer .heart{color:var(--coral);}
       </article>
     </div>
 
-    <div class="section-head reveal">
-      <h2>Coming soon</h2><span class="count">4 in the workshop</span><span class="rule"></span>
-    </div>
-
-    <div class="soon">
-      <div class="mystery reveal" style="--hue:#5ee08a" role="button" tabindex="0" data-game="grass" aria-label="Blade of Grass: tap for details">
-        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
-        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><path d="M30 60 C 28 40, 22 22, 14 6 C 30 18, 36 38, 36 60 Z"/><path d="M34 60 C 36 46, 42 34, 52 26 C 46 38, 42 48, 40 60 Z" opacity=".7"/></svg>
-        <h4>Blade of Grass</h4><span>Defend the last blade</span><em class="more">Tap for details ›</em>
-      </div>
-      <div class="mystery reveal" style="--hue:#ff7ab6" role="button" tabindex="0" data-game="circus" aria-label="Airborne Circus: tap for details">
-        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
-        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><circle cx="14" cy="30" r="8"/><circle cx="32" cy="12" r="8"/><circle cx="50" cy="30" r="8"/><path d="M14 50 Q32 64 50 50" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
-        <h4>Airborne Circus</h4><span>Keep it all in the air</span><em class="more">Tap for details ›</em>
-      </div>
-      <div class="mystery reveal" style="--hue:#7aa8ff" role="button" tabindex="0" data-game="maze" aria-label="3D Maze: tap for details">
-        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
-        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h52v52H22"/><path d="M6 6v42h30V20H20v14h8"/><path d="M48 18v30"/></svg>
-        <h4>3D Maze</h4><span>Find your way out</span><em class="more">Tap for details ›</em>
-      </div>
-      <div class="mystery reveal" style="--hue:#ffb347" role="button" tabindex="0" data-game="spot" aria-label="Spot It Pro: tap for details">
-        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
-        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
-        <h4>Spot It Pro</h4><span>Fast eyes win</span><em class="more">Tap for details ›</em>
-      </div>
-    </div>
   </div>
 
   <div class="soon-pop" id="soonPop" hidden>
@@ -778,6 +821,35 @@ footer .heart{color:var(--coral);}
     </div>
     <a class="support-btn" href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-bottom">Buy me a coffee</a>
   </section>
+
+  <div class="wrap soon-wrap">
+    <div class="section-head reveal">
+      <h2>Coming soon</h2><span class="count">4 in the workshop</span><span class="rule"></span>
+    </div>
+
+    <div class="soon">
+      <div class="mystery reveal" style="--hue:#5ee08a" role="button" tabindex="0" data-game="grass" aria-label="Blade of Grass: tap for details">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><path d="M30 60 C 28 40, 22 22, 14 6 C 30 18, 36 38, 36 60 Z"/><path d="M34 60 C 36 46, 42 34, 52 26 C 46 38, 42 48, 40 60 Z" opacity=".7"/></svg>
+        <h4>Blade of Grass</h4><span>Defend the last blade</span><em class="more">Tap for details ›</em>
+      </div>
+      <div class="mystery reveal" style="--hue:#ff7ab6" role="button" tabindex="0" data-game="circus" aria-label="Airborne Circus: tap for details">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="currentColor"><circle cx="14" cy="30" r="8"/><circle cx="32" cy="12" r="8"/><circle cx="50" cy="30" r="8"/><path d="M14 50 Q32 64 50 50" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+        <h4>Airborne Circus</h4><span>Keep it all in the air</span><em class="more">Tap for details ›</em>
+      </div>
+      <div class="mystery reveal" style="--hue:#7aa8ff" role="button" tabindex="0" data-game="maze" aria-label="3D Maze: tap for details">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h52v52H22"/><path d="M6 6v42h30V20H20v14h8"/><path d="M48 18v30"/></svg>
+        <h4>3D Maze</h4><span>Find your way out</span><em class="more">Tap for details ›</em>
+      </div>
+      <div class="mystery reveal" style="--hue:#ffb347" role="button" tabindex="0" data-game="spot" aria-label="Spot It Pro: tap for details">
+        <span class="lock"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2.5"/></svg>Locked</span>
+        <svg class="silhouette" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="15"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
+        <h4>Spot It Pro</h4><span>Fast eyes win</span><em class="more">Tap for details ›</em>
+      </div>
+    </div>
+  </div>
 
   <footer>Made in Australia <span class="heart">♥</span> Aussie Game Room<span class="foot-links"><a href="/contact/">Contact &amp; feedback</a> · <a href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-footer">Support on Ko-fi</a></span></footer>
 </div>

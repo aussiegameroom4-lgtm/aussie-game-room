@@ -11,6 +11,11 @@
 <meta property="og:title" content="Aussie Game Room | Free Online Word &amp; Number Games">
 <meta property="og:description" content="Free word and number games made in Australia, with new daily challenges every day.">
 <meta property="og:url" content="https://aussiegameroom.com/">
+<meta property="og:image" content="https://aussiegameroom.com/aussie-game-room-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aussiegameroom.com/aussie-game-room-share.jpg">
 <meta name="theme-color" content="#070a14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,6 +77,12 @@ body{
 .nav-links{display:flex; align-items:center; gap:8px;}
 .support-pill{border-color:rgba(255,210,74,0.45); color:var(--gold);}
 .support-pill:hover{background:rgba(255,210,74,0.12);}
+.share-pill{font-family:inherit; cursor:pointer; display:inline-flex; align-items:center; gap:6px; border-color:rgba(47,211,195,0.5); color:var(--teal);}
+.share-pill:hover{background:rgba(47,211,195,0.12);}
+.share-toast{position:fixed; left:50%; bottom:28px; transform:translate(-50%,20px); opacity:0; z-index:50; pointer-events:none;
+  background:#0d1222; color:var(--ink); border:1px solid rgba(47,211,195,0.6); border-radius:30px; padding:12px 20px; font-weight:800; font-size:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5); transition:opacity .25s, transform .25s;}
+.share-toast.show{opacity:1; transform:translate(-50%,0);}
 
 /* ---------- hero ---------- */
 .hero{max-width:1120px; margin:0 auto; padding:56px 24px 40px; text-align:center;}
@@ -407,6 +418,8 @@ footer .heart{color:var(--coral);}
   .daily-links{margin-left:0;}
   .nav-pill{display:none;}
   .nav-pill.support-pill{display:inline-block;}
+  .nav-pill.share-pill{display:inline-flex; padding:9px 11px;}
+  .share-pill span{display:none;}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important; transition:none !important;}
@@ -688,6 +701,7 @@ footer .heart{color:var(--coral);}
       <a class="nav-pill" href="#games">All games</a>
       <a class="nav-pill" href="/reviews/">Reviews</a>
       <a class="nav-pill" href="/contact/">Feedback</a>
+      <button class="nav-pill share-pill" id="shareSite" type="button" data-goatcounter-click="share-site" aria-label="Share Aussie Game Room"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Share</span></button>
       <a class="nav-pill support-pill" href="https://ko-fi.com/aussiegameroom" target="_blank" rel="noopener" data-goatcounter-click="kofi-top">☕ Support</a>
     </div>
   </div>
@@ -861,6 +875,23 @@ footer .heart{color:var(--coral);}
 </div>
 
 <script>
+/* SHARE THE SITE: phone share sheet, or copy the link on a computer */
+(function(){
+  var btn = document.getElementById('shareSite'); if (!btn) return;
+  var url = 'https://aussiegameroom.com/';
+  var text = 'Free word and number games made in Australia. No sign-up, no downloads. Can you beat today\'s champions?';
+  function toast(msg){
+    var t = document.createElement('div'); t.className = 'share-toast'; t.textContent = msg; document.body.appendChild(t);
+    requestAnimationFrame(function(){ t.classList.add('show'); });
+    setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 2200);
+  }
+  btn.addEventListener('click', function(){
+    if (navigator.share) { navigator.share({ title: 'Aussie Game Room', text: text, url: url }).catch(function(){}); return; }
+    var copied = function(){ toast('Link copied! Paste it anywhere to share.'); };
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(url).then(copied, function(){ prompt('Copy this link:', url); }); }
+    else { prompt('Copy this link:', url); }
+  });
+})();
 /* PLAYER COMMENTS: approved on the private page /admin/comments/ (no push needed) */
 (function(){
   var esc = function(t){ var d=document.createElement('div'); d.textContent=t||''; return d.innerHTML; };
